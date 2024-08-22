@@ -3,7 +3,7 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "markingdb";
+$dbname = "clinicdb";
 
 // Establish connection
 $connection = new mysqli($servername, $username, $password, $dbname);
@@ -18,19 +18,19 @@ if (isset($_POST['login'])) {
     $pwd = $_POST['pwd'];
 
     if ($uname === 'admin' && $pwd === 'admin') {
-        // Default login credentials, redirect to index_teacher.php
+        // Default login credentials, redirect to index_staff.php
         $_SESSION['loggedin'] = true;
-        header("Location: index_teacher.php");
+        header("Location: index_staff.php");
         exit;
     } else {
         // Check credentials against the database
-        $sql = "SELECT * FROM teachers WHERE username='$uname' AND password='$pwd'";
+        $sql = "SELECT * FROM admin WHERE username='$uname' AND password='$pwd'";
         $result = $connection->query($sql);
 
         if ($result->num_rows == 1) {
             // Login successful
             $_SESSION['loggedin'] = true;
-            header("Location: index_student.php");
+            header("Location: index_patient.php");
             exit;
         } else {
             // Login failed
