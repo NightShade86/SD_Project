@@ -3,328 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
-
-        .sidebar {
-            width: 250px;
-            background-color: #f4f4f4;
-            padding: 20px;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .sidebar h2 {
-            margin-top: 0;
-            font-size: 1.5em;
-        }
-
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .sidebar ul li {
-            margin: 20px 0;
-        }
-
-        .sidebar ul li a {
-            text-decoration: none;
-            color: #333;
-            font-size: 1.1em;
-        }
-
-        .main-content {
-            flex: 1;
-            padding: 20px;
-        }
-
-        .card {
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
-        h3 {
-            margin-top: 0;
-            color: #333;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f4f4f4;
-        }
-
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <title>Medical Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="sidebar">
-        <h2>Admin Dashboard</h2>
-        <ul>
-            <li><a href="#user-management">User Management</a></li>
-            <li><a href="#user-statistics">User Statistics</a></li>
-            <li><a href="#manage-appointments">Manage Appointments</a></li>
-        </ul>
-    </div>
-    <div class="main-content">
-        <section id="user-management">
-            <h3>User Management</h3>
-            <div class="card">
-                <h4>Manage Users</h4>
-                <form id="user-form">
-                    <input type="text" id="user-name" placeholder="Enter user name" required>
-                    <input type="email" id="user-email" placeholder="Enter user email" required>
-                    <button type="submit">Add User</button>
-                </form>
-                <table id="user-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- User rows will be dynamically inserted here -->
-                    </tbody>
-                </table>
+    <!-- Top Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Medical Dashboard</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Notifications</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Profile</a>
+                    </li>
+                </ul>
             </div>
-        </section>
-        <section id="user-statistics">
-            <h3>User Statistics</h3>
-            <div class="card">
-                <h4>Statistics Overview</h4>
-                <canvas id="user-chart"></canvas>
-            </div>
-        </section>
-       <section id="manage-appointments">
-		<h3>Manage Appointments</h3>
-		<div class="card">
-			<h4>Appointment Scheduling</h4>
-			<form id="appointment-form">
-				<input type="text" id="appointment-title" placeholder="Enter appointment title" required>
-				<input type="datetime-local" id="appointment-time" required>
-				<button type="submit">Add Appointment</button>
-			</form>
-			<table id="appointment-table">
-				<thead>
-					<tr>
-						<th>Title</th>
-						<th>Time</th>
-						<th>Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					<!-- Appointment rows will be dynamically inserted here -->
-				</tbody>
-			</table>
-		</div>
-	</section>
+        </div>
+    </nav>
 
-    </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const userForm = document.getElementById('user-form');
-            const userTable = document.getElementById('user-table').getElementsByTagName('tbody')[0];
-            const appointmentForm = document.getElementById('appointment-form');
-            const appointmentTable = document.getElementById('appointment-table').getElementsByTagName('tbody')[0];
-            const ctx = document.getElementById('user-chart').getContext('2d');
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#appointments">
+                                Appointments
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#patient-info">
+                                Patients
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
 
-            // Function to fetch users from the server
-            const fetchUsers = async () => {
-                try {
-                    const response = await fetch('/api/users');
-                    const users = await response.json();
-                    userTable.innerHTML = ''; // Clear table
-                    users.forEach(user => {
-                        const row = userTable.insertRow();
-                        row.insertCell(0).innerText = user.name;
-                        row.insertCell(1).innerText = user.email;
-                        const actionsCell = row.insertCell(2);
-                        const deleteButton = document.createElement('button');
-                        deleteButton.innerText = 'Delete';
-                        deleteButton.addEventListener('click', () => deleteUser(user.id));
-                        actionsCell.appendChild(deleteButton);
-                    });
-                } catch (error) {
-                    console.error('Error fetching users:', error);
-                }
-            };
+            <!-- Main Content Area -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div class="pt-3 pb-2 mb-3">
+                    <h1 class="h2">Dashboard</h1>
 
-            // Function to add a new user
-            userForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const name = document.getElementById('user-name').value;
-                const email = document.getElementById('user-email').value;
+                    <!-- Appointments Section -->
+                    <div id="appointments" class="mb-5">
+                        <h3>Today's Appointments</h3>
+                        <ul class="list-group">
+                            <?php
+                            // Example PHP code to fetch appointment data from a database
+                            $conn = new mysqli("localhost", "username", "password", "database");
 
-                try {
-                    await fetch('/api/users', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ name, email })
-                    });
-                    fetchUsers(); // Refresh user list
-                } catch (error) {
-                    console.error('Error adding user:', error);
-                }
-            });
-
-            // Function to delete a user
-            const deleteUser = async (userId) => {
-                try {
-                    await fetch(`/api/users/${userId}`, { method: 'DELETE' });
-                    fetchUsers(); // Refresh user list
-                } catch (error) {
-                    console.error('Error deleting user:', error);
-                }
-            };
-
-            // Function to fetch user statistics
-            const fetchStatistics = async () => {
-                try {
-                    const response = await fetch('/api/user-statistics');
-                    const data = await response.json();
-
-                    new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: data.labels,
-                            datasets: [{
-                                label: 'Users',
-                                data: data.values,
-                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                borderColor: 'rgba(75, 192, 192, 1)',
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
+                            // Check connection
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
                             }
-                        }
-                    });
-                } catch (error) {
-                    console.error('Error fetching statistics:', error);
-                }
-            };
 
-            // Function to fetch appointments from the server
-			const fetchAppointments = async () => {
-				try {
-					const response = await fetch('/api/appointments.php');
-					const appointments = await response.json();
-					if (appointments.error) {
-						console.error('Error fetching appointments:', appointments.error);
-						return;
-					}
-					appointmentTable.innerHTML = ''; // Clear table
-					appointments.forEach(appointment => {
-						const row = appointmentTable.insertRow();
-						row.insertCell(0).innerText = appointment.name;
-						row.insertCell(1).innerText = appointment.department;
-						row.insertCell(2).innerText = appointment.date;
-						row.insertCell(3).innerText = appointment.time;
-						row.insertCell(4).innerText = appointment.message;
-						const actionsCell = row.insertCell(5);
-						const deleteButton = document.createElement('button');
-						deleteButton.innerText = 'Delete';
-						deleteButton.addEventListener('click', () => deleteAppointment(appointment.id));
-						actionsCell.appendChild(deleteButton);
-					});
-				} catch (error) {
-					console.error('Error fetching appointments:', error);
-				}
-			};
+                            // Fetch appointments for today
+                            $sql = "SELECT patientName, time, type FROM appointments WHERE date = CURDATE()";
+                            $result = $conn->query($sql);
 
-		document.addEventListener('DOMContentLoaded', () => {
-		const appointmentForm = document.getElementById('appointment-form');
-		const appointmentTable = document.getElementById('appointment-table').getElementsByTagName('tbody')[0];
+                            if ($result->num_rows > 0) {
+                                // Output each row
+                                while($row = $result->fetch_assoc()) {
+                                    echo "<li class='list-group-item'>" . $row["patientName"] . " - " . $row["time"] . " - " . $row["type"] . "</li>";
+                                }
+                            } else {
+                                echo "<li class='list-group-item'>No appointments for today</li>";
+                            }
 
-		// Function to fetch appointments from the server
-		const fetchAppointments = async () => {
-			try {
-				const response = await fetch('/api/appointments');
-				const appointments = await response.json();
-				appointmentTable.innerHTML = ''; // Clear table
-				appointments.forEach(appointment => {
-					const row = appointmentTable.insertRow();
-					row.insertCell(0).innerText = appointment.title;
-					row.insertCell(1).innerText = appointment.time;
-					const actionsCell = row.insertCell(2);
-					const deleteButton = document.createElement('button');
-					deleteButton.innerText = 'Delete';
-					deleteButton.addEventListener('click', () => deleteAppointment(appointment.id));
-					actionsCell.appendChild(deleteButton);
-				});
-			} catch (error) {
-				console.error('Error fetching appointments:', error);
-			}
-		};
+                            $conn->close();
+                            ?>
+                        </ul>
+                    </div>
 
-		// Function to add a new appointment
-		appointmentForm.addEventListener('submit', async (e) => {
-			e.preventDefault();
-			const title = document.getElementById('appointment-title').value;
-			const time = document.getElementById('appointment-time').value;
+                    <!-- Patient Information Section -->
+                    <div id="patient-info" class="mb-5">
+                        <h3>Patient Information</h3>
+                        <div class="card">
+                            <div class="card-body">
+                                <?php
+                                // Example PHP code to fetch a specific patient's information
+                                $conn = new mysqli("localhost", "username", "password", "database");
 
-			try {
-				await fetch('/api/appointments', {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ title, time })
-				});
-				fetchAppointments(); // Refresh appointment list
-			} catch (error) {
-				console.error('Error adding appointment:', error);
-			}
-		});
+                                // Check connection
+                                if ($conn->connect_error) {
+                                    die("Connection failed: " . $conn->connect_error);
+                                }
 
-		// Function to delete an appointment
-		const deleteAppointment = async (appointmentId) => {
-			try {
-				await fetch(`/api/appointments/${appointmentId}`, { method: 'DELETE' });
-				fetchAppointments(); // Refresh appointment list
-			} catch (error) {
-				console.error('Error deleting appointment:', error);
-			}
-		};
+                                // Fetch patient data (replace 123456 with the patient ID)
+                                $sql = "SELECT name, patientNumber, age, address, phone, email FROM patients WHERE patientNumber = 123456";
+                                $result = $conn->query($sql);
 
-		fetchAppointments(); // Initial fetch for appointments
-	});
-    </script>
+                                if ($result->num_rows > 0) {
+                                    $patient = $result->fetch_assoc();
+                                    echo "<h5 class='card-title'>" . $patient['name'] . "</h5>";
+                                    echo "<p><strong>Patient Number:</strong> " . $patient['patientNumber'] . "</p>";
+                                    echo "<p><strong>Age:</strong> " . $patient['age'] . "</p>";
+                                    echo "<p><strong>Address:</strong> " . $patient['address'] . "</p>";
+                                    echo "<p><strong>Phone Number:</strong> " . $patient['phone'] . "</p>";
+                                    echo "<p><strong>Email Address:</strong> " . $patient['email'] . "</p>";
+                                } else {
+                                    echo "<p>No patient data available</p>";
+                                }
+
+                                $conn->close();
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
