@@ -318,17 +318,37 @@
                     
                     <!-- Register Form -->
                     <div class="login-form register-form">
-                        <h2>Register</h2>
+                        <h2>Sign Up</h2>
                         <!--Login Form-->
-                        <form method="post" action="contact.html">
+                        <form method="post" action="signup.php">
                             <div class="form-group">
-                                <label>User Name</label>
-                                <input type="text" name="username" placeholder="Your Name" required>
+                                <label>First Name: </label>
+                                <input type="text" name="firstname" placeholder="Your First Name" required>
                             </div>
 
                             <div class="form-group">
-                                <label>Email Address</label>
+                                <label>Last Name: </label>
+                                <input type="text" name="lastname" placeholder="Your Last Name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Number Telephone: </label>
+                                <input type="text" name="no_tel" placeholder="Your Phone Number" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Email: </label>
                                 <input type="email" name="email" placeholder="Your Email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>IC: </label>
+                                <input type="ic" name="ic" placeholder="Your IC Number" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="user_id" name="user_id" placeholder="Your Username" required>
                             </div>
                             
                             <div class="form-group">
@@ -337,7 +357,7 @@
                             </div>
                             
                             <div class="form-group text-right">
-                                <button class="theme-btn btn-style-one" type="submit" name="submit-form"><span class="btn-title">Register</span></button>
+                                <button class="theme-btn btn-style-one" type="submit" name="submit-form"><span class="btn-title">Sign Up</span></button>
                             </div>
                         </form>      
                     </div>
