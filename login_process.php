@@ -3,7 +3,7 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "clinicdb";
+$dbname = "dtcmsdb";
 
 // Establish connection
 $connection = new mysqli($servername, $username, $password, $dbname);
@@ -17,26 +17,38 @@ if (isset($_POST['login'])) {
     $uname = $_POST['uname'];
     $pwd = $_POST['pwd'];
 
+    // Admin login
     if ($uname === 'admin' && $pwd === 'admin') {
-        // Default login credentials, redirect to index_staff.php
         $_SESSION['loggedin'] = true;
-        header("Location: index_staff.php");
+        $_SESSION['role'] = 'admin';
+        header("Location: admin_dashboard.php");
         exit;
-    } else {
-        // Check credentials against the database
-        $sql = "SELECT * FROM admin WHERE username='$uname' AND password='$pwd'";
-        $result = $connection->query($sql);
-
-        if ($result->num_rows == 1) {
-            // Login successful
-            $_SESSION['loggedin'] = true;
-            header("Location: index_patient.php");
-            exit;
-        } else {
-            // Login failed
-            echo "Invalid username or password. Please try again.";
-        }
     }
+
+    // Staff login
+    $staff_sql = "SELECT * FROM staff_info WHERE USER_ID='$uname' AND PASSWORD='$pwd'";
+    $staff_result = $connection->query($staff_sql);
+
+    if ($staff_result->num_rows == 1) {
+        $_SESSION['loggedin'] = true;
+        $_SESSION['role'] = 'staff';
+        header("Location: staff_dashboard.html");
+        exit;
+    }
+
+    // Patient/Guest login
+    $user_sql = "SELECT * FROM user_info WHERE USER_ID='$uname' AND PASSWORD='$pwd'";
+    $user_result = $connection->query($user_sql);
+
+    if ($user_result->num_rows == 1) {
+        $_SESSION['loggedin'] = true;
+        $_SESSION['role'] = 'patient';  // Assuming patients and guests are treated similarly
+        header("Location: homepage_patient.php");
+        exit;
+    }
+
+    // If login fails
+    echo "Invalid username or password. Please try again.";
 }
 
 $connection->close();
