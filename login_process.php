@@ -32,7 +32,7 @@ if (isset($_POST['login'])) {
     if ($staff_result->num_rows == 1) {
         $_SESSION['loggedin'] = true;
         $_SESSION['role'] = 'staff';
-        header("Location: staff_dashboard.html");
+        header("Location: staff_dashboard.php");
         exit;
     }
 
@@ -43,7 +43,7 @@ if (isset($_POST['login'])) {
     if ($user_result->num_rows == 1) {
         $_SESSION['loggedin'] = true;
         $_SESSION['role'] = 'patient';  // Assuming patients and guests are treated similarly
-        header("Location: homepage_patient.php");
+        header("Location: patient_homepage.php");
         exit;
     }
 
