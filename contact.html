@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Medicoz | Health and Medical HTML Template | Login</title>
+<title>Medicoz | Health and Medical HTML Template | Contact Us</title>
 
 <!-- Stylesheets -->
 <link href="css/bootstrap.css" rel="stylesheet">
@@ -107,7 +107,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="dropdown current">
+                                <li class="dropdown">
                                     <span>Shop</span>
                                     <ul>
                                         <li><a href="shop.html">Shop</a></li>
@@ -116,9 +116,9 @@
                                         <li><a href="checkout.html">Checkout</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="contact.html">Contact</a></li>
+                                <li class="current"><a href="contact.html">Contact</a></li>
 								<li><a href="login.html">Login</a></li>
-								<li><a href="register.html">Register</a></li>
+								<li><a href="Register.html">Register</a></li>
                             </ul>
                         </nav>
                         <!-- Main Menu End-->
@@ -229,7 +229,6 @@
             </div> <!-- End shopping-cart -->
         </div>
         <!-- End Sidebar Cart  -->
-
     </header>
     <!--End Main Header -->
 
@@ -237,66 +236,109 @@
     <section class="page-title" style="background-image: url(images/background/8.jpg);">
         <div class="auto-container">
             <div class="title-outer">
-                <h1>Login</h1>
+                <h1>Contact Us</h1>
                 <ul class="page-breadcrumb">
                     <li><a href="index.html">Home</a></li>
-                    <li>Shop</li>
+                    <li>Contact</li>
                 </ul> 
             </div>
         </div>
     </section>
     <!--End Page Title-->
 
-	<!--Login Section-->
-	<section class="login-section" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background-image: linear-gradient(to bottom, #f7f7f7, #fff);">
-		<div class="auto-container" style="width: 100%; max-width: 400px; background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
-			<div class="row clearfix" style="display: flex; justify-content: center;">
-				<div class="column col-lg-12 col-md-12 col-sm-12">
-					<!-- Login Form -->
-					<div class="login-form" style="background-color: #f7f7f7; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
-						<h2 style="text-align: center; color: #333; font-weight: bold;">Login</h2>
-						<!-- Error Message -->
-						<?php if (isset($_SESSION['error'])): ?>
-							<div class="error" style="color: red; text-align: center; padding: 10px; border-radius: 5px; background-color: #ffe6e6;">
-								<?php
-								echo $_SESSION['error'];
-								unset($_SESSION['error']);
-								?>
-							</div>
-						<?php endif; ?>
-						<form method="post" action="login_process.php">
-							<div class="form-group">
-								<label style="font-weight: bold; color: #333;">Username or Email</label>
-								<input type="text" name="uname" placeholder="Name or Email" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-							</div>
-							
-							<div class="form-group">
-								<label style="font-weight: bold; color: #333;">Enter Your Password</label>
-								<input type="password" name="pwd" placeholder="Password" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-							</div>
-							
-							<div class="form-group">
-								<input type="checkbox" name="remember_me" id="account-option-1" style="margin-right: 10px;">&nbsp; 
-								<label for="account-option-1" style="font-weight: bold; color: #333;">Remember me</label>
-							</div>
+    <!-- Map Section -->
+    <section class="map-section">
+        <div class="auto-container">
+            <div class="map-outer">
+                <div class="map-canvas"
+                    data-zoom="20"
+                    data-lat="2.8103385009032835"
+                    data-lng="102.40180757836478"
+                    data-content="34, Jalan Besar, 72100 Bahau, Negeri Sembilan<br><a href='mailto:info@youremail.com'>info@youremail.com</a>">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Map Section -->
 
-							<div class="form-group">
-								<button class="theme-btn btn-style-one" type="submit" name="login" style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer;">
-									<span class="btn-title">LOGIN</span>
-								</button>
-							</div>
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="small-container">
+            <div class="sec-title text-center">
+                <span class="sub-title">Contact Now</span>
+                <h2>Write us a Message !</h2>
+                <span class="divider"></span>
+            </div>
 
-							<div class="form-group pass">
-								<a href="#" class="psw" style="color: #337ab7; text-decoration: none;">Lost your password?</a>
-							</div>
-						</form>
-					</div>
-					<!--End Login Form -->
-				</div>
-			</div>
-		</div>
-	</section>
-    <!--End Login Section-->
+            <!-- Contact box -->
+            <div class="contact-box">
+                <div class="row">
+                    <div class="contact-info-block col-lg-4 col-md-6 col-sm-12">
+                        <div class="inner">
+                            <span class="icon flaticon-worldwide"></span> 
+                            <h4><strong>Address</strong></h4>
+                            <p>34, Jalan Besar, 72100 Bahau, Negeri Sembilan</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-block col-lg-4 col-md-6 col-sm-12">
+                        <div class="inner">
+                            <span class="icon flaticon-phone"></span> 
+                            <h4><strong>Phone</strong></h4>
+                            <p><a href="#">06-454 1048</a></p>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-block col-lg-4 col-md-6 col-sm-12">
+                        <div class="inner">
+                            <span class="icon flaticon-email"></span> 
+                            <h4><strong>Email</strong></h4>
+                            <p><a href="mailto:thongclinic@gmail.com">thongclinic@gmail.com</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form box -->
+            <div class="form-box">
+                <div class="contact-form">
+                    <form action="#" method="post" id="email-form">
+                        <div class="row">
+                            <div class="form-group col-lg-12">
+                                <div class="response"></div>
+                            </div>
+
+                            <div class="col-lg-6 col-md-12">
+                                <div class="form-group">
+                                    <input type="text" name="username" class="username" placeholder="Full Name *">
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="email" name="email" class="email" placeholder="Email Address *">
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" name="username" class="username" placeholder="Your Phone">
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6 col-md-12">
+                                <div class="form-group">
+                                    <textarea name="contact_message" class="message" placeholder="Massage"></textarea>
+                                </div>
+                                
+                            </div>
+
+                            <div class="form-group col-lg-12 text-center pt-3">
+                                <button class="theme-btn btn-style-one" type="button" id="submit" name="submit-form"><span class="btn-title">Send Message</span></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--End Contact Section -->
 	<div class="spacer" style="height: 50px;"></div>
     <!-- Main Footer -->
     <footer class="main-footer">
@@ -322,7 +364,7 @@
                             <!--Footer Column-->
                         </div>
                     </div>
-
+					
                     <!--Big Column-->
 				   <div class="big-column col-xl-6 col-lg-12 col-md-12 col-sm-12 d-flex justify-content-end">
 						<div class="row">
@@ -442,7 +484,7 @@
 </div><!-- End Page Wrapper -->
 
 
-<script src="js/jquery.js"></script>  
+<script src="js/jquery.js"></script> 
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.fancybox.js"></script>
@@ -450,10 +492,15 @@
 <script src="js/mmenu.polyfills.js"></script>
 <script src="js/mmenu.js"></script>
 <script src="js/appear.js"></script>
-<script src="js/jquery.bootstrap-touchspin.js"></script>
+<script src="js/mixitup.js"></script>
 <script src="js/owl.js"></script>
 <script src="js/wow.js"></script>
 <script src="js/script.js"></script>
+<!--Google Map APi Key-->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB84WyJt1Plv9hTmYLLIlwYzunytqvLxH0"></script>
+<script src="js/map-script.js"></script>
+<!--End Google Map APi-->
+
 </body>
 </html>
 

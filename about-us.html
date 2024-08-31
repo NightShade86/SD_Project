@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Medicoz | Health and Medical HTML Template | Login</title>
+<title>Medicoz | Health and Medical HTML Template | About Us</title>
 
 <!-- Stylesheets -->
 <link href="css/bootstrap.css" rel="stylesheet">
@@ -43,6 +43,7 @@
                         </ul>
                     </div>
                     <div class="top-right">
+                        
                         <div class="btn-box">
                             <a href="appointment.html" id="appointment-btn" class="theme-btn btn-style-three"><span class="btn-title">Appointment</span></a>
                         </div>
@@ -73,10 +74,10 @@
                                     </ul>
                                 </li>
 
-                                <li class="dropdown">
+                                <li class="current dropdown">
                                     <span>Pages</span>
                                     <ul>
-                                        <li><a href="about-us.html">About Us</a></li>
+                                        <li class="current"><a href="about-us.html">About Us</a></li>
                                         <li><a href="services.html">Services</a></li>
                                     </ul>
                                 </li>
@@ -107,7 +108,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="dropdown current">
+                                <li class="dropdown">
                                     <span>Shop</span>
                                     <ul>
                                         <li><a href="shop.html">Shop</a></li>
@@ -229,76 +230,260 @@
             </div> <!-- End shopping-cart -->
         </div>
         <!-- End Sidebar Cart  -->
-
     </header>
     <!--End Main Header -->
 
     <!--Page Title-->
     <section class="page-title" style="background-image: url(images/background/8.jpg);">
         <div class="auto-container">
-            <div class="title-outer">
-                <h1>Login</h1>
+            <div class="title-outer">            
+                <h1>About Us</h1>
                 <ul class="page-breadcrumb">
                     <li><a href="index.html">Home</a></li>
-                    <li>Shop</li>
-                </ul> 
+                    <li>About</li>
+                </ul>
             </div>
         </div>
     </section>
     <!--End Page Title-->
 
-	<!--Login Section-->
-	<section class="login-section" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background-image: linear-gradient(to bottom, #f7f7f7, #fff);">
-		<div class="auto-container" style="width: 100%; max-width: 400px; background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
-			<div class="row clearfix" style="display: flex; justify-content: center;">
-				<div class="column col-lg-12 col-md-12 col-sm-12">
-					<!-- Login Form -->
-					<div class="login-form" style="background-color: #f7f7f7; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
-						<h2 style="text-align: center; color: #333; font-weight: bold;">Login</h2>
-						<!-- Error Message -->
-						<?php if (isset($_SESSION['error'])): ?>
-							<div class="error" style="color: red; text-align: center; padding: 10px; border-radius: 5px; background-color: #ffe6e6;">
-								<?php
-								echo $_SESSION['error'];
-								unset($_SESSION['error']);
-								?>
-							</div>
-						<?php endif; ?>
-						<form method="post" action="login_process.php">
-							<div class="form-group">
-								<label style="font-weight: bold; color: #333;">Username or Email</label>
-								<input type="text" name="uname" placeholder="Name or Email" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-							</div>
-							
-							<div class="form-group">
-								<label style="font-weight: bold; color: #333;">Enter Your Password</label>
-								<input type="password" name="pwd" placeholder="Password" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-							</div>
-							
-							<div class="form-group">
-								<input type="checkbox" name="remember_me" id="account-option-1" style="margin-right: 10px;">&nbsp; 
-								<label for="account-option-1" style="font-weight: bold; color: #333;">Remember me</label>
-							</div>
+	<!-- About Section -->
+	<section class="about-section">
+		<div class="auto-container">
+			<div class="row">
+				<!-- Content Column -->
+				<div class="content-column col-lg-12 col-md-12 col-sm-12">
+					<div class="inner-column">
+						<div class="sec-title">
+							<span class="sub-title">OUR MEDICAL</span>
+							<h2>Setting Standards in Research and Clinical Care</h2>
+							<span class="divider"></span>
+						</div>
+						<br>
+						<!-- Clinic Overview -->
+						<div class="about-content">
+							<h3 class="content-title">Clinic Overview</h3>
+							<p>Founded in 1985 by Dr. Tony Thong, Thong's Clinic has been a cornerstone of healthcare in Bahau, Negeri Sembilan. The clinic is renowned for its compassionate and effective medical care, providing a trusted resource for the community.</p>
+						</div>
 
-							<div class="form-group">
-								<button class="theme-btn btn-style-one" type="submit" name="login" style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer;">
-									<span class="btn-title">LOGIN</span>
-								</button>
-							</div>
+						<!-- Mission Statement -->
+						<div class="about-content">
+							<h3 class="content-title">Mission Statement</h3>
+							<p>"Our mission is to deliver comprehensive medical services with a focus on patient-centered care. We aim to enhance the health and well-being of our community through accessible, reliable, and personalized healthcare."</p>
+						</div>
 
-							<div class="form-group pass">
-								<a href="#" class="psw" style="color: #337ab7; text-decoration: none;">Lost your password?</a>
-							</div>
-						</form>
+						<!-- Clinic Values -->
+						<div class="about-content">
+							<h3 class="content-title">Clinic Values</h3>
+							<ul class="values-list">
+								<li><strong>Compassion:</strong> We treat each patient with kindness and empathy.</li>
+								<li><strong>Integrity:</strong> We uphold the highest standards of ethical practice.</li>
+								<li><strong>Excellence:</strong> We are committed to delivering superior medical care.</li>
+								<li><strong>Community:</strong> We value our role in supporting the health and wellness of Bahau.</li>
+							</ul>
+						</div>
+
+						<!-- History -->
+						<div class="about-content">
+							<h3 class="content-title">History</h3>
+							<p>Thong's Clinic was founded by Dr. Tony Thong with a vision to improve healthcare services in Bahau. Over the years, the clinic has grown and evolved while maintaining its commitment to exceptional care and community service.</p>
+						</div>
+
+						<!-- Our Team -->
+						<div class="about-content">
+							<h3 class="content-title">Our Team</h3>
+							<p>Dr. Tony Thong, the founder, is a highly respected medical professional with extensive experience in general medicine. His son, Dr. Thong Joo Hock, continues the family legacy, contributing his expertise to uphold the clinic's high standards of care.</p>
+						</div>
 					</div>
-					<!--End Login Form -->
+				</div>
+				<!-- End Content Column -->
+			</div>
+		</div>
+	</section>
+	<!-- End About Section -->
+
+	<!-- About Section CSS -->
+	<style>
+		.about-section {
+			padding: 60px 20px;
+			background-color: #f9f9f9;
+		}
+
+		.sec-title {
+			margin-bottom: 40px;
+		}
+
+		.sec-title .sub-title {
+			font-size: 18px;
+			color: #3498db;
+			display: block;
+			margin-bottom: 10px;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+
+		.sec-title h2 {
+			font-size: 36px;
+			margin-bottom: 20px;
+			color: #2c3e50;
+			line-height: 1.4;
+		}
+
+		.sec-title .divider {
+			width: 80px;
+			height: 4px;
+			background: #3498db;
+			margin-bottom: 20px;
+			border-radius: 2px;
+		}
+
+		.about-content {
+			margin-bottom: 50px;
+		}
+
+		.about-content h3.content-title {
+			font-size: 28px;
+			color: #2c3e50;
+			margin-bottom: 15px;
+			position: relative;
+			padding-bottom: 10px;
+			border-bottom: 2px solid #3498db;
+			display: inline-block;
+		}
+
+		.about-content p {
+			font-size: 16px;
+			color: #5a5a5a;
+			line-height: 1.8;
+			margin-bottom: 20px;
+		}
+
+		.values-list {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		.values-list li {
+			font-size: 16px;
+			color: #5a5a5a;
+			margin-bottom: 10px;
+			line-height: 1.6;
+		}
+
+		.values-list li strong {
+			color: #2c3e50;
+		}
+	</style>
+	<!-- End About Section CSS -->
+
+    
+    <!-- Fun Fact Section Two-->
+		<section class="fun-fact-section-two">
+		<div class="auto-container">
+			<div class="row justify-content-center">
+				<!--Column-->
+				<div class="counter-column col-lg-3 col-md-6 col-sm-12 wow fadeInUp">
+					<div class="count-box">
+						<div class="icon-box"><span class="icon flaticon-user-experience"></span></div>
+						<h4 class="counter-title">Years of Experience</h4>
+						<span class="count-text" data-speed="3000" data-stop="39">0</span>
+					</div>
+				</div>
+				
+				<!--Column-->
+				<div class="counter-column col-lg-3 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="800ms">
+					<div class="count-box">
+						<div class="icon-box"><span class="icon flaticon-hospital"></span></div>
+						<h4 class="counter-title">Medical Spesialities</h4>
+						<span class="count-text" data-speed="3000" data-stop="689">0</span>
+					</div>
+				</div>
+
+				<!--Column-->
+				<div class="counter-column col-lg-3 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="1200ms">
+					<div class="count-box">
+						<div class="icon-box"><span class="icon flaticon-add-friend"></span></div>
+						<h4 class="counter-title">Happy Patients</h4>
+						<span class="count-text" data-speed="3000" data-stop="9036">0</span>
+					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-    <!--End Login Section-->
-	<div class="spacer" style="height: 50px;"></div>
-    <!-- Main Footer -->
+    <!-- Fun Fact Section Two -->
+
+    <!-- Team Section Two -->
+    <section class="team-section-two alternate">
+        <div class="auto-container">
+            <div class="sec-title text-center">
+                <span class="sub-title">MEET OUR EXPERIENCED TEAM</span>
+                <h2>Our Dedicated Doctors Team.</h2>
+                <span class="divider"></span>
+            </div>
+
+            <div class="row">
+                <!-- Team Block -->
+                <div class="team-block-two col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
+                    <div class="inner-box">
+                        <div class="image-box">
+                           <figure class="image"><a href="doctor-detail.html"><img src="Dr_Thong2.jpg" alt="Dr.Thong"></a></figure>
+                        </div>
+                        <div class="info-box">
+                            <h5 class="name"><a href="doctor-detail.html">Doctor Tony Thong</a></h5>
+                            <span class="designation">General Medicine</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Block -->
+                <div class="team-block-two col-lg-4 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="400ms">
+                    <div class="inner-box">
+                        <div class="image-box">
+                           <figure class="image"><a href="doctor-detail.html"><img src="Dr_Chia2.jpg" alt="Dr.Chia"></a></figure>
+                        </div>
+                        <div class="info-box">
+                            <h5 class="name"><a href="doctor-detail.html">Doctor Chia</a></h5>
+                            <span class="designation">General Medicine</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sec-bottom-text">Don’t hesitate, contact us for better help and services. <a href="doctor-detail.html">Explore all Dr. Team</a></div>
+        </div>
+    </section>
+    <!--End Team Section -->
+	 <!--Team Section CSS -->
+	<style>
+		.team-section-two .row {
+		justify-content: center;
+	}
+
+	.team-section-two .sec-bottom-text {
+		text-align: center;
+		margin-top: 30px;
+	}
+
+	.team-section-two .sec-title.text-center {
+		text-align: center;
+		margin-bottom: 50px;
+	}
+
+	.team-section-two .inner-box {
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.team-section-two .team-block-two {
+		margin-bottom: 30px;
+		display: flex;
+		justify-content: center;
+	}
+	</style>
+	 <!--End Team Section CSS -->
+	 
+        <!-- Main Footer -->
     <footer class="main-footer">
         <!--Widgets Section-->
         <div class="widgets-section" style="background-image: url(images/background/7.jpg);">
@@ -450,7 +635,7 @@
 <script src="js/mmenu.polyfills.js"></script>
 <script src="js/mmenu.js"></script>
 <script src="js/appear.js"></script>
-<script src="js/jquery.bootstrap-touchspin.js"></script>
+<script src="js/mixitup.js"></script>
 <script src="js/owl.js"></script>
 <script src="js/wow.js"></script>
 <script src="js/script.js"></script>
