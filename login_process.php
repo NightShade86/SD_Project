@@ -1,9 +1,13 @@
 <?php
 session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 $servername = "localhost";
 $username = "root";
-$password = "";
-$dbname = "clinicdb";
+$password = "root";
+$dbname = "dtcmsdb";
+
 
 // Establish connection
 $connection = new mysqli($servername, $username, $password, $dbname);
@@ -17,26 +21,47 @@ if (isset($_POST['login'])) {
     $uname = $_POST['uname'];
     $pwd = $_POST['pwd'];
 
+    // Admin login
     if ($uname === 'admin' && $pwd === 'admin') {
-        // Default login credentials, redirect to index_staff.php
         $_SESSION['loggedin'] = true;
-        header("Location: index_staff.php");
+        $_SESSION['role'] = 'admin';
+        header("Location: dashboard.php");
         exit;
-    } else {
-        // Check credentials against the database
-        $sql = "SELECT * FROM admin WHERE username='$uname' AND password='$pwd'";
-        $result = $connection->query($sql);
-
-        if ($result->num_rows == 1) {
-            // Login successful
-            $_SESSION['loggedin'] = true;
-            header("Location: index_patient.php");
-            exit;
-        } else {
-            // Login failed
-            echo "Invalid username or password. Please try again.";
-        }
     }
+
+    // Staff login
+    $staff_sql = "SELECT * FROM staff_info WHERE USER_ID=? AND PASSWORD=?";
+   // $stmt = $connection->prepare($staff_sql);
+    //$stmt->bind_param("ss", $uname, $pwd);
+    //$stmt->execute();
+    //$staff_result = $stmt->get_result();
+
+    if ($staff_result->num_rows == 1) {
+        $_SESSION['loggedin'] = true;
+        $_SESSION['role'] = 'staff';
+        header("Location: dashboard.php");
+        exit;
+    }
+
+    // Patient/Guest login
+    $user_sql = "SELECT * FROM user_info WHERE USER_ID=? AND PASSWORD=?";
+    $stmt = $connection->prepare($user_sql);
+    $stmt->bind_param("ss", $uname, $pwd);
+    $stmt->execute();
+    $user_result = $stmt->get_result();
+
+    if ($user_result->num_rows == 1) {
+        $_SESSION['loggedin'] = true;
+        $_SESSION['role'] = 'patient';  // Assuming patients and guests are treated similarly
+        header("Location: index_patient.html");
+        exit;
+    }
+
+    // If login fails
+    $_SESSION['error'] = "Invalid username or password. Please try again.";
+    header("Location: login_guess.html");
+    exit;
+
 }
 
 $connection->close();
