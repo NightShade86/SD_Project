@@ -5,7 +5,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $servername = "localhost";
     $username = "root"; 
-    $password = ""; 
+
+    $password = "root"; 
     $dbname = "dtcmsdb";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -24,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_id = $conn->real_escape_string($_POST['user_id']);
     $pass = $conn->real_escape_string($_POST['password']);
 
+
     // Hash the password
     $hashed_password = password_hash($pass, PASSWORD_DEFAULT);
 
@@ -35,8 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$firstname', '$lastname', '$no_tel', '$email', '$ic', '$user_id', '$hashed_password', '$usertype')";
 
     if ($conn->query($sql) === TRUE) {
-        // Redirect to patient homepage after successful registration
-        header("Location: login.html");
+
+			header("Location:index_patient.html");
         exit();
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;

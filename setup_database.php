@@ -2,17 +2,16 @@
 // MySQL connection details
 $servername = "localhost";
 $username = "root";
-$password = ""; // Default XAMPP MySQL setup
-$database = "medical_dashboard";
+
+$password = "root";
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $database);
+$conn = new mysqli($servername, $username, $password);
 
 // Check connection
 if ($conn->connect_error) {
-    die("<p>Connection failed: " . $conn->connect_error . "</p>");
+    die("Connection failed: " . $conn->connect_error);
 }
-
 
 // Create the database if it doesn't exist
 $sql = "CREATE DATABASE IF NOT EXISTS medical_dashboard";
