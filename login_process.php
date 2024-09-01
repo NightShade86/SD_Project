@@ -25,7 +25,7 @@ if (isset($_POST['login'])) {
     if ($uname === 'admin' && $pwd === 'admin') {
         $_SESSION['loggedin'] = true;
         $_SESSION['role'] = 'admin';
-        header("Location:Admin/admin_dashboard.html");
+        header("Location:admin_dashboard.html");
 
         exit;
     }
@@ -37,11 +37,11 @@ if (isset($_POST['login'])) {
     $staff_result = $staff_sql->get_result();
 
     if ($staff_result->num_rows == 1) {
-         $staff = $staff_result->fetch_assoc();
+        $staff = $staff_result->fetch_assoc();
         if (password_verify($pwd, $staff['PASSWORD'])) {
             $_SESSION['loggedin'] = true;
             $_SESSION['role'] = 'staff';
-            header("Location: dashboard.php");
+            header("Location: staff_dashboard.php");
             exit;
         }
     }
