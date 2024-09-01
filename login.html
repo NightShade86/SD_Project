@@ -38,17 +38,12 @@
                 <div class="inner-container">
                     <div class="top-left">
                         <ul class="contact-list clearfix">
-                            <li><i class="flaticon-hospital-1"></i>234 Triumph, Los Angeles, <br>California, US </li>
-                            <li><i class="flaticon-back-in-time"></i>Mon - Sat 8.00 - 18.00. <br>Sunday CLOSED</li>
+							<li><i class="flaticon-hospital-1"></i>34, Jalan Besar, 72100 Bahau, Negeri Sembilan </li>
+                            <li><i class="flaticon-back-in-time"></i>Monday - Thursday 9.00am - 9.00pm , Friday 9.00am - 5.00pm. Sunday and Saturday CLOSED</li>
                         </ul>
                     </div>
                     <div class="top-right">
-                        <ul class="social-icon-one">
-                            <li><a href="#"><span class="fab fa-facebook-f"></span></a></li>
-                            <li><a href="#"><span class="fab fa-twitter"></span></a></li>
-                            <li><a href="#"><span class="fab fa-skype"></span></a></li>
-                            <li><a href="#"><span class="fab fa-linkedin-in"></span></a></li>
-                        </ul>
+
                         <div class="btn-box">
                             <a href="appointment.html" id="appointment-btn" class="theme-btn btn-style-three"><span class="btn-title">Appointment</span></a>
                         </div>
@@ -76,10 +71,7 @@
                                     <span>Home</span>
                                     <ul>
                                         <li><a href="index.html">Home Medical</a></li>
-                                        <li><a href="index-2.html">Home Clanic</a></li>
-                                        <li><a href="index-3.html">Home Dental Care</a></li>
-                                        <li><a href="index-4.html">Home Eye Care</a></li>
-                                        <li><a href="index-5.html">Home Prenatal care</a></li>
+
                                     </ul>
                                 </li>
 
@@ -88,35 +80,16 @@
                                     <ul>
                                         <li><a href="about-us.html">About Us</a></li>
                                         <li><a href="services.html">Services</a></li>
-                                        <li><a href="gallery.html">Gallery</a></li>
-                                        <li><a href="pricing-table.html">Pricing Table</a></li>
-                                        <li><a href="elements.html">UI Elements</a></li>
-                                        <li><a href="coming-soon.html">Coming Soon</a></li>
-                                        <li><a href="error-page.html">Error 404</a></li>
-                                        <li><a href="terms-and-condition.html">Terms and Condition</a></li>
+
                                     </ul>
                                 </li>
                                 <li class="dropdown">
                                     <span>Doctors</span>
                                     <ul>
-                                        <li><a href="doctors.html">Doctors</a></li>
+
                                         <li><a href="doctor-detail.html">Doctor Detail</a></li>
                                     </ul>
                                 </li>
-                                <li class="dropdown">
-                                    <span>Departments</span>
-                                    <ul>
-                                        <li><a href="departments.html">Departments</a></li>
-                                        <li><a href="department-detail.html">Cardiology</a></li>
-                                        <li><a href="department-detail.html">Neurology</a></li>
-                                        <li><a href="department-detail.html">Urology</a></li>
-                                        <li><a href="department-detail.html">Gynecological</a></li>
-                                        <li><a href="department-detail.html">Pediatrical</a></li>
-                                        <li><a href="department-detail.html">Laboratory</a></li>
-                                        <li><a href="department-detail.html">Department Detail</a></li>
-                                    </ul>
-                                </li>
-
                                 <li class="dropdown">
                                     <span>Blog</span>
                                     <ul>
@@ -149,7 +122,8 @@
                                 </li>
                                 <li><a href="contact.html">Contact</a></li>
 								<li><a href="login.html">Login</a></li>
-								<li><a href="dashboard.html">Dashboard</a></li>
+								<li><a href="register.html">Register</a></li>
+
                             </ul>
                         </nav>
                         <!-- Main Menu End-->
@@ -278,94 +252,57 @@
     </section>
     <!--End Page Title-->
 
-    <!--Login Section-->
-    <section class="login-section">
-        <div class="auto-container">
-            <div class="row clearfix">
-                <div class="column col-lg-6 col-md-6 col-sm-12">
-                    <!-- Login Form -->
-                    <div class="login-form">
-                        <h2>Login</h2>
-                        <!--Login Form-->
-                        <form method="post" action="contact.html">
-                            <div class="form-group">
-                                <label>Username or Email</label>
-                                <input type="text" name="username" placeholder="Name or Email " required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>Enter Your Password</label>
-                                <input type="email" name="email" placeholder="Password" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <input type="checkbox" name="shipping-option" id="account-option-1">&nbsp; <label for="account-option-1">Remember me</label>
-                            </div>
+<!--Login Section-->
+<section class="login-section" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background-image: linear-gradient(to bottom, #f7f7f7, #fff);">
+    <div class="auto-container" style="width: 100%; max-width: 400px; background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
+        <div class="row clearfix" style="display: flex; justify-content: center;">
+            <div class="column col-lg-12 col-md-12 col-sm-12">
+                <!-- Login Form -->
+                <div class="login-form" style="background-color: #f7f7f7; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
+                    <h2 style="text-align: center; color: #333; font-weight: bold;">Login</h2>
+                    <!-- Error Message -->
+                    <?php if (isset($_SESSION['error'])): ?>
+                        <div class="error" style="color: red; text-align: center; padding: 10px; border-radius: 5px; background-color: #ffe6e6;">
+                            <?php
+                            echo $_SESSION['error'];
+                            unset($_SESSION['error']);
+                            ?>
+                        </div>
+                    <?php endif; ?>
+                    <form method="post" action="login_process.php">
+                        <div class="form-group">
+                            <label style="font-weight: bold; color: #333;">Username</label>
+                            <input type="text" name="uname" placeholder="Username" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
+                        </div>
 
-                            <div class="form-group">
-                                <button class="theme-btn btn-style-one" type="submit" name="submit-form"><span class="btn-title">LOGIN</span></button>
-                            </div>
+                        <div class="form-group">
+                            <label style="font-weight: bold; color: #333;">Enter Your Password</label>
+                            <input type="password" name="pwd" placeholder="Password" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
+                        </div>
 
-                            <div class="form-group pass">
-                                <a href="#" class="psw">Lost your password?</a>
-                            </div>
-                        </form>
-                    </div>
-                    <!--End Login Form -->
+                        <div class="form-group">
+                            <input type="checkbox" name="remember_me" id="account-option-1" style="margin-right: 10px;">&nbsp; 
+                            <label for="account-option-1" style="font-weight: bold; color: #333;">Remember me</label>
+                        </div>
+
+                        <div class="form-group">
+                            <button class="theme-btn btn-style-one" type="submit" name="login" style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer;">
+                                <span class="btn-title">LOGIN</span>
+                            </button>
+                        </div>
+
+                        <div class="form-group pass">
+                            <a href="forgot_password.php" class="psw" style="color: #337ab7; text-decoration: none;">Forgot password?</a>
+                        </div>
+                    </form>
                 </div>
-                
-                <div class="column col-lg-6 col-md-6 col-sm-12">
-                    
-                    <!-- Register Form -->
-                    <div class="login-form register-form">
-                        <h2>Register</h2>
-                        <!--Login Form-->
-                        <form method="post" action="contact.html">
-                            <div class="form-group">
-                                <label>User Name</label>
-                                <input type="text" name="username" placeholder="Your Name" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Email Address</label>
-                                <input type="email" name="email" placeholder="Your Email" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>Your Password</label>
-                                <input type="password" name="password" placeholder="Password" required>
-                            </div>
-                            
-                            <div class="form-group text-right">
-                                <button class="theme-btn btn-style-one" type="submit" name="submit-form"><span class="btn-title">Register</span></button>
-                            </div>
-                        </form>      
-                    </div>
-                    <!--End Register Form -->
-                </div>
-            </div>
-        </div>
-    </section>
+                <!--End Login Form -->
+				</div>
+			</div>
+		</div>
+	</section>
     <!--End Login Section-->
-
-    <!-- Clients Section -->
-    <section class="clients-section alternate">
-        <div class="auto-container">
-
-            <!-- Sponsors Outer -->
-            <div class="sponsors-outer">
-                <!--clients carousel-->
-                <ul class="clients-carousel owl-carousel owl-theme">
-                    <li class="slide-item"> <a href="#"><img src="images/clients/1.png" alt=""></a> </li>
-                    <li class="slide-item"> <a href="#"><img src="images/clients/2.png" alt=""></a> </li>
-                    <li class="slide-item"> <a href="#"><img src="images/clients/3.png" alt=""></a> </li>
-                    <li class="slide-item"> <a href="#"><img src="images/clients/4.png" alt=""></a> </li>
-                    <li class="slide-item"> <a href="#"><img src="images/clients/5.png" alt=""></a> </li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    <!--End Clients Section -->
+	<div class="spacer" style="height: 50px;"></div>
 
     <!-- Main Footer -->
     <footer class="main-footer">
@@ -383,106 +320,108 @@
                                         <a href="index.html"><img src="images/logo-2.png" alt="" /></a>
                                     </div>
                                     <div class="text">
-                                        <p>Our Clinic has grown to provide a world class facility for the clinic advanced restorative. </p>
-                                        <p>We are among the most qualified implant providers in the AUS with over 30 years of quality training and experience.</p>
+                                        <p>Thong's Clinic was established by Dr. Tony Thong, a dedicated physician with a vision to enhance healthcare services in Bahau. Since its inception, the clinic has grown and evolved, always maintaining its commitment to exceptional care. </p>
+                                        <p>We are among the most qualified Doctos in the MY with over 10 years of quality training and experience.</p>
                                     </div>
-                                    <ul class="social-icon-three">
-                                        <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-skype"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                                    </ul>
                                 </div>
                             </div>
-
                             <!--Footer Column-->
-                            <div class="footer-column col-xl-5 col-lg-6 col-md-6 col-sm-12">
-                                <div class="footer-widget">
-                                    <h2 class="widget-title">Departments</h2>
-                                    <ul class="user-links">
-                                        <li><a href="#">Surgery & Radiology</a></li>
-                                        <li><a href="#">Family Medicine</a></li>
-                                        <li><a href="#">Women’s Health</a></li>
-                                        <li><a href="#">Optician</a></li>
-                                        <li><a href="#">Pediatrics</a></li>
-                                        <li><a href="#">Dermatology</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
 
                     <!--Big Column-->
-                    <div class="big-column col-xl-6 col-lg-12 col-md-12 col-sm-12">
-                        <div class="row">
-                            <!--Footer Column-->
-                            <div class="footer-column col-lg-6 col-md-6 col-sm-12">
-                                <!--Footer Column-->
-                                <div class="footer-widget recent-posts">
-                                    <h2 class="widget-title">Latest News</h2>
-                                     <!--Footer Column-->
-                                    <div class="widget-content">
-                                        <div class="post">
-                                            <div class="thumb"><a href="blog-post-image.html"><img src="images/resource/post-thumb-1.jpg" alt=""></a></div>
-                                            <h4><a href="blog-post-image.html">Integrative Medicine <Br>& Cancer Treatment.</a></h4>
-                                            <span class="date">July 11, 2020</span>
-                                        </div>
+				   <div class="big-column col-xl-6 col-lg-12 col-md-12 col-sm-12 d-flex justify-content-end">
+						<div class="row">
+							<!--Footer Column-->
+							<div class="footer-column col-lg-6 col-md-6 col-sm-12">
+								<!--Footer Column-->
+								<div class="footer-widget contact-widget">
+									<h2 class="widget-title">Contact Us</h2>
+									<!--Footer Column-->
+									<div class="widget-content">
+										<ul class="contact-list">
+											<li>
+												<span class="icon flaticon-placeholder"></span>
+												<div class="text">34, Jalan Besar, 72100 Bahau, Negeri Sembilan </div>
+											</li>
 
-                                        <div class="post">
-                                            <div class="thumb"><a href="blog-post-image.html"><img src="images/resource/post-thumb-2.jpg" alt=""></a></div>
-                                            <h4><a href="blog-post-image.html">Achieving Better <br>Health Care Time.</a></h4>
-                                            <span class="date">August 1, 2020</span>
-                                        </div>
+											<li>
+												<span class="icon flaticon-call-1"></span>
+												<div class="text">Mon to Thur : 09:00 - 21:00</div>
+												<div class="text">Friday : 09:00 - 17:00</div>
+												<a href="tel:+06-454 1048"><strong>(+60)06-454 1048</strong></a>
+											</li>
 
-                                        <div class="post">
-                                            <div class="thumb"><a href="blog-post-image.html"><img src="images/resource/post-thumb-3.jpg" alt=""></a></div>
-                                            <h4><a href="blog-post-image.html">Great Health Care <br>For Patients.</a></h4>
-                                            <span class="date">August 1, 2020</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+											<li>
+												<span class="icon flaticon-email"></span>
+												<div class="text">Do you have a Question?<br>
+													<a href="mailto:thongclinic@gmail.com"><strong>thongclinic@gmail.com</strong></a>
+												</div>
+											</li>
 
-                            <!--Footer Column-->
-                            <div class="footer-column col-lg-6 col-md-6 col-sm-12">
-                                <!--Footer Column-->
-                                <div class="footer-widget contact-widget">
-                                    <h2 class="widget-title">Contact Us</h2>
-                                     <!--Footer Column-->
-                                    <div class="widget-content">
-                                        <ul class="contact-list">
-                                            <li>
-                                                <span class="icon flaticon-placeholder"></span>
-                                                <div class="text">2130 Fulton Street San Diego <Br>CA 94117-1080 USA</div>
-                                            </li>
-
-                                            <li>
-                                                <span class="icon flaticon-call-1"></span>
-                                                <div class="text">Mon to Fri : 08:30 - 18:00</div>
-                                                <a href="tel:+89868679575"><strong>+898 68679 575</strong></a>
-                                            </li>
-
-                                            <li>
-                                                <span class="icon flaticon-email"></span>
-                                                <div class="text">Do you have a Question?<br>
-                                                <a href="mailto:info@gmail.com"><strong>info@gmail.com</strong></a></div>
-                                            </li>
-
-                                            <li>
-                                                <span class="icon flaticon-back-in-time"></span>
-                                                <div class="text">Mon - Sat 8.00 - 18.00<br>
-                                                <strong>Sunday CLOSED</strong></div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+											<li>
+												<span class="icon flaticon-back-in-time"></span>
+												<div class="text">Mon - Thurs : 9:00 - 21:00<br>
+													<div class="text">Fri : 9:00 - 17:00 </div>
+													<strong>Sunday and Saturday CLOSED</strong>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
                 </div>
             </div>
         </div>
+		<style>
+			.big-column {
+			/* Ensure the column takes up the full width */
+			width: 100%;
+		}
+
+		.d-flex {
+			display: flex;
+		}
+
+		.justify-content-end {
+			justify-content: flex-end;
+		}
+
+		.footer-column {
+			max-width: 350px; /* Adjust width to ensure it's not too wide */
+		}
+
+		.widget-content {
+			text-align: left;
+			/* Optionally, you can add padding/margin adjustments if needed */
+		}
+
+		.contact-list {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		.contact-list li {
+			margin-bottom: 15px;
+		}
+
+		.contact-list .icon {
+			margin-right: 10px;
+			color: #3498db; /* Example color for icons */
+		}
+
+		.contact-list .text {
+			display: inline-block;
+			vertical-align: middle;
+			font-size: 14px;
+			color: #5a5a5a;
+		}
+		</style>
+
 
         <!--Footer Bottom-->
         <div class="footer-bottom">
@@ -525,5 +464,3 @@
 <script src="js/script.js"></script>
 </body>
 </html>
-
-
