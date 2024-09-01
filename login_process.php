@@ -25,37 +25,41 @@ if (isset($_POST['login'])) {
     if ($uname === 'admin' && $pwd === 'admin') {
         $_SESSION['loggedin'] = true;
         $_SESSION['role'] = 'admin';
-        header("Location: dashboard.php");
+        header("Location:Admin/admin_dashboard.html");
 
         exit;
     }
 
     // Staff login
-    $staff_sql = "SELECT * FROM staff_info WHERE USER_ID=? AND PASSWORD=?";
-   // $stmt = $connection->prepare($staff_sql);
-    //$stmt->bind_param("ss", $uname, $pwd);
-    //$stmt->execute();
-    //$staff_result = $stmt->get_result();
+    $staff_sql = $connection->prepare("SELECT * FROM staff_info WHERE STAFF_ID=?");
+    $staff_sql->bind_param("s", $uname);
+    $staff_sql->execute();
+    $staff_result = $staff_sql->get_result();
 
     if ($staff_result->num_rows == 1) {
-        $_SESSION['loggedin'] = true;
-        $_SESSION['role'] = 'staff';
-        header("Location: dashboard.php");
-        exit;
+         $staff = $staff_result->fetch_assoc();
+        if (password_verify($pwd, $staff['PASSWORD'])) {
+            $_SESSION['loggedin'] = true;
+            $_SESSION['role'] = 'staff';
+            header("Location: dashboard.php");
+            exit;
+        }
     }
 
     // Patient/Guest login
-    $user_sql = "SELECT * FROM user_info WHERE USER_ID=? AND PASSWORD=?";
-    $stmt = $connection->prepare($user_sql);
-    $stmt->bind_param("ss", $uname, $pwd);
-    $stmt->execute();
-    $user_result = $stmt->get_result();
+    $user_sql = $connection->prepare("SELECT * FROM user_info WHERE USER_ID=?");
+    $user_sql->bind_param("s", $uname);
+    $user_sql->execute();
+    $user_result = $user_sql->get_result();
 
     if ($user_result->num_rows == 1) {
-        $_SESSION['loggedin'] = true;
-        $_SESSION['role'] = 'patient';  // Assuming patients and guests are treated similarly
-        header("Location: index_patient.html");
-        exit;
+        $user = $user_result->fetch_assoc();
+        if (password_verify($pwd, $user['PASSWORD'])) {
+            $_SESSION['loggedin'] = true;
+            $_SESSION['role'] = 'patient';  // Assuming patients and guests are treated similarly
+            header("Location: index_patient.html");
+            exit;
+        }
     }
 
     // If login fails
