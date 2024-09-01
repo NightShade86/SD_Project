@@ -1,117 +1,47 @@
 <?php
-session_start();
 
-// Configuration
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "dtcmsdb";
-
-// Create connection
-$connection = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($connection->connect_error) {
-    die("Connection failed: " . $connection->connect_error);
+if (!isset($_GET["token"])) {
+    die("No token provided");
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    $token = $_GET['token'] ?? '';
+$token = $_GET["token"];
+$token_hash = hash("sha256", $token);
 
-    // Check if the token is valid
-    $reset_sql = $connection->prepare("SELECT * FROM password_resets WHERE token=?");
-    $reset_sql->bind_param("s", $token);
-    if (!$reset_sql->execute()) {
-        echo "Error executing query: " . $reset_sql->error;
-        exit;
-    }
-    $reset_result = $reset_sql->get_result();
+// Make sure the path to database.php is correct
+$mysqli = require __DIR__ . "/database.php";
 
-    if ($reset_result->num_rows == 0) {
-        echo "Invalid token.";
-        exit;
-    }
+$sql = "SELECT * FROM user_info WHERE reset_token_hash = ?";
+$stmt = $mysqli->prepare($sql);
+$stmt->bind_param("s", $token_hash);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
 
-    // Get the email address associated with the token
-    $row = $reset_result->fetch_assoc();
-    $email = $row['email'];
-} else {
-    // Redirect to forgot password page if token is missing
-    header("Location: forgot_password.html");
-    exit;
+if ($user === null) {
+    die("token not found");
 }
 
-$connection->close();
+if (strtotime($user["reset_token_expires_at"]) <= time()) {
+    die("token has expired");
+}
+
 ?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reset Password</title>
-    <style>
-        /* Add some basic styling */
-        .reset-password-section {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-image: linear-gradient(to bottom, #f7f7f7, #fff);
-        }
-        .auto-container {
-            width: 100%;
-            max-width: 400px;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            font-weight: bold;
-            color: #333;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .btn-style-one {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .btn-style-one:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
 </head>
 <body>
-    <!-- Reset Password Section -->
-    <section class="reset-password-section">
-        <div class="auto-container">
-            <h2 style="text-align: center; color: #333;">Reset Password</h2>
-            <form method="post" action="reset_password_process.php">
-                <input type="hidden" name="token" value="<?php echo htmlspecialchars($_GET['token']); ?>">
-                <div class="form-group">
-                    <label for="new_password">New Password:</label>
-                    <input type="password" id="new_password" name="new_password" required>
-                </div>
-                <div class="form-group">
-                    <label for="confirm_password">Confirm Password:</label>
-                    <input type="password" id="confirm_password" name="confirm_password" required>
-                </div>
-                <button type="submit" class="btn-style-one">Reset Password</button>
-            </form>
-        </div>
-    </section>
+    <h1>Reset Password</h1>
+    <form method="post" action="process_reset_password.php">
+        <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
+        <label for="password">New password</label>
+        <input type="password" id="password" name="password">
+        <label for="password_confirmation">Repeat password</label>
+        <input type="password" id="password_confirmation" name="password_confirmation">
+        <button>Send</button>
+    </form>
 </body>
 </html>
