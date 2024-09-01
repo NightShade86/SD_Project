@@ -2,6 +2,7 @@
 // MySQL connection details
 $servername = "localhost";
 $username = "root";
+
 $password = "root";
 
 // Create connection

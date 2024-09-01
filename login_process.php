@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 
 $servername = "localhost";
 $username = "root";
-$password = "root";
+$password = "";
 $dbname = "dtcmsdb";
 
 
@@ -26,6 +26,7 @@ if (isset($_POST['login'])) {
         $_SESSION['loggedin'] = true;
         $_SESSION['role'] = 'admin';
         header("Location: dashboard.php");
+
         exit;
     }
 
