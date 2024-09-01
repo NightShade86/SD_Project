@@ -8,6 +8,7 @@ $username = "root";
 $password = "root";
 $dbname = "dtcmsdb";
 
+
 // Establish connection
 $connection = new mysqli($servername, $username, $password, $dbname);
 
@@ -60,6 +61,7 @@ if (isset($_POST['login'])) {
     $_SESSION['error'] = "Invalid username or password. Please try again.";
     header("Location: login_guess.html");
     exit;
+
 }
 
 $connection->close();
