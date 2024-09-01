@@ -6,7 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $servername = "localhost";
     $username = "root"; 
 
-    $password = "root"; 
+    $password = ""; 
     $dbname = "dtcmsdb";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($conn->query($sql) === TRUE) {
 
-			header("Location:index_patient.html");
+			header("Location:login_patient.html");
         exit();
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;

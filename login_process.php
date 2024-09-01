@@ -25,7 +25,7 @@ if (isset($_POST['login'])) {
     if ($uname === 'admin' && $pwd === 'admin') {
         $_SESSION['loggedin'] = true;
         $_SESSION['role'] = 'admin';
-        header("Location: dashboard.php");
+        header("Location: admin_dashboard.php");
 
         exit;
     }
@@ -40,7 +40,7 @@ if (isset($_POST['login'])) {
     if ($staff_result->num_rows == 1) {
         $_SESSION['loggedin'] = true;
         $_SESSION['role'] = 'staff';
-        header("Location: dashboard.php");
+        header("Location: satff_dashboard.php");
         exit;
     }
 
