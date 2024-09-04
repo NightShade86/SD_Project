@@ -66,15 +66,16 @@
                                 <li class="current dropdown">
                                     <span>Home</span>
                                     <ul>
-                                        <li class="current"><a href="index_patients.html">Home Medical</a></li>
+                                        <li class="current"><a href="index_patient.html">Home Medical</a></li>
                                     </ul>
                                 </li>
 
                                 <li class="dropdown">
                                     <span>Pages</span>
                                     <ul>
-                                        <li><a href="about-us_patients.html">About Us</a></li>
-                                        <li><a href="services_patients.html">Services</a></li>
+                                        <li><a href="about-us_patient.html">About Us</a></li>
+                                        <li><a href="services_patient.html">Services</a></li>
+										<li><a href="contact_patient.html">Contact</a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown">
@@ -113,21 +114,81 @@
                                         <li><a href="checkout.html">Checkout</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="contact_patient.html">Contact</a></li>
-								<li><a href="login_patient.html">Login</a></li>
-								<li><a href="register_patient.html">Register</a></li>
+								<li class="dropdown">
+                                    <span>Profile</span>
+                                    <ul>
+										<li><a href="profile.html">Profile</a></li>
+										<li><a href="logout.php">Logout</a></li>
+                                    </ul>
+                                </li>
                             </ul>
                         </nav>
                         <!-- Main Menu End-->
-
-					<div class="outer-box">
-						 <a href="profile.html" id="" class="theme-btn btn-style-one"><span class="btn-title">Profile</span></a>
-						 <a href="logout.php" id="" class="theme-btn btn-style-one"><span class="btn-title">Log Out</span></a>
-					</div>
                     </div>
                 </div>
             </div>
         </div>
+		
+		<style>
+			.nav-outer {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		padding: 10px 20px;
+	}
+
+	.nav.main-menu .navigation {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+		padding: 0;
+		margin: 0;
+		list-style: none;
+	}
+
+	.nav.main-menu .navigation > li {
+		position: relative;
+	}
+
+	.dropdown ul {
+		position: absolute;
+		left: 0;
+		top: 100%;
+		display: none;
+		flex-direction: column;
+		background-color: #fff;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		min-width: 200px;
+	}
+
+	.dropdown:hover ul,
+	.dropdown:focus-within ul {
+		display: block;
+	}
+
+	@media (max-width: 768px) {
+		.nav-outer {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.nav.main-menu .navigation {
+			flex-direction: column;
+			width: 100%;
+		}
+
+		.nav.main-menu .navigation > li {
+			width: 100%;
+		}
+
+		.dropdown ul {
+			position: static;
+			box-shadow: none;
+		}
+	}
+
+		</style>
 
         <!-- Sticky Header  -->
         <div class="sticky-header">

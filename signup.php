@@ -5,7 +5,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $servername = "localhost";
     $username = "root"; 
-
     $password = ""; 
     $dbname = "dtcmsdb";
 
@@ -25,6 +24,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_id = $conn->real_escape_string($_POST['user_id']);
     $pass = $conn->real_escape_string($_POST['password']);
 
+    
+
+    
+    
 
     // Hash the password
     $hashed_password = password_hash($pass, PASSWORD_DEFAULT);
@@ -39,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($conn->query($sql) === TRUE) {
 
 			header("Location:login_patient.html");
+
         exit();
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
