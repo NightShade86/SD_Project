@@ -40,7 +40,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$firstname', '$lastname', '$no_tel', '$email', '$ic', '$user_id', '$hashed_password', '$usertype')";
 
     if ($conn->query($sql) === TRUE) {
-			header("Location: login_patient.html");
+
+			header("Location:login_patient.html");
+
         exit();
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
