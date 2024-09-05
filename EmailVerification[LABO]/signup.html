@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guest Sign Up</title>
+</head>
+<body>
+    <h2>Patient Sign Up</h2><br>
+
+    <h3><strong>Please verify your email to continue signing up</strong></h3><br>
+    <h4>Please enter your email here:</h4>
+    <form style="display: display;" action="verifyemail.php" method="POST">
+        <label for="emailverify">Email:</label>
+        <input type="email" id="emailverify" name="emailverify">
+        <button type="submit">Verify</button>
+    </form>
+
+
+    <form style="display: none;" action="signup.php" method="POST">
+        <label for="firstname">First Name:</label>
+        <input type="text" id="firstname" name="firstname" required><br><br>
+
+        <label for="lastname">Last Name:</label>
+        <input type="text" id="lastname" name="lastname" required><br><br>
+
+        <label for="no_tel">Number Telephone:</label>
+        <input type="text" id="no_tel" name="no_tel"><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="ic">IC:</label>
+        <input type="int" id="ic" name="ic" required><br><br>
+
+        <label for="user_id">Username:</label>
+        <input type="user_id" id="user_id" name="user_id" required><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <button type="submit">Sign Up</button>
+    </form>
+</body>
+</html>
