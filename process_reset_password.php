@@ -24,48 +24,74 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check if user with the provided token exists
     if ($user === null) {
-        die("Token not found or invalid.");
+        $_SESSION['message'] = "Token not found or invalid.";
+        $_SESSION['message_type'] = 'error';
+        $_SESSION['token'] = $token; // Save token for redirection
+        header("Location: reset_password_feedback.php");
+        exit();
     }
 
     // Check if the token has expired
     if (strtotime($user["reset_token_expires_at"]) <= time()) {
-        die("Token has expired.");
+        $_SESSION['message'] = "Token has expired.";
+        $_SESSION['message_type'] = 'error';
+        $_SESSION['token'] = $token; // Save token for redirection
+        header("Location: reset_password_feedback.php");
+        exit();
     }
 
     // Retrieve the new password from the form
     $password = $_POST["password"];
     $password_confirmation = $_POST["password_confirmation"];
 
-    // === Password Validation ===
-    
-    // Check for password length
-    if (strlen($password) < 6) {
-        die("Password must be at least 6 characters long.");
-    }
-
-    // Check for at least one capital letter
-    if (!preg_match('/[A-Z]/', $password)) {
-        die("Password must contain at least one capital letter.");
-    }
-
-    // Check for at least one lowercase letter
-    if (!preg_match('/[a-z]/', $password)) {
-        die("Password must contain at least one lowercase letter.");
-    }
-
-    // Check for at least one number
-    if (!preg_match('/[0-9]/', $password)) {
-        die("Password must contain at least one number.");
-    }
-
-    // Check for at least one special character
-    if (!preg_match('/[!@#$%^&*(),.?":{}|<>]/', $password)) {
-        die("Password must contain at least one special character.");
-    }
-
-    // Check if passwords match
+    // Check if the passwords match
     if ($password !== $password_confirmation) {
-        die("Passwords must match.");
+        $_SESSION['message'] = "Passwords do not match.";
+        $_SESSION['message_type'] = 'error';
+        $_SESSION['token'] = $token; // Save token for redirection
+        header("Location: reset_password_feedback.php");
+        exit();
+    }
+
+    // === Password Validation ===
+    if (strlen($password) < 6) {
+        $_SESSION['message'] = "Password must be at least 6 characters long.";
+        $_SESSION['message_type'] = 'error';
+        $_SESSION['token'] = $token; // Save token for redirection
+        header("Location: reset_password_feedback.php");
+        exit();
+    }
+
+    if (!preg_match('/[A-Z]/', $password)) {
+        $_SESSION['message'] = "Password must contain at least one capital letter.";
+        $_SESSION['message_type'] = 'error';
+        $_SESSION['token'] = $token; // Save token for redirection
+        header("Location: reset_password_feedback.php");
+        exit();
+    }
+    
+    if (!preg_match('/[a-z]/', $password)) {
+        $_SESSION['message'] = "Password must contain at least one lowercase letter.";
+        $_SESSION['message_type'] = 'error';
+        $_SESSION['token'] = $token; // Save token for redirection
+        header("Location: reset_password_feedback.php");
+        exit();
+    }
+
+    if (!preg_match('/[0-9]/', $password)) {
+        $_SESSION['message'] = "Password must contain at least one number.";
+        $_SESSION['message_type'] = 'error';
+        $_SESSION['token'] = $token; // Save token for redirection
+        header("Location: reset_password_feedback.php");
+        exit();
+    }
+
+    if (!preg_match('/[!@#$%^&*(),.?":{}|<>]/', $password)) {
+        $_SESSION['message'] = "Password must contain at least one special character.";
+        $_SESSION['message_type'] = 'error';
+        $_SESSION['token'] = $token; // Save token for redirection
+        header("Location: reset_password_feedback.php");
+        exit();
     }
 
     // Hash the new password
@@ -83,13 +109,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Execute the query
     if ($stmt->execute()) {
-        echo "Password updated successfully. You can now log in.";
+        $_SESSION['message'] = 'Your password has been successfully reset.';
+        $_SESSION['message_type'] = 'success';
+        unset($_SESSION['token']); // Clear the token since reset was successful
     } else {
-        echo "Error updating password: " . $stmt->error;
+        $_SESSION['message'] = "Error updating password: " . $stmt->error;
+        $_SESSION['message_type'] = 'error';
+        $_SESSION['token'] = $token; // Save token for redirection
     }
 
-    // Close the statement and database connection
-    $stmt->close();
-    $mysqli->close();
+    // Redirect to feedback page
+    header("Location: reset_password_feedback.php");
+    exit();
 }
 ?>

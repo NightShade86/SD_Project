@@ -13,7 +13,7 @@ ini_set('display_errors', 1);
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 <link href="css/responsive.css" rel="stylesheet">
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--Color Themes-->
 <link id="theme-color-file" href="css/color-themes/default-theme.css" rel="stylesheet">
 
@@ -124,8 +124,8 @@ ini_set('display_errors', 1);
 								<li class="dropdown current">
                                     <span>Login</span>
                                     <ul>
-										<li><a href="login_guess.html">Login</a></li>
-										<li><a href="register_guess.html">Register</a></li>
+										<li><a href="login_guess.php">Login</a></li>
+										<li><a href="register_guess.php">Register</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="contact_guess.html">Contact</a></li>
@@ -253,6 +253,39 @@ ini_set('display_errors', 1);
         </div>
     </section>
     <!--End Page Title-->
+    <?php
+    $firstname = isset($_SESSION['form_data']['firstname']) ? htmlspecialchars($_SESSION['form_data']['firstname']) : '';
+    $lastname = isset($_SESSION['form_data']['lastname']) ? htmlspecialchars($_SESSION['form_data']['lastname']) : '';
+    $no_tel = isset($_SESSION['form_data']['no_tel']) ? htmlspecialchars($_SESSION['form_data']['no_tel']) : '';
+    $email = isset($_SESSION['form_data']['email']) ? htmlspecialchars($_SESSION['form_data']['email']) : '';
+    $ic = isset($_SESSION['form_data']['ic']) ? htmlspecialchars($_SESSION['form_data']['ic']) : '';
+    $user_id = isset($_SESSION['form_data']['user_id']) ? htmlspecialchars($_SESSION['form_data']['user_id']) : '';
+    
+if (isset($_SESSION['error_message'])) {
+    echo "<script>
+    Swal.fire({
+        title: 'Error!',
+        text: '" . $_SESSION['error_message'] . "',
+        icon: 'error'
+    });
+    </script>";
+    unset($_SESSION['error_message']); // Clear the error message after displaying it
+}
+
+if (isset($_SESSION['success_message'])) {
+    echo "<script>
+    Swal.fire({
+        title: 'Success!',
+        text: '" . $_SESSION['success_message'] . "',
+        icon: 'success'
+    }).then(function() {
+        window.location = 'login_patient.php';
+    });
+    </script>";
+    unset($_SESSION['success_message']); // Clear the success message after displaying it
+    unset($_SESSION['form_data']);
+}
+?>
 	<div class="spacer" style="height: 50px;"></div>
 		<section class="register-section" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background-image: linear-gradient(to bottom, #f7f7f7, #fff);">
 		  <div class="auto-container" style="width: 100%; max-width: 600px; background-color: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
@@ -264,32 +297,44 @@ ini_set('display_errors', 1);
 				  <form method="POST" action="signup.php">
 					<div class="form-group">
 					  <label for="firstname" style="font-weight: bold;">First Name:</label>
-					  <input type="text" id="firstname" name="firstname" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;">
+                      <input type="text" id="firstname" name="firstname" required 
+    style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
+    value="<?php echo $firstname; ?>">
 					</div>
 					
 					<div class="form-group">
 					  <label for="lastname" style="font-weight: bold;">Last Name:</label>
-					  <input type="text" id="lastname" name="lastname" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;">
+					  <input type="text" id="lastname" name="lastname" required
+    style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
+    value="<?php echo $lastname; ?>">
 					</div>
 					
 					<div class="form-group">
 					  <label for="no_tel" style="font-weight: bold;">Phone Number:</label>
-					  <input type="text" id="no_tel" name="no_tel" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;">
+					  <input type="text" id="no_tel" name="no_tel"
+    style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
+    value="<?php echo $no_tel; ?>">
 					</div>
 
 					<div class="form-group">
 					  <label for="email" style="font-weight: bold;">Email:</label>
-					  <input type="email" id="email" name="email" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;">
+					  <input type="email" id="email" name="email" required
+    style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
+    value="<?php echo $email; ?>">
 					</div>
 					
 					<div class="form-group">
 					  <label for="ic" style="font-weight: bold;">IC:</label>
-					  <input type="text" id="ic" name="ic" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;">
+					  <input type="text" id="ic" name="ic" required
+    style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
+    value="<?php echo $ic; ?>">
 					</div>
 					
 					<div class="form-group">
 					  <label for="user_id" style="font-weight: bold;">Username:</label>
-					  <input type="text" id="user_id" name="user_id" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;">
+					  <input type="text" id="user_id" name="user_id" required
+    style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
+    value="<?php echo $user_id; ?>">
 					</div>
 					
 					<div class="form-group">

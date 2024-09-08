@@ -26,39 +26,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_id = $conn->real_escape_string($_POST['user_id']);
     $pass = $conn->real_escape_string($_POST['password']);
     $pass_confirm = $conn->real_escape_string($_POST['password_confirmation']);
+    $_SESSION['form_data'] = $_POST; // Save all form data in session
+    
+      // === PHONE NUMBER VALIDATION ===
+      if (!preg_match('/^[0-9]+$/', $no_tel)) {
+        $_SESSION['error_message'] = "Please enter a valid phone number containing only digits.";
+        header("Location: register_guess.php");
+        exit();
+    }
 
     // === EMAIL VALIDATION ===
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        die("Please enter a valid email, e.g., example@email.com");
+        $_SESSION['error_message'] = "Please enter a valid email, e.g., example@email.com";
+        header("Location: register_guess.php");
+        exit();
     }
 
     // === PASSWORD VALIDATION ===
     if (strlen($pass) < 6) {
-        die("Password must be at least 6 characters long.");
+        $_SESSION['error_message'] = "Password must be at least 6 characters long.";
+        header("Location: register_guess.php");
+        exit();
     }
 
     if (!preg_match('/[A-Z]/', $pass)) {
-        die("Password must contain at least one uppercase letter.");
+        $_SESSION['error_message'] = "Password must contain at least one uppercase letter.";
+        header("Location: register_guess.php");
+        exit();
     }
 
     if (!preg_match('/[0-9]/', $pass)) {
-        die("Password must contain at least one number.");
+        $_SESSION['error_message'] = "Password must contain at least one number.";
+        header("Location: register_guess.php");
+        exit();
     }
 
     if (!preg_match('/[!@#$%^&*(),.?":{}|<>]/', $pass)) {
-        die("Password must contain at least one special character.");
+        $_SESSION['error_message'] = "Password must contain at least one special character.";
+        header("Location: register_guess.php");
+        exit();
     }
 
-    // Check if password confirmation matches
     if ($pass !== $pass_confirm) {
-        die("Passwords do not match.");
+        $_SESSION['error_message'] = "Passwords do not match.";
+        header("Location: register_guess.php");
+        exit();
     }
-
-    // Hash the password
-    $hashed_password = password_hash($pass, PASSWORD_DEFAULT);
-
-    // Set user type to 'patient'
-    $usertype = '2'; // assume 2 as patient
 
     // Check for existing email or username in the database
     $check_sql = "SELECT * FROM user_info WHERE EMAIL = ? OR USER_ID = ?";
@@ -68,8 +81,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        die("Email or Username already exists.");
+        $_SESSION['error_message'] = "Email or Username already exists.";
+        header("Location: register_guess.php");
+        exit();
     }
+
+    // Hash the password
+    $hashed_password = password_hash($pass, PASSWORD_DEFAULT);
+
+    // Set user type to 'patient'
+    $usertype = '2'; // assume 2 as patient
 
     // Insert user data into the database
     $sql = "INSERT INTO user_info (FIRSTNAME, LASTNAME, NO_TEL, EMAIL, IC, USER_ID, PASSWORD, USERTYPE) 
@@ -78,11 +99,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sssssssi", $firstname, $lastname, $no_tel, $email, $ic, $user_id, $hashed_password, $usertype);
 
     if ($stmt->execute() === TRUE) {
+        $_SESSION['success_message'] = "Registration successful!";
         header("Location: login_patient.php");
-        exit();
     } else {
-        echo "Error: " . $stmt->error;
+        $_SESSION['error_message'] = "There was an issue with the registration. Please try again.";
+        header("Location: register_guess.php");
     }
+
 
     $stmt->close();
     $conn->close();

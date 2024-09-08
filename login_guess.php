@@ -13,7 +13,7 @@ ini_set('display_errors', 1);
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 <link href="css/responsive.css" rel="stylesheet">
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--Color Themes-->
 <link id="theme-color-file" href="css/color-themes/default-theme.css" rel="stylesheet">
 
@@ -262,14 +262,27 @@ ini_set('display_errors', 1);
 					<!-- Login Form -->
 					<div class="login-form" style="background-color: #f7f7f7; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
 						<h2 style="text-align: center; color: #333; font-weight: bold;">Login</h2>
-						<!-- Error Message -->
+						<!-- SweetAlert Messages -->
 						<?php if (isset($_SESSION['error'])): ?>
-							<div class="error" style="color: red; text-align: center; padding: 10px; border-radius: 5px; background-color: #ffe6e6;">
-								<?php
-								echo $_SESSION['error'];
-								unset($_SESSION['error']);
-								?>
-							</div>
+						    <script>
+							    Swal.fire({
+							        title: 'Error!',
+							        text: '<?php echo $_SESSION["error"]; ?>',
+							        icon: 'error'
+							    });
+						    </script>
+						    <?php unset($_SESSION['error']); // Clear the error after displaying it ?>
+						<?php endif; ?>
+
+						<?php if (isset($_SESSION['success'])): ?>
+						    <script>
+							    Swal.fire({
+							        title: 'Success!',
+							        text: '<?php echo $_SESSION["success"]; ?>',
+							        icon: 'success'
+							    });
+						    </script>
+						    <?php unset($_SESSION['success']); // Clear the success message after displaying it ?>
 						<?php endif; ?>
 						<form method="post" action="login_process.php">
 							<div class="form-group">
