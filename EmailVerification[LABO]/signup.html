@@ -11,7 +11,7 @@
     <div id="verify">
         <h3><strong>Please verify your email to continue signing up</strong></h3><br>
         <h4>Please enter your email here:</h4>
-        <form style="display: display;" action="verifyemail.php" method="POST">
+        <form  action="verifyemail.php" method="POST">
             <label for="emailverify">Email:</label>
             <input type="email" id="emailverify" name="emailverify">
             <button type="submit">Verify</button>
@@ -20,7 +20,7 @@
 
 
     <div id="signup">
-        <form style="display: none;" action="signup.php" method="POST">
+        <form  action="signup.php" method="POST">
             <label for="firstname">First Name:</label>
             <input type="text" id="firstname" name="firstname" required><br><br>
     
@@ -62,13 +62,13 @@
         // Check if the URL contains the token
         if (url.includes(token)) {
             // Show the div if the token is in the URL
-            signup.style.display = "none";
-            verify.style.display = "block";
+            signup.style.display = "display";
+            verify.style.display = "none";
 
         } else {
             // Hide the div if the token is not in the URL
-            signup.style.display = "block";
-            verify.style.display = "none";
+            signup.style.display = "none";
+            verify.style.display = "display";
         }
     </script>
 
