@@ -1,4 +1,7 @@
 <?php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 $email = $_POST["email"];
 
@@ -32,7 +35,7 @@ if ($mysqli->affected_rows) {
     $mail->Subject = "Password Reset";
     $mail->Body = <<<END
 
-    Click <a href="http://example.com/reset_password.php?token=$token">here</a> 
+    Click <a href="http://localhost/clinicdb/SD_Project/reset_password.php?token=$token">here</a> 
     to reset your password.
 
     END;

@@ -1,4 +1,7 @@
 <?php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 if (!isset($_GET["token"])) {
     die("No token provided");
@@ -8,7 +11,7 @@ $token = $_GET["token"];
 $token_hash = hash("sha256", $token);
 
 // Make sure the path to database.php is correct
-$mysqli = require __DIR__ . "/database.php";
+$mysqli = require __DIR__ . "/db_conn.php";
 
 $sql = "SELECT * FROM user_info WHERE reset_token_hash = ?";
 $stmt = $mysqli->prepare($sql);

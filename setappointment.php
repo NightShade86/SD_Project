@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Database connection details
 $host = 'localhost';
 $db = 'appointments_db'; // Your database name

@@ -1,9 +1,14 @@
+<?php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Staff Dashboard</title>
+  <title>Admin Dashboard</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
@@ -12,6 +17,7 @@
     <div class="row">
       <div class="col-md-2 bg-dark text-white p-0" id="sidebar">
         <nav class="nav flex-column">
+          <a class="nav-link text-white py-3 border-bottom" href="#view-staff"><i class="fas fa-users"></i> View Staff</a>
           <a class="nav-link text-white py-3 border-bottom" href="#view-appointment"><i class="fas fa-calendar-alt"></i> View Appointment</a>
           <a class="nav-link text-white py-3 border-bottom" href="#view-patients"><i class="fas fa-procedures"></i> View Patients</a>
           <a class="nav-link text-white py-3 border-bottom" href="#view-bills"><i class="fas fa-file-invoice-dollar"></i> View Bills</a>
@@ -23,7 +29,7 @@
       <div class="col-md-10 offset-md-2">
         <header>
           <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
-            <a class="navbar-brand" href="#">Staff Dashboard</a>
+            <a class="navbar-brand" href="#">Admin Dashboard</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -39,7 +45,7 @@
         <main class="mt-4">
 			  <div class="content bg-white p-4 shadow-sm rounded" id="profile-section">
 				<!-- Default content before loading profile -->
-				<h3>Welcome to the Staff Dashboard</h3>
+				<h3>Welcome to the Admin Dashboard</h3>
 				<p>Use the sidebar to navigate through the different sections of the admin panel.</p>
 			  </div>
 			  <div class="content bg-white p-4 shadow-sm rounded" id="feedback-section" style="display: none;">
@@ -52,7 +58,7 @@
   </div>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <script src="staff_script.js"></script>
+  <script src="admin_script.js"></script>
 </body>
 <style>
   body {
