@@ -42,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($conn->query($sql) === TRUE) {
         // Redirect to patient homepage after successful registration
         header("Location: patient_homepage.php");
+
         exit();
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
