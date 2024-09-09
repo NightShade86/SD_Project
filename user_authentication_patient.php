@@ -33,14 +33,14 @@ if (isset($_POST['login'])) {
                 $_SESSION['loggedin'] = true;
                 $_SESSION['role'] = 'patient';  // Assuming patients and guests are treated similarly
                 $_SESSION['success'] = "Welcome back!";
-                header("Location: updateprofile.php?verified=true");
+                header("Location: profile.php?verified=true");
                 exit;
             }
         }
         // If login fails
     $_SESSION['error'] = "Invalid username or password. Please try again.";
 
-    header("Location: updateprofile.php");
+    header("Location: profile.php");
     exit;
 
 }
