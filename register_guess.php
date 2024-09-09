@@ -375,8 +375,8 @@ if (isset($_SESSION['success_message'])) {
                     <h2 style="text-align: center; color: #007bff;">Verify your email to continue registration process</h2>
                     <form method="POST" action="verifyemail.php">
                         <div class="form-group">
-                            <label for="email" style="font-weight: bold;">Email:</label>
-                            <input type="text" id="email" name="email" required
+                            <label for="emailverify" style="font-weight: bold;">Email:</label>
+                            <input type="email" id="emailverify" name="emailverify" required
                                    style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
                                    value="<?php echo $email; ?>">
                         </div>
