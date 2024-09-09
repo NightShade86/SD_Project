@@ -64,7 +64,7 @@ ini_set('display_errors', 1);
                 <div class="main-box">
 
                     <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img src="images/logo-9.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
                     </div>
 
                     <!--Nav Box-->
@@ -121,7 +121,7 @@ ini_set('display_errors', 1);
                                         <li><a href="checkout.html">Checkout</a></li>
                                     </ul>
 								<li class="dropdown current">
-                                    <span>Login</span>
+                                    <span>Sign Up</span>
                                     <ul>
 										<li><a href="login_guess.php">Login</a></li>
 										<li><a href="register_guess.php">Register</a></li>
@@ -241,7 +241,7 @@ ini_set('display_errors', 1);
     <!--End Main Header -->
 
     <!--Page Title-->
-    <section class="page-title" style="background-image: url(images/background/8.jpg);">
+    <section class="page-title" style="background-image: url(images/background/1-1.png);">
         <div class="auto-container">
             <div class="title-outer">
                 <h1>Login</h1>

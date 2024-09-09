@@ -125,6 +125,7 @@ ini_set('display_errors', 1);
                                     <span>Login</span>
                                     <ul>
 										<li><a href="profile.html">Profile</a></li>
+                                        <li><a href="login_patient.php">Login</a></li>
 										<li><a href="logout.php">Log Out</a></li>
                                     </ul>
                                 </li>
@@ -146,7 +147,7 @@ ini_set('display_errors', 1);
             <div class="auto-container">            
                 <div class="main-box">
                     <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img src="images/logo.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
                     </div>
 
                     <!--Keep This Empty / Menu will come through Javascript-->
@@ -156,7 +157,7 @@ ini_set('display_errors', 1);
 
         <!-- Mobile Header -->
         <div class="mobile-header">
-            <div class="logo"><a href="index.html"><img src="images/logo.png" alt="" title=""></a></div>
+            <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
 
             <!--Nav Box-->
             <div class="nav-outer clearfix">
@@ -241,7 +242,7 @@ ini_set('display_errors', 1);
     <!--End Main Header -->
 
     <!--Page Title-->
-    <section class="page-title" style="background-image: url(images/background/8.jpg);">
+    <section class="page-title" style="background-image: url(images/background/1-1.png);">
         <div class="auto-container">
             <div class="title-outer">
                 <h1>Login</h1>

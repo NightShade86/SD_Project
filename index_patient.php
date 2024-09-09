@@ -1,4 +1,4 @@
-<?php
+<a?php
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -61,7 +61,7 @@ ini_set('display_errors', 1);
                 <!-- Main box -->
                 <div class="main-box">
                     <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img src="images/logo.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index.html"><img src="images/logo-8-1.png" alt="" title=""></a></div>
                     </div>
 
                     <!--Nav Box-->
@@ -80,7 +80,6 @@ ini_set('display_errors', 1);
                                     <ul>
                                         <li><a href="about-us_patient.html">About Us</a></li>
                                         <li><a href="services_patient.html">Services</a></li>
-										<li><a href="contact_patient.html">Contact</a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown">
@@ -125,6 +124,7 @@ ini_set('display_errors', 1);
 										<li><a href="profile.html">Profile</a></li>
 										<li><a href="logout.php">Logout</a></li>
                                     </ul>
+                                    <li><a href="contact_patient.html">Contact</a></li>
                                 </li>
                             </ul>
                         </nav>
@@ -256,7 +256,7 @@ ini_set('display_errors', 1);
                     <li data-index="rs-1" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-thumb=""  data-rotate="0"  data-saveperformance="off"  data-title="Slide" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
                         
                         <!-- MAIN IMAGE -->
-                        <img alt="" class="rev-slidebg" data-bgfit="cover" data-bgparallax="20" data-bgposition="center center" data-bgrepeat="no-repeat" data-no-retina="" src="images/main-slider/2.jpg">
+                        <img alt="" class="rev-slidebg" data-bgfit="cover" data-bgparallax="20" data-bgposition="center center" data-bgrepeat="no-repeat" data-no-retina="" src="images/main-slider/1-1.png">
 
                         <div class="tp-caption" 
                         data-paddingbottom="[0,0,0,0]"
@@ -332,8 +332,8 @@ ini_set('display_errors', 1);
                         data-textalign="['top','top','top','top']"
                         data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","to":"o:1;","ease":"Power4.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'>
                             <div class="btn-box">
-                                <a href="about-us.html" class="theme-btn btn-style-one"><span class="btn-title">About Us</span></a>
-                                <a href="departments.html" class="theme-btn btn-style-two"><span class="btn-title">Our Services</span></a>
+                                <a href="about-us_patient.html" class="theme-btn btn-style-one"><span class="btn-title">About Us</span></a>
+                                <a href="services_patient.html" class="theme-btn btn-style-two"><span class="btn-title">Our Services</span></a>
                             </div>
                         </div>
                     </li>
@@ -341,7 +341,7 @@ ini_set('display_errors', 1);
                     <li data-index="rs-2" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-thumb=""  data-rotate="0"  data-saveperformance="off"  data-title="Slide" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
                         
                         <!-- MAIN IMAGE -->
-                        <img alt="" class="rev-slidebg" data-bgfit="cover" data-bgparallax="20" data-bgposition="center center" data-bgrepeat="no-repeat" data-no-retina="" src="images/main-slider/1.jpg">
+                        <img alt="" class="rev-slidebg" data-bgfit="cover" data-bgparallax="20" data-bgposition="center center" data-bgrepeat="no-repeat" data-no-retina="" src="images/main-slider/1-1.png">
 
                         <div class="tp-caption" 
                         data-paddingbottom="[0,0,0,0]"
