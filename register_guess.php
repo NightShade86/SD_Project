@@ -287,79 +287,114 @@ if (isset($_SESSION['success_message'])) {
 }
 ?>
 	<div class="spacer" style="height: 50px;"></div>
-		<section class="register-section" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background-image: linear-gradient(to bottom, #f7f7f7, #fff);">
-		  <div class="auto-container" style="width: 100%; max-width: 600px; background-color: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
-			<div class="row clearfix" style="display: flex; justify-content: center;">
-			  <div class="column col-lg-12 col-md-12 col-sm-12">
-				<!-- Register Form -->
-				<div class="login-form register-form" style="padding: 30px; border-radius: 10px;">
-				  <h2 style="text-align: center; color: #007bff;">Create Your Account</h2>
-				  <form method="POST" action="signup.php">
-					<div class="form-group">
-					  <label for="firstname" style="font-weight: bold;">First Name:</label>
-                      <input type="text" id="firstname" name="firstname" required 
-    style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
-    value="<?php echo $firstname; ?>">
-					</div>
-					
-					<div class="form-group">
-					  <label for="lastname" style="font-weight: bold;">Last Name:</label>
-					  <input type="text" id="lastname" name="lastname" required
-    style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
-    value="<?php echo $lastname; ?>">
-					</div>
-					
-					<div class="form-group">
-					  <label for="no_tel" style="font-weight: bold;">Phone Number:</label>
-					  <input type="text" id="no_tel" name="no_tel"
-    style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
-    value="<?php echo $no_tel; ?>">
-					</div>
+    <section class="register-section" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background-image: linear-gradient(to bottom, #f7f7f7, #fff);">
+    <div class="auto-container" style="width: 100%; max-width: 600px; background-color: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
+        <div class="row clearfix" style="display: flex; justify-content: center;">
+            <div class="column col-lg-12 col-md-12 col-sm-12">
 
-					<div class="form-group">
-					  <label for="email" style="font-weight: bold;">Email:</label>
-					  <input type="email" id="email" name="email" required
-    style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
-    value="<?php echo $email; ?>">
-					</div>
-					
-					<div class="form-group">
-					  <label for="ic" style="font-weight: bold;">IC:</label>
-					  <input type="text" id="ic" name="ic" required
-    style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
-    value="<?php echo $ic; ?>">
-					</div>
-					
-					<div class="form-group">
-					  <label for="user_id" style="font-weight: bold;">Username:</label>
-					  <input type="text" id="user_id" name="user_id" required
-    style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
-    value="<?php echo $user_id; ?>">
-					</div>
-					
-					<div class="form-group">
-					  <label for="password" style="font-weight: bold;">Password:</label>
-					  <input type="password" id="password" name="password" required style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd;">
-					</div>
+                <?php
+                // Check if 'token' exists in the URL
+                if (isset($_GET['token'])) {
+                    $regisdisplay = "block";
+                    $verifydisplay = "none";
+                } else {
+                    $regisdisplay = "none";
+                    $verifydisplay = "block";
+                }
+                ?>
 
-                    <div class="form-group">
-                        <label for="password_confirmation" style="font-weight: bold;">Confirm Password:</label>
-                        <input type="password" id="password_confirmation" name="password_confirmation" required style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd;">
-                      </div>
-                      
-					
-					<div class="form-group text-right">
-					  <button class="theme-btn btn-style-one" type="submit" name="submit-form" style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px;">
-						<span class="btn-title">Register Now</span>
-					  </button>
-					</div>
-				  </form>      
-				</div>
-				<!--End Register Form -->
-			  </div>
-			</div>
-		  </div>
-		</section>
+                <!-- Register Form -->
+                <div id="regisform" class="login-form register-form" style="display: <?php echo $regisdisplay; ?>; padding: 30px; border-radius: 10px;">
+                    <h2 style="text-align: center; color: #007bff;">Create Your Account</h2>
+                    <form method="POST" action="signup.php">
+                        <div class="form-group">
+                            <label for="firstname" style="font-weight: bold;">First Name:</label>
+                            <input type="text" id="firstname" name="firstname" required
+                                   style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
+                                   value="<?php echo $firstname; ?>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastname" style="font-weight: bold;">Last Name:</label>
+                            <input type="text" id="lastname" name="lastname" required
+                                   style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
+                                   value="<?php echo $lastname; ?>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="no_tel" style="font-weight: bold;">Phone Number:</label>
+                            <input type="text" id="no_tel" name="no_tel"
+                                   style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
+                                   value="<?php echo $no_tel; ?>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" style="font-weight: bold;">Email:</label>
+                            <input type="email" id="email" name="email" required
+                                   style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
+                                   value="<?php echo $email; ?>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ic" style="font-weight: bold;">IC:</label>
+                            <input type="text" id="ic" name="ic" required
+                                   style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
+                                   value="<?php echo $ic; ?>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="user_id" style="font-weight: bold;">Username:</label>
+                            <input type="text" id="user_id" name="user_id" required
+                                   style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
+                                   value="<?php echo $user_id; ?>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" style="font-weight: bold;">Password:</label>
+                            <input type="password" id="password" name="password" required
+                                   style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd;">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password_confirmation" style="font-weight: bold;">Confirm Password:</label>
+                            <input type="password" id="password_confirmation" name="password_confirmation" required
+                                   style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd;">
+                        </div>
+
+                        <div class="form-group text-right">
+                            <button class="theme-btn btn-style-one" type="submit" name="submit-form" style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px;">
+                                <span class="btn-title">Register Now</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <!--End Register Form -->
+
+                <!-- Verification Form -->
+                <div id="verifyform" class="login-form register-form" style="display: <?php echo $verifydisplay; ?>; padding: 30px; border-radius: 10px;">
+                    <h2 style="text-align: center; color: #007bff;">Verify your email to continue registration process</h2>
+                    <form method="POST" action="verifyemail.php">
+                        <div class="form-group">
+                            <label for="email" style="font-weight: bold;">Email:</label>
+                            <input type="text" id="email" name="email" required
+                                   style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
+                                   value="<?php echo $email; ?>">
+                        </div>
+
+                        <div class="form-group text-right">
+                            <button class="theme-btn btn-style-one" type="submit" name="submit-form" style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px;">
+                                <span class="btn-title">Verify Now</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <!--End Verification Form -->
+
+            </div>
+        </div>
+    </div>
+</section>
+
 
     <!--End Login Section-->
 
