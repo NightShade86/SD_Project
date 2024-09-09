@@ -4,7 +4,7 @@ async function loadContent(feature) {
 
     // Handle profile redirection
     if (feature === 'view-profile') {
-      window.location.href = 'profile.html';
+      window.location.href = 'profile.php';
       return;
     }
 

@@ -121,7 +121,7 @@ ini_set('display_errors', 1);
 								<li class="dropdown">
                                     <span>Profile</span>
                                     <ul>
-										<li><a href="profile.html">Profile</a></li>
+										<li><a href="profile.php">Profile</a></li>
 										<li><a href="logout.php">Logout</a></li>
                                     </ul>
                                     <li><a href="contact_patient.html">Contact</a></li>

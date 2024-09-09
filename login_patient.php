@@ -64,7 +64,7 @@ ini_set('display_errors', 1);
                 <div class="main-box">
 
                     <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img src="images/logo-9.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
                     </div>
 
                     <!--Nav Box-->
@@ -124,8 +124,7 @@ ini_set('display_errors', 1);
 								<li class="dropdown current">
                                     <span>Login</span>
                                     <ul>
-										<li><a href="profile.html">Profile</a></li>
-                                        <li><a href="login_patient.php">Login</a></li>
+										<li><a href="profile.php">Profile</a></li>
 										<li><a href="logout.php">Log Out</a></li>
                                     </ul>
                                 </li>

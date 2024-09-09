@@ -4,7 +4,7 @@ async function loadContent(feature) {
 
     // Handle profile redirection
     if (feature === 'view-profile') {
-      window.location.href = 'profile.html';
+      window.location.href = 'profile.php';
       return;
     }
 
@@ -76,6 +76,13 @@ async function loadContent(feature) {
 	main.innerHTML = '';
 	main.appendChild(content);
 
+} catch (error) {
+  console.error('Error in loadContent:', error);
+  main.innerHTML = `<div class="error">An error occurred: ${error.message}</div>`;
+}
+}
+
+
 function generateContent(data) {
   return data.map(item => `
     <div>
@@ -84,3 +91,4 @@ function generateContent(data) {
     </div>
   `).join('');
 }
+

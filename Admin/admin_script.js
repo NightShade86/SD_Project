@@ -14,8 +14,8 @@ async function loadContent(feature) {
     main.innerHTML = '<div class="loading">Loading...</div>';
 
     if (feature === 'view-profile') {
-      // Redirect to profile.html
-      window.location.href = 'profile.html';
+      // Redirect to profile.php
+      window.location.href = 'profile.php';
       return;
     }
 

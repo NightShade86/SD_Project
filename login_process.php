@@ -25,9 +25,9 @@ if (isset($_POST['login'])) {
     if ($uname === 'admin' && $pwd === 'admin') {
         $_SESSION['loggedin'] = true;
         $_SESSION['role'] = 'admin';
+        $_SESSION['USER_ID'] = 'admin'; 
         $_SESSION['success'] = "Welcome Admin!";
         header("Location:admin_dashboard.php");
-
         exit;
     }
 
@@ -42,6 +42,8 @@ if (isset($_POST['login'])) {
         if (password_verify($pwd, $staff['PASSWORD'])) {
             $_SESSION['loggedin'] = true;
             $_SESSION['role'] = 'staff';
+            $_SESSION['USER_ID'] = $staff['STAFF_ID'];
+            $_SESSION['USERTYPE'] = 'staff';
             $_SESSION['success'] = "Welcome Staff!";
             header("Location: staff_dashboard.php");
             exit;
@@ -58,7 +60,9 @@ if (isset($_POST['login'])) {
         $user = $user_result->fetch_assoc();
         if (password_verify($pwd, $user['PASSWORD'])) {
             $_SESSION['loggedin'] = true;
-            $_SESSION['role'] = 'patient';  // Assuming patients and guests are treated similarly
+            $_SESSION['role'] = 'patient';
+            $_SESSION['USER_ID'] = $user['USER_ID'];
+            $_SESSION['USERTYPE'] = 'patient';
             $_SESSION['success'] = "Welcome back!";
             header("Location: index_patient.php");
             exit;
