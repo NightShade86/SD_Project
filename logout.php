@@ -15,3 +15,7 @@ die;
 
 //[READ ME] this code snippet is still under testing
 
+// Redirect to the login page
+header("Location: login_guess.php");
+exit;
+?>

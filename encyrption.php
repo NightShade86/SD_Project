@@ -1,4 +1,8 @@
 <?php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Encryption and Decryption Configuration
 define('ENCRYPTION_METHOD', 'AES-256-CBC'); // Encryption method
 define('SECRET_KEY', 'my_secret_key');      // Secret key

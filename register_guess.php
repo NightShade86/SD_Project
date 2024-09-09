@@ -1,14 +1,19 @@
+<?php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Medicoz | Health and Medical HTML Template | Login</title>
+<title>Medicoz | Health and Medical HTML Template | Register</title>
 
 <!-- Stylesheets -->
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 <link href="css/responsive.css" rel="stylesheet">
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--Color Themes-->
 <link id="theme-color-file" href="css/color-themes/default-theme.css" rel="stylesheet">
 
@@ -38,7 +43,7 @@
                 <div class="inner-container">
                     <div class="top-left">
                         <ul class="contact-list clearfix">
-							<li><i class="flaticon-hospital-1"></i>34, Jalan Besar, 72100 Bahau, Negeri Sembilan </li>
+                            <li><i class="flaticon-hospital-1"></i>34, Jalan Besar, 72100 Bahau, Negeri Sembilan </li>
                             <li><i class="flaticon-back-in-time"></i>Monday - Thursday 9.00am - 9.00pm , Friday 9.00am - 5.00pm. Sunday and Saturday CLOSED</li>
                         </ul>
                     </div>
@@ -59,7 +64,7 @@
                 <div class="main-box">
 
                     <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img src="images/logo-9.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index_guess.html"><img src="images/file.png" alt="" title=""></a></div>
                     </div>
 
                     <!--Nav Box-->
@@ -69,21 +74,21 @@
                                 <li class="dropdown">
                                     <span>Home</span>
                                     <ul>
-                                        <li><a href="index_patient.html">Home Medical</a></li>
+                                        <li><a href="index_guess.html">Home Medical</a></li>
                                     </ul>
                                 </li>
 
                                 <li class="dropdown">
                                     <span>Pages</span>
                                     <ul>
-                                        <li><a href="about-us_patient.html">About Us</a></li>
-                                        <li><a href="services_patient.html">Services</a></li>
+                                        <li><a href="about-us_guess.html">About Us</a></li>
+                                        <li><a href="services_guess.html">Services</a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown">
                                     <span>Doctors</span>
                                     <ul>
-                                        <li><a href="doctor-detail_patient.html">Doctor Detail</a></li>
+                                        <li><a href="doctor-detail_guess.html">Doctor Detail</a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown">
@@ -117,13 +122,13 @@
                                     </ul>
                                 </li>
 								<li class="dropdown current">
-                                    <span>Login</span>
+                                    <span>Sign Up</span>
                                     <ul>
-										<li><a href="profile.html">Profile</a></li>
-										<li><a href="logout.php">Log Out</a></li>
+										<li><a href="login_guess.php">Login</a></li>
+										<li><a href="register_guess.php">Register</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="contact_patient.html">Contact</a></li>	
+                                <li><a href="contact_guess.html">Contact</a></li>
 							</ul>
 						</nav>
 						<!-- Main Menu End-->
@@ -236,10 +241,10 @@
     <!--End Main Header -->
 
     <!--Page Title-->
-    <section class="page-title" style="background-image: url(images/background/8.jpg);">
+    <section class="page-title" style="background-image: url(images/background/1-1.png);">
         <div class="auto-container">
             <div class="title-outer">
-                <h1>Login</h1>
+                <h1>Register</h1>
                 <ul class="page-breadcrumb">
                     <li><a href="index.html">Home</a></li>
                     <li>Shop</li>
@@ -248,59 +253,119 @@
         </div>
     </section>
     <!--End Page Title-->
+    <?php
+    $firstname = isset($_SESSION['form_data']['firstname']) ? htmlspecialchars($_SESSION['form_data']['firstname']) : '';
+    $lastname = isset($_SESSION['form_data']['lastname']) ? htmlspecialchars($_SESSION['form_data']['lastname']) : '';
+    $no_tel = isset($_SESSION['form_data']['no_tel']) ? htmlspecialchars($_SESSION['form_data']['no_tel']) : '';
+    $email = isset($_SESSION['form_data']['email']) ? htmlspecialchars($_SESSION['form_data']['email']) : '';
+    $ic = isset($_SESSION['form_data']['ic']) ? htmlspecialchars($_SESSION['form_data']['ic']) : '';
+    $user_id = isset($_SESSION['form_data']['user_id']) ? htmlspecialchars($_SESSION['form_data']['user_id']) : '';
+    
+if (isset($_SESSION['error_message'])) {
+    echo "<script>
+    Swal.fire({
+        title: 'Error!',
+        text: '" . $_SESSION['error_message'] . "',
+        icon: 'error'
+    });
+    </script>";
+    unset($_SESSION['error_message']); // Clear the error message after displaying it
+}
 
-	<!--Login Section-->
-	<section class="login-section" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background-image: linear-gradient(to bottom, #f7f7f7, #fff);">
-		<div class="auto-container" style="width: 100%; max-width: 400px; background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
-			<div class="row clearfix" style="display: flex; justify-content: center;">
-				<div class="column col-lg-12 col-md-12 col-sm-12">
-					<!-- Login Form -->
-					<div class="login-form" style="background-color: #f7f7f7; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
-						<h2 style="text-align: center; color: #333; font-weight: bold;">Login</h2>
-						<!-- Error Message -->
-						<?php if (isset($_SESSION['error'])): ?>
-							<div class="error" style="color: red; text-align: center; padding: 10px; border-radius: 5px; background-color: #ffe6e6;">
-								<?php
-								echo $_SESSION['error'];
-								unset($_SESSION['error']);
-								?>
-							</div>
-						<?php endif; ?>
-						<form method="post" action="login_process.php">
-							<div class="form-group">
-								<label style="font-weight: bold; color: #333;">Username or Email</label>
-								<input type="text" name="uname" placeholder="Name or Email" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-							</div>
-							
-							<div class="form-group">
-								<label style="font-weight: bold; color: #333;">Enter Your Password</label>
-								<input type="password" name="pwd" placeholder="Password" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-							</div>
-							
-							<div class="form-group">
-								<input type="checkbox" name="remember_me" id="account-option-1" style="margin-right: 10px;">&nbsp; 
-								<label for="account-option-1" style="font-weight: bold; color: #333;">Remember me</label>
-							</div>
-							
-							<div class="form-group">
-								<button class="theme-btn btn-style-one" type="submit" name="login" style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer;">
-									<span class="btn-title">LOGIN</span>
-								</button>
-							</div>
-
-							<div class="form-group pass">
-								<a href="forgot_password.php" class="psw" style="color: #337ab7; text-decoration: none;">Lost your password?</a>
-							</div>
-						</form>
-					</div>
-					<!--End Login Form -->
-				</div>
-			</div>
-		</div>
-	</section>
-    <!--End Login Section-->
+if (isset($_SESSION['success_message'])) {
+    echo "<script>
+    Swal.fire({
+        title: 'Success!',
+        text: '" . $_SESSION['success_message'] . "',
+        icon: 'success'
+    }).then(function() {
+        window.location = 'login_patient.php';
+    });
+    </script>";
+    unset($_SESSION['success_message']); // Clear the success message after displaying it
+    unset($_SESSION['form_data']);
+}
+?>
 	<div class="spacer" style="height: 50px;"></div>
-    <!-- Main Footer -->
+		<section class="register-section" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background-image: linear-gradient(to bottom, #f7f7f7, #fff);">
+		  <div class="auto-container" style="width: 100%; max-width: 600px; background-color: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
+			<div class="row clearfix" style="display: flex; justify-content: center;">
+			  <div class="column col-lg-12 col-md-12 col-sm-12">
+				<!-- Register Form -->
+				<div class="login-form register-form" style="padding: 30px; border-radius: 10px;">
+				  <h2 style="text-align: center; color: #007bff;">Create Your Account</h2>
+				  <form method="POST" action="signup.php">
+					<div class="form-group">
+					  <label for="firstname" style="font-weight: bold;">First Name:</label>
+                      <input type="text" id="firstname" name="firstname" required 
+    style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
+    value="<?php echo $firstname; ?>">
+					</div>
+					
+					<div class="form-group">
+					  <label for="lastname" style="font-weight: bold;">Last Name:</label>
+					  <input type="text" id="lastname" name="lastname" required
+    style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
+    value="<?php echo $lastname; ?>">
+					</div>
+					
+					<div class="form-group">
+					  <label for="no_tel" style="font-weight: bold;">Phone Number:</label>
+					  <input type="text" id="no_tel" name="no_tel"
+    style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
+    value="<?php echo $no_tel; ?>">
+					</div>
+
+					<div class="form-group">
+					  <label for="email" style="font-weight: bold;">Email:</label>
+					  <input type="email" id="email" name="email" required
+    style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
+    value="<?php echo $email; ?>">
+					</div>
+					
+					<div class="form-group">
+					  <label for="ic" style="font-weight: bold;">IC:</label>
+					  <input type="text" id="ic" name="ic" required
+    style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
+    value="<?php echo $ic; ?>">
+					</div>
+					
+					<div class="form-group">
+					  <label for="user_id" style="font-weight: bold;">Username:</label>
+					  <input type="text" id="user_id" name="user_id" required
+    style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;"
+    value="<?php echo $user_id; ?>">
+					</div>
+					
+					<div class="form-group">
+					  <label for="password" style="font-weight: bold;">Password:</label>
+					  <input type="password" id="password" name="password" required style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd;">
+					</div>
+
+                    <div class="form-group">
+                        <label for="password_confirmation" style="font-weight: bold;">Confirm Password:</label>
+                        <input type="password" id="password_confirmation" name="password_confirmation" required style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd;">
+                      </div>
+                      
+					
+					<div class="form-group text-right">
+					  <button class="theme-btn btn-style-one" type="submit" name="submit-form" style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px;">
+						<span class="btn-title">Register Now</span>
+					  </button>
+					</div>
+				  </form>      
+				</div>
+				<!--End Register Form -->
+			  </div>
+			</div>
+		  </div>
+		</section>
+
+    <!--End Login Section-->
+
+   	<div class="spacer" style="height: 50px;"></div>
+
+      <!-- Main Footer -->
     <footer class="main-footer">
         <!--Widgets Section-->
         <div class="widgets-section" style="background-image: url(images/background/7.jpg);">

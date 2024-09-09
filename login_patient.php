@@ -1,3 +1,8 @@
+<?php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,21 +74,21 @@
                                 <li class="dropdown">
                                     <span>Home</span>
                                     <ul>
-                                        <li><a href="index_guess.html">Home Medical</a></li>
+                                        <li><a href="index_patient.html">Home Medical</a></li>
                                     </ul>
                                 </li>
 
                                 <li class="dropdown">
                                     <span>Pages</span>
                                     <ul>
-                                        <li><a href="about-us_guess.html">About Us</a></li>
-                                        <li><a href="services_guess.html">Services</a></li>
+                                        <li><a href="about-us_patient.html">About Us</a></li>
+                                        <li><a href="services_patient.html">Services</a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown">
                                     <span>Doctors</span>
                                     <ul>
-                                        <li><a href="doctor-detail_guess.html">Doctor Detail</a></li>
+                                        <li><a href="doctor-detail_patient.html">Doctor Detail</a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown">
@@ -115,15 +120,16 @@
                                         <li><a href="shopping-cart.html">Shopping Cart</a></li>
                                         <li><a href="checkout.html">Checkout</a></li>
                                     </ul>
+                                </li>
 								<li class="dropdown current">
                                     <span>Login</span>
                                     <ul>
-										<li><a href="login_guess.html">Login</a></li>
-										<li><a href="register_guess.html">Register</a></li>
+										<li><a href="profile.html">Profile</a></li>
+                                        <li><a href="login_patient.php">Login</a></li>
+										<li><a href="logout.php">Log Out</a></li>
                                     </ul>
                                 </li>
-                                </li>
-                                <li><a href="contact_guess.html">Contact</a></li>
+                                <li><a href="contact_patient.html">Contact</a></li>	
 							</ul>
 						</nav>
 						<!-- Main Menu End-->
@@ -141,7 +147,7 @@
             <div class="auto-container">            
                 <div class="main-box">
                     <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img src="images/logo.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
                     </div>
 
                     <!--Keep This Empty / Menu will come through Javascript-->
@@ -151,7 +157,7 @@
 
         <!-- Mobile Header -->
         <div class="mobile-header">
-            <div class="logo"><a href="index.html"><img src="images/logo.png" alt="" title=""></a></div>
+            <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
 
             <!--Nav Box-->
             <div class="nav-outer clearfix">
@@ -236,7 +242,7 @@
     <!--End Main Header -->
 
     <!--Page Title-->
-    <section class="page-title" style="background-image: url(images/background/8.jpg);">
+    <section class="page-title" style="background-image: url(images/background/1-1.png);">
         <div class="auto-container">
             <div class="title-outer">
                 <h1>Login</h1>
@@ -281,7 +287,7 @@
 								<input type="checkbox" name="remember_me" id="account-option-1" style="margin-right: 10px;">&nbsp; 
 								<label for="account-option-1" style="font-weight: bold; color: #333;">Remember me</label>
 							</div>
-
+							
 							<div class="form-group">
 								<button class="theme-btn btn-style-one" type="submit" name="login" style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer;">
 									<span class="btn-title">LOGIN</span>

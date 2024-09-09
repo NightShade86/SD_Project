@@ -1,14 +1,19 @@
+<?php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Medicoz | Health and Medical HTML Template | Register</title>
+<title>Medicoz | Health and Medical HTML Template | Login</title>
 
 <!-- Stylesheets -->
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 <link href="css/responsive.css" rel="stylesheet">
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--Color Themes-->
 <link id="theme-color-file" href="css/color-themes/default-theme.css" rel="stylesheet">
 
@@ -38,7 +43,7 @@
                 <div class="inner-container">
                     <div class="top-left">
                         <ul class="contact-list clearfix">
-                            <li><i class="flaticon-hospital-1"></i>34, Jalan Besar, 72100 Bahau, Negeri Sembilan </li>
+							<li><i class="flaticon-hospital-1"></i>34, Jalan Besar, 72100 Bahau, Negeri Sembilan </li>
                             <li><i class="flaticon-back-in-time"></i>Monday - Thursday 9.00am - 9.00pm , Friday 9.00am - 5.00pm. Sunday and Saturday CLOSED</li>
                         </ul>
                     </div>
@@ -59,7 +64,7 @@
                 <div class="main-box">
 
                     <div class="logo-box">
-                        <div class="logo"><a href="index_guess.html"><img src="images/logo-9.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
                     </div>
 
                     <!--Nav Box-->
@@ -115,13 +120,13 @@
                                         <li><a href="shopping-cart.html">Shopping Cart</a></li>
                                         <li><a href="checkout.html">Checkout</a></li>
                                     </ul>
-                                </li>
 								<li class="dropdown current">
-                                    <span>Login</span>
+                                    <span>Sign Up</span>
                                     <ul>
-										<li><a href="login_guess.html">Login</a></li>
-										<li><a href="register_guess.html">Register</a></li>
+										<li><a href="login_guess.php">Login</a></li>
+										<li><a href="register_guess.php">Register</a></li>
                                     </ul>
+                                </li>
                                 </li>
                                 <li><a href="contact_guess.html">Contact</a></li>
 							</ul>
@@ -236,10 +241,10 @@
     <!--End Main Header -->
 
     <!--Page Title-->
-    <section class="page-title" style="background-image: url(images/background/8.jpg);">
+    <section class="page-title" style="background-image: url(images/background/1-1.png);">
         <div class="auto-container">
             <div class="title-outer">
-                <h1>Register</h1>
+                <h1>Login</h1>
                 <ul class="page-breadcrumb">
                     <li><a href="index.html">Home</a></li>
                     <li>Shop</li>
@@ -248,68 +253,72 @@
         </div>
     </section>
     <!--End Page Title-->
-	<div class="spacer" style="height: 50px;"></div>
-		<section class="register-section" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background-image: linear-gradient(to bottom, #f7f7f7, #fff);">
-		  <div class="auto-container" style="width: 100%; max-width: 600px; background-color: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
+
+	<!--Login Section-->
+	<section class="login-section" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background-image: linear-gradient(to bottom, #f7f7f7, #fff);">
+		<div class="auto-container" style="width: 100%; max-width: 400px; background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
 			<div class="row clearfix" style="display: flex; justify-content: center;">
-			  <div class="column col-lg-12 col-md-12 col-sm-12">
-				<!-- Register Form -->
-				<div class="login-form register-form" style="padding: 30px; border-radius: 10px;">
-				  <h2 style="text-align: center; color: #007bff;">Create Your Account</h2>
-				  <form method="POST" action="signup.php">
-					<div class="form-group">
-					  <label for="firstname" style="font-weight: bold;">First Name:</label>
-					  <input type="text" id="firstname" name="firstname" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;">
-					</div>
-					
-					<div class="form-group">
-					  <label for="lastname" style="font-weight: bold;">Last Name:</label>
-					  <input type="text" id="lastname" name="lastname" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;">
-					</div>
-					
-					<div class="form-group">
-					  <label for="no_tel" style="font-weight: bold;">Phone Number:</label>
-					  <input type="text" id="no_tel" name="no_tel" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;">
-					</div>
+				<div class="column col-lg-12 col-md-12 col-sm-12">
+					<!-- Login Form -->
+					<div class="login-form" style="background-color: #f7f7f7; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
+						<h2 style="text-align: center; color: #333; font-weight: bold;">Login</h2>
+						<!-- SweetAlert Messages -->
+						<?php if (isset($_SESSION['error'])): ?>
+						    <script>
+							    Swal.fire({
+							        title: 'Error!',
+							        text: '<?php echo $_SESSION["error"]; ?>',
+							        icon: 'error'
+							    });
+						    </script>
+						    <?php unset($_SESSION['error']); // Clear the error after displaying it ?>
+						<?php endif; ?>
 
-					<div class="form-group">
-					  <label for="email" style="font-weight: bold;">Email:</label>
-					  <input type="email" id="email" name="email" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;">
+						<?php if (isset($_SESSION['success'])): ?>
+						    <script>
+							    Swal.fire({
+							        title: 'Success!',
+							        text: '<?php echo $_SESSION["success"]; ?>',
+							        icon: 'success'
+							    });
+						    </script>
+						    <?php unset($_SESSION['success']); // Clear the success message after displaying it ?>
+						<?php endif; ?>
+						<form method="post" action="login_process.php">
+							<div class="form-group">
+								<label style="font-weight: bold; color: #333;">Username or Email</label>
+								<input type="text" name="uname" placeholder="Name or Email" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
+							</div>
+							
+							<div class="form-group">
+								<label style="font-weight: bold; color: #333;">Enter Your Password</label>
+								<input type="password" name="pwd" placeholder="Password" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
+							</div>
+							
+							<div class="form-group">
+								<input type="checkbox" name="remember_me" id="account-option-1" style="margin-right: 10px;">&nbsp; 
+								<label for="account-option-1" style="font-weight: bold; color: #333;">Remember me</label>
+							</div>
+
+							<div class="form-group">
+								<button class="theme-btn btn-style-one" type="submit" name="login" style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer;">
+									<span class="btn-title">LOGIN</span>
+								</button>
+							</div>
+
+							<div class="form-group pass">
+								<a href="forgot_password.php" class="psw" style="color: #337ab7; text-decoration: none;">Lost your password?</a>
+							</div>
+						</form>
 					</div>
-					
-					<div class="form-group">
-					  <label for="ic" style="font-weight: bold;">IC:</label>
-					  <input type="text" id="ic" name="ic" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;">
-					</div>
-					
-					<div class="form-group">
-					  <label for="user_id" style="font-weight: bold;">Username:</label>
-					  <input type="text" id="user_id" name="user_id" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;">
-					</div>
-					
-					<div class="form-group">
-					  <label for="password" style="font-weight: bold;">Password:</label>
-					  <input type="password" id="password" name="password" required style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd;">
-					</div>
-					
-					<div class="form-group text-right">
-					  <button class="theme-btn btn-style-one" type="submit" name="submit-form" style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px;">
-						<span class="btn-title">Register Now</span>
-					  </button>
-					</div>
-				  </form>      
+					<!--End Login Form -->
 				</div>
-				<!--End Register Form -->
-			  </div>
 			</div>
-		  </div>
-		</section>
-
+		</div>
+	</section>
     <!--End Login Section-->
-
-   	<div class="spacer" style="height: 50px;"></div>
-
-      <!-- Main Footer -->
+	<div class="spacer" style="height: 50px;"></div>
+    <!-- Main Footer -->
     <footer class="main-footer">
         <!--Widgets Section-->
         <div class="widgets-section" style="background-image: url(images/background/7.jpg);">
