@@ -127,10 +127,10 @@ ini_set('display_errors', 1);
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                  <a class="nav-link" href="#view-profile"><i class="fas fa-user"></i> View Profile</a>
+                  <a class="nav-link" href="profile.php"><i class="fas fa-user"></i> View Profile</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#logout"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+                  <a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i> Log Out</a>
                 </li>
               </ul>
             </div>
