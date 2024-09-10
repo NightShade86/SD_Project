@@ -91,41 +91,7 @@ if (isset($_SESSION['success_message'])) {
                             </div>
                             <hr class="border-light m-0">
                             <div class="card-body">
-                                <div class="form-group">
-                                    <label class="form-label">Username</label>
-                                    <input type="text" class="form-control mb-1" value="nmaxwell">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Name</label>
-                                    <input type="text" class="form-control" value="Nelle Maxwell">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">E-mail</label>
-                                    <input type="email" class="form-control mb-1" value="example@mail.com">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="account-change-password">
-                            <div class="card-body pb-2">
-                                <form action="change_password.php" method="post">
-                                    <div class="form-group">
-                                        <label class="form-label">Current password</label>
-                                        <input type="password" name="current_password" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">New password</label>
-                                        <input type="password" name="new_password" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Repeat new password</label>
-                                        <input type="password" name="repeat_new_password" class="form-control" required>
-                                    </div>
-                                    <div class="text-right mt-3">
-                                        <button type="submit" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </form>
-							
-							<!-- Authentication Form -->
+                                <!-- Authentication Form -->
 							<div id="authenform" class="login-form register-form" style="display: <?php echo $authenticatedisplay; ?>; padding: 30px; border-radius: 10px;">
 									<form action="user_authentication_patient.php" method="post">
 										<h2>Please enter your username and password to verify your identity.</h2>
@@ -187,6 +153,29 @@ if (isset($_SESSION['success_message'])) {
 
 							</form>
 					</div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="account-change-password">
+                            <div class="card-body pb-2">
+                                <form action="change_password.php" method="post">
+                                    <div class="form-group">
+                                        <label class="form-label">Current password</label>
+                                        <input type="password" name="current_password" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">New password</label>
+                                        <input type="password" name="new_password" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Repeat new password</label>
+                                        <input type="password" name="repeat_new_password" class="form-control" required>
+                                    </div>
+                                    <div class="text-right mt-3">
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </form>
+							
+							
 					
                 </div>
                         <div class="tab-pane fade" id="account-change-password">
