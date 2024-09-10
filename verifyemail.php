@@ -39,14 +39,28 @@ if ($mysqli->affected_rows) {
 
     try {
 
+
         $mail->send();
-
+        $mail->send();
+        // Store a success message in the session
+        $_SESSION['message'] = 'Password reset link sent! Please check your inbox.';
+        $_SESSION['message_type'] = 'success';  // For SweetAlert 'success' icon
     } catch (Exception $e) {
-
+    } catch (Exception $e) {
+        // Store an error message in the session
+        $_SESSION['message'] = "Message could not be sent. Mailer error: {$mail->ErrorInfo}";
         echo "Message could not be sent. Mailer error: {$mail->ErrorInfo}";
-
+        $_SESSION['message_type'] = 'error';  // For SweetAlert 'error' icon
     }
 
-}
+} else {
+    // Store an error message if the email is not found
+    $_SESSION['message'] = "Email not found.";
+    $_SESSION['message_type'] = 'error';
 
+}
+// Redirect to a page that will handle showing the message
 echo "Message sent, please check your inbox.";
+header("Location: reset_password_feedback.php");
+exit;
+?>
