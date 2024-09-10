@@ -98,6 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("sssssssi", $firstname, $lastname, $no_tel, $email, $ic, $user_id, $hashed_password, $usertype);
 
+
     if ($stmt->execute() === TRUE) {
         $_SESSION['success_message'] = "Registration successful!";
         header("Location: login_patient.php");

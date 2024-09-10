@@ -149,6 +149,7 @@ if (isset($_SESSION['success_message'])) {
 								<br><br>
 								
                             <hr class="border-light m-0">
+
 							
 						<!-- Update Form -->
 					<div id="updateform" class="card-body" style="display: <?php echo $updatedisplay; ?>; padding: 30px; border-radius: 10px;">
