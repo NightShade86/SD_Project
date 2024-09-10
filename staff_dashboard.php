@@ -139,8 +139,8 @@ ini_set('display_errors', 1);
         <main class="mt-4">
           <div class="content bg-white p-4 shadow-sm rounded" id="profile-section">
             <!-- Default content before loading profile -->
-            <h3>Welcome to the Admin Dashboard</h3>
-            <p>Use the sidebar to navigate through the different sections of the admin panel.</p>
+            <h3>Welcome to the Staff Dashboard</h3>
+            <p>Use the sidebar to navigate through the different sections of the staff panel.</p>
           </div>
           <div class="content bg-white p-4 shadow-sm rounded" id="feedback-section" style="display: none;">
             <h3>Feedback</h3>
