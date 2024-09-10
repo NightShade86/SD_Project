@@ -64,7 +64,7 @@ ini_set('display_errors', 1);
                 <div class="main-box">
 
                     <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index_guess.html"><img src="images/file.png" alt="" title=""></a></div>
                     </div>
 
                     <!--Nav Box-->
@@ -92,7 +92,7 @@ ini_set('display_errors', 1);
                                     </ul>
                                 </li>
                                 <li class="dropdown">
-                                    <span>Blog</span>
+                                <!--    <span>Blog</span>
                                     <ul>
                                         <li><a href="blog-checkboard.html">Checkerboard</a></li>
                                         <li><a href="blog-masonry.html">Masonry</a></li>
@@ -119,7 +119,7 @@ ini_set('display_errors', 1);
                                         <li><a href="shop-single.html">Shop Single</a></li>
                                         <li><a href="shopping-cart.html">Shopping Cart</a></li>
                                         <li><a href="checkout.html">Checkout</a></li>
-                                    </ul>
+                                    </ul> -->
 								<li class="dropdown current">
                                     <span>Sign Up</span>
                                     <ul>

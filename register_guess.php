@@ -92,7 +92,7 @@ ini_set('display_errors', 1);
                                     </ul>
                                 </li>
                                 <li class="dropdown">
-                                    <span>Blog</span>
+                                <!--    <span>Blog</span>
                                     <ul>
                                         <li><a href="blog-checkboard.html">Checkerboard</a></li>
                                         <li><a href="blog-masonry.html">Masonry</a></li>
@@ -120,7 +120,7 @@ ini_set('display_errors', 1);
                                         <li><a href="shopping-cart.html">Shopping Cart</a></li>
                                         <li><a href="checkout.html">Checkout</a></li>
                                     </ul>
-                                </li>
+                                </li> -->
 								<li class="dropdown current">
                                     <span>Sign Up</span>
                                     <ul>
@@ -247,7 +247,7 @@ ini_set('display_errors', 1);
                 <h1>Register</h1>
                 <ul class="page-breadcrumb">
                     <li><a href="index.html">Home</a></li>
-                    <li>Shop</li>
+                    <li>Register</li>
                 </ul> 
             </div>
         </div>
