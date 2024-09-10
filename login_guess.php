@@ -162,14 +162,6 @@ ini_set('display_errors', 1);
             <div class="nav-outer clearfix">
 
                 <div class="outer-box">
-                    <!-- Search Btn -->
-                    <div class="search-box">
-                        <button class="search-btn mobile-search-btn"><i class="flaticon-magnifying-glass"></i></button>
-                    </div>
-
-                    <!-- Cart Btn -->
-                    <button class="cart-btn"><i class="icon flaticon-shopping-cart"></i><span class="count">3</span></button>
-
                     <a href="#nav-mobile" class="mobile-nav-toggler navbar-trigger"><span class="fa fa-bars"></span></a>
                 </div>
             </div>
@@ -177,66 +169,6 @@ ini_set('display_errors', 1);
 
         <!-- Mobile Nav -->
         <div id="nav-mobile"></div>
-
-        <!-- Header Search -->
-        <div class="search-popup">
-            <span class="search-back-drop"></span>
-            <button class="close-search"><span class="fa fa-times"></span></button>
-            
-            <div class="search-inner">
-                <form method="post" action="blog-showcase.html">
-                    <div class="form-group">
-                        <input type="search" name="search-field" value="" placeholder="Search..." required="">
-                        <button type="submit"><i class="flaticon-magnifying-glass"></i></button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <!-- End Header Search -->
-
-        <!-- Sidebar Cart  -->
-        <div class="sidebar-cart">
-            <span class="cart-back-drop"></span>
-            <div class="shopping-cart">
-                <div class="cart-header">
-                    <div class="title">Shopping Cart <span>(3)</span></div>
-                    <button class="close-cart"><span class="flaticon-add"></span></button>
-                </div>
-                <ul class="shopping-cart-items">
-                    <li class="cart-item">
-                        <img src="images/resource/products/product-thumb-1.jpg" alt="#" class="thumb" />
-                        <span class="item-name">First Aid Kit</span>
-                        <span class="item-quantity">1 x <span class="item-amount">$50.00</span></span>
-                        <a href="shop-single.html" class="product-detail"></a>
-                        <button class="remove">Remove</button>
-                    </li>
-
-                    <li class="cart-item">
-                        <img src="images/resource/products/product-thumb-2.jpg" alt="#" class="thumb"  />
-                        <span class="item-name">Vitamin Tablet</span>
-                        <span class="item-quantity">1 x <span class="item-amount">$25.00</span></span>
-                        <a href="shop-single.html" class="product-detail"></a>
-                        <button class="remove">Remove</button>
-                    </li>
-
-                    <li class="cart-item">
-                        <img src="images/resource/products/product-thumb-3.jpg" alt="#" class="thumb"  />
-                        <span class="item-name">Zinc Tablet</span>
-                        <span class="item-quantity">1 x <span class="item-amount">$15.00</span></span>
-                        <a href="shop-single.html" class="product-detail"></a>
-                        <button class="remove">Remove</button>
-                    </li>
-                </ul>
-
-                <div class="cart-footer">
-                    <div class="shopping-cart-total"><strong>Subtotal:</strong> $90.00</div>
-                    <a href="shopping-cart.html" class="theme-btn btn-style-three"><span class="btn-title">View Cart</span></a>
-                    <a href="checkout.html" class="theme-btn btn-style-one"><span class="btn-title">Checkout</span></a>
-                </div>
-            </div> <!-- End shopping-cart -->
-        </div>
-        <!-- End Sidebar Cart  -->
-
     </header>
     <!--End Main Header -->
 
@@ -246,7 +178,7 @@ ini_set('display_errors', 1);
             <div class="title-outer">
                 <h1>Login</h1>
                 <ul class="page-breadcrumb">
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index_guess.html">Home</a></li>
                     <li>Shop</li>
                 </ul> 
             </div>
@@ -444,9 +376,8 @@ ini_set('display_errors', 1);
                 <div class="inner-container clearfix">
                     <div class="footer-nav">
                         <ul class="clearfix">
-                           <li><a href="index.html">Privacy Policy</a></li> 
-                           <li><a href="about-us.html">Contact</a></li> 
-                           <li><a href="services.html">Supplier</a></li>  
+                           <li><a href="about-us_guess.html">Contact</a></li> 
+                           <li><a href="services_guess.html">Supplier</a></li>  
                         </ul>
                     </div>
                     

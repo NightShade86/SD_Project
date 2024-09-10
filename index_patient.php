@@ -725,12 +725,12 @@ ini_set('display_errors', 1);
 	</style>
 	<!-- End Team Section CSS -->
 
-    <!-- Appointment Section -->
+    <!-- Appointment Section 
     <section class="appointment-section">
         <div class="image-layer" style="background-image: url(images/background/2.jpg);"></div>
         <div class="auto-container">
             <div class="row">
-                <!-- Content Column -->
+                 
                 <div class="content-column col-lg-6 col-md-12 col-sm-12">
                     <div class="inner-column">
                         <span class="title">Need a Doctor for Check-up?</span>
@@ -747,7 +747,7 @@ ini_set('display_errors', 1);
             <div class="fun-fact-section">
                 <div class="auto-container">
 			<div class="row justify-content-center">
-				<!--Column-->
+			
 				<div class="counter-column col-lg-3 col-md-6 col-sm-12 wow fadeInUp">
 					<div class="count-box">
 						<div class="icon-box"><span class="icon flaticon-user-experience"></span></div>
@@ -756,7 +756,7 @@ ini_set('display_errors', 1);
 					</div>
 				</div>
 				
-				<!--Column-->
+				
 				<div class="counter-column col-lg-3 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="800ms">
 					<div class="count-box">
 						<div class="icon-box"><span class="icon flaticon-hospital"></span></div>
@@ -765,7 +765,7 @@ ini_set('display_errors', 1);
 					</div>
 				</div>
 
-				<!--Column-->
+				
 				<div class="counter-column col-lg-3 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="1200ms">
 					<div class="count-box">
 						<div class="icon-box"><span class="icon flaticon-add-friend"></span></div>
@@ -777,13 +777,14 @@ ini_set('display_errors', 1);
 		</div>
             </div>
         </div>
-    </section>
+    </section> -->
+     
     <!-- End Appointment Section -->
 	
-     <!-- News Section -->
+     <!-- News Section 
     <section class="news-section">
         <div class="auto-container">
-            <!-- Sec Title -->
+            
             <div class="sec-title text-center">
                 <span class="title">OUR BLOG</span>
                 <h2>Recent Articles and News</h2>
@@ -791,7 +792,7 @@ ini_set('display_errors', 1);
             </div>
 
             <div class="row">
-                <!-- News Block -->
+               
                 <div class="news-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
                     <div class="inner-box">
                         <div class="image-box">
@@ -812,7 +813,7 @@ ini_set('display_errors', 1);
                     </div>
                 </div>
 
-                <!-- News Block -->
+                
                 <div class="news-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
                     <div class="inner-box">
                         <div class="image-box">
@@ -833,7 +834,7 @@ ini_set('display_errors', 1);
                     </div>
                 </div>
 
-                <!-- News Block -->
+                
                 <div class="news-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
                     <div class="inner-box">
                         <div class="image-box">
@@ -856,8 +857,10 @@ ini_set('display_errors', 1);
 
             </div>
         </div>
-    </section>
+    </section> -->
+
     <!--End News Section -->
+
        <!-- Main Footer -->
     <footer class="main-footer">
         <!--Widgets Section-->
@@ -870,9 +873,6 @@ ini_set('display_errors', 1);
                             <!--Footer Column-->
                             <div class="footer-column col-xl-7 col-lg-6 col-md-6 col-sm-12">
                                 <div class="footer-widget about-widget">
-                                    <div class="logo">
-                                        <a href="index.html"><img src="images/logo-2.png" alt="" /></a>
-                                    </div>
                                     <div class="text">
                                         <p>Thong's Clinic was established by Dr. Tony Thong, a dedicated physician with a vision to enhance healthcare services in Bahau. Since its inception, the clinic has grown and evolved, always maintaining its commitment to exceptional care. </p>
                                         <p>We are among the most qualified Doctos in the MY with over 10 years of quality training and experience.</p>
@@ -984,9 +984,8 @@ ini_set('display_errors', 1);
                 <div class="inner-container clearfix">
                     <div class="footer-nav">
                         <ul class="clearfix">
-                           <li><a href="index.html">Privacy Policy</a></li> 
-                           <li><a href="about-us.html">Contact</a></li> 
-                           <li><a href="services.html">Supplier</a></li>  
+                           <li><a href="about-us_guess.html">Contact</a></li> 
+                           <li><a href="services_guess.html">Services</a></li>  
                         </ul>
                     </div>
                     
