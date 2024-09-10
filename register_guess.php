@@ -140,6 +140,7 @@ ini_set('display_errors', 1);
                 </div>
             </div>
         </div>
+</header>
 
         <!-- Sticky Header  -->
         <div class="sticky-header">
