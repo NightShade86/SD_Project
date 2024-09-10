@@ -172,7 +172,7 @@ if (isset($_SESSION['success_message'])) {
                                     </div>
                                     <div class="text-right mt-3">
                                         <button type="submit" class="btn btn-primary">Save changes</button>
-                                        <button type="button" class="btn btn-default">Cancel</button>
+                                        <a href="profile.php" type="button" class="btn btn-secondary">Cancel</a>
                                     </div>
                                 </form>
 							
