@@ -29,10 +29,10 @@ if ($mysqli->affected_rows) {
 
     $mail->setFrom("thongclinic@gmail.com");
     $mail->addAddress($email);
-    $mail->Subject = "Password Reset";
+    $mail->Subject = "Email Verification";
     $mail->Body = <<<END
 
-    Click <a href="http://example.com/register_guess?token=$token">here</a> 
+    Click <a href="http://localhost/clinicdb/SD_Project/register_guess.php?token=$token">here</a> 
     to verify your email.
 
     END;
