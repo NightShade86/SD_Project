@@ -21,7 +21,7 @@ if (isset($_POST['login'])) {
     $uname = $_POST['uname'];
     $pwd = $_POST['pwd'];
 
-    // Admin login
+    /*Admin login
     if ($uname === 'admin' && $pwd === 'admin') {
         $_SESSION['loggedin'] = true;
         $_SESSION['role'] = 'admin';
@@ -29,7 +29,26 @@ if (isset($_POST['login'])) {
         $_SESSION['success'] = "Welcome Admin!";
         header("Location:admin_dashboard.php");
         exit;
-    }
+    }*/
+
+     // Admin login
+     $admin_sql = $connection->prepare("SELECT * FROM admin_info WHERE USER_ID=? OR EMAIL=?");
+     $admin_sql->bind_param("ss", $uname, $uname);
+     $admin_sql->execute();
+     $admin_result = $admin_sql->get_result();
+ 
+     if ($admin_result->num_rows == 1) {
+         $admin = $admin_result->fetch_assoc();
+         if (password_verify($pwd, $admin['PASSWORD'])) {
+             $_SESSION['loggedin'] = true;
+             $_SESSION['role'] = 'admin';
+             $_SESSION['USER_ID'] = $admin['USER_ID'];
+             $_SESSION['USERTYPE'] = 'admin';
+             $_SESSION['success'] = "Welcome Admin!";
+             header("Location: admin_dashboard.php");
+             exit;
+         }
+     }
 
     // Staff login
     $staff_sql = $connection->prepare("SELECT * FROM staff_info WHERE STAFF_ID=? OR EMAIL=?");
