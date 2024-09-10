@@ -6,14 +6,14 @@ $token = bin2hex(random_bytes(16));
 
 $token_hash = hash("sha256", $token);
 
-$expiry = date("Y-m-d H:i:s", time() + 60 * 30);
+$expiry = date("Y-m-d H:i:s", time() +19800+ 60 * 30);
 
 $mysqli = require "C:/xampp/htdocs/clinicdb/SD_Project/db_conn.php";
 
 
 $sql = "UPDATE user_info
-        SET reset_token_hash = ?,
-            reset_token_expires_at = ?
+        SET verify_token_hash = ?,
+            verify_token_expires_at = ?
         WHERE EMAIL = ?";
 
 $stmt = $mysqli->prepare($sql);
@@ -41,11 +41,9 @@ if ($mysqli->affected_rows) {
 
 
         $mail->send();
-        $mail->send();
         // Store a success message in the session
         $_SESSION['message'] = 'Password reset link sent! Please check your inbox.';
         $_SESSION['message_type'] = 'success';  // For SweetAlert 'success' icon
-    } catch (Exception $e) {
     } catch (Exception $e) {
         // Store an error message in the session
         $_SESSION['message'] = "Message could not be sent. Mailer error: {$mail->ErrorInfo}";
