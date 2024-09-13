@@ -18,7 +18,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodingDung | Profile Template</title>
+    <title>Profile</title>
     <link rel="stylesheet" href="style.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -61,6 +61,7 @@ if (isset($_SESSION['success_message'])) {
 }
 ?>
     <div class="container light-style flex-grow-1 container-p-y">
+		<a href="javascript:history.back()" class="btn btn-secondary">Back</a>
         <h4 class="font-weight-bold py-3 mb-4">
             Account settings
         </h4>
@@ -69,7 +70,7 @@ if (isset($_SESSION['success_message'])) {
                 <div class="col-md-3 pt-0">
                     <div class="list-group list-group-flush account-settings-links">
                         <a class="list-group-item list-group-item-action active" data-toggle="list"
-                            href="#account-general">General</a>
+                            href="#account-general">Profile</a>
                         <a class="list-group-item list-group-item-action" data-toggle="list"
                             href="#account-change-password">Change password</a>
                     </div>
@@ -207,6 +208,22 @@ if (isset($_SESSION['success_message'])) {
 
 </body>
 <style>
+		.btn-secondary {
+		background-color: #6c757d;
+		color: white;
+		border: none;
+		border-radius: 5px;
+		padding: 10px 20px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		margin: 10px 0;
+	}
+
+	.btn-secondary:hover {
+		background-color: #5a6268;
+	}
+
     body {
         background: #f5f5f5;
         margin-top: 20px;
