@@ -4,6 +4,7 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,21 +40,21 @@ ini_set('display_errors', 1);
     <div class="preloader"></div>
     
     <!-- Main Header-->
-    <header class="main-header header-style-one">
+        <header class="main-header header-style-two">
 
         <!-- Header top -->
-        <div class="header-top">
-            <div class="auto-container">
-                <div class="inner-container">
-                    <div class="top-left">
-                        <ul class="contact-list clearfix">
-                            <li><i class="flaticon-hospital-1"></i>34, Jalan Besar, 72100 Bahau, Negeri Sembilan </li>
-                            <li><i class="flaticon-back-in-time"></i>Monday - Thursday 9.00am - 9.00pm , Friday 9.00am - 5.00pm. Sunday and Saturday CLOSED</li>
-                        </ul>
-                    </div>
+     <div class="header-top-two">
+        <div class="auto-container">
+            <div class="inner-container">
+                <div class="top-left">
+                    <ul class="contact-list clearfix">
+                        <li><i class="flaticon-hospital-1"></i>34, Jalan Besar, 72100 Bahau, Negeri Sembilan </li>
+                        <li><i class="flaticon-back-in-time"></i>Monday - Thursday 9.00am - 9.00pm , Friday 9.00am - 5.00pm. Sunday and Saturday CLOSED</li>
+                    </ul>
                 </div>
             </div>
         </div>
+    </div>
         <!-- End Header Top -->
         
         <!-- Header Lower -->
@@ -62,35 +63,20 @@ ini_set('display_errors', 1);
                 <!-- Main box -->
                 <div class="main-box">
                     <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img src="images/logo-8-1.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
                     </div>
-
                     <!--Nav Box-->
                     <div class="nav-outer">
                         <nav class="nav main-menu">
                             <ul class="navigation" id="navbar">
-                                <li class="current dropdown">
-                                    <span>Home</span>
-                                    <ul>
-                                        <li class="current"><a href="index_patient.html">Home Medical</a></li>
-                                    </ul>
-                                </li>
-
-                                <li class="dropdown">
-                                    <span>Pages</span>
-                                    <ul>
-                                        <li><a href="about-us_patient.html">About Us</a></li>
-                                        <li><a href="services_patient.html">Services</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <span>Doctors</span>
-                                    <ul>
-                                        <li><a href="doctor-detail_patient.html">Doctor Detail</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                              <!-- <span>Blog</span>
+                                <li class="current"><a href="index_patient.html">Home</a></li>
+								<li><a href="services_patient.html">Services</a></li>
+								<li><a href="doctor-detail_patient.html">Doctor Detail</a></li>
+								<li><a href="about-us_patient.html">About Us</a></li>
+								<li><a href="contact_patient.html">Contact</a></li>
+								<li><a href="profile.php">Profile</a></li>
+                                <li><a href="logout.php">Log Out</a></li>
+                                <!-- <span>Blog</span>
                                     <ul>
                                         <li><a href="blog-checkboard.html">Checkerboard</a></li>
                                         <li><a href="blog-masonry.html">Masonry</a></li>
@@ -117,16 +103,7 @@ ini_set('display_errors', 1);
                                         <li><a href="shop-single.html">Shop Single</a></li>
                                         <li><a href="shopping-cart.html">Shopping Cart</a></li>
                                         <li><a href="checkout.html">Checkout</a></li>
-                                    </ul>
-                                </li> -->
-								<li class="dropdown">
-                                    <span>Profile</span>
-                                    <ul>
-										<li><a href="profile.php">Profile</a></li>
-										<li><a href="logout.php">Logout</a></li>
-                                    </ul>
-                                    <li><a href="contact_patient.html">Contact</a></li>
-                                </li>
+                                    </ul> -->
                             </ul>
                         </nav>
                         <!-- Main Menu End-->
@@ -134,68 +111,6 @@ ini_set('display_errors', 1);
                 </div>
             </div>
         </div>
-		
-		<style>
-			.nav-outer {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		flex-wrap: wrap;
-		padding: 10px 20px;
-	}
-
-	.nav.main-menu .navigation {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 10px;
-		padding: 0;
-		margin: 0;
-		list-style: none;
-	}
-
-	.nav.main-menu .navigation > li {
-		position: relative;
-	}
-
-	.dropdown ul {
-		position: absolute;
-		left: 0;
-		top: 100%;
-		display: none;
-		flex-direction: column;
-		background-color: #fff;
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-		min-width: 200px;
-	}
-
-	.dropdown:hover ul,
-	.dropdown:focus-within ul {
-		display: block;
-	}
-
-	@media (max-width: 768px) {
-		.nav-outer {
-			flex-direction: column;
-			align-items: flex-start;
-		}
-
-		.nav.main-menu .navigation {
-			flex-direction: column;
-			width: 100%;
-		}
-
-		.nav.main-menu .navigation > li {
-			width: 100%;
-		}
-
-		.dropdown ul {
-			position: static;
-			box-shadow: none;
-		}
-	}
-
-		</style>
-
         <!-- Sticky Header  -->
         <div class="sticky-header">
             <div class="auto-container">            
@@ -218,11 +133,6 @@ ini_set('display_errors', 1);
             <div class="nav-outer clearfix">
 
                 <div class="outer-box">
-                    <!-- Search Btn -->
-                    <div class="search-box">
-                        <button class="search-btn mobile-search-btn"><i class="flaticon-magnifying-glass"></i></button>
-                    </div>
-
                     <a href="#nav-mobile" class="mobile-nav-toggler navbar-trigger"><span class="fa fa-bars"></span></a>
                 </div>
             </div>
@@ -230,24 +140,8 @@ ini_set('display_errors', 1);
 
         <!-- Mobile Nav -->
         <div id="nav-mobile"></div>
-
-        <!-- Header Search -->
-        <div class="search-popup">
-            <span class="search-back-drop"></span>
-            <button class="close-search"><span class="fa fa-times"></span></button>
-            
-            <div class="search-inner">
-                <form method="post" action="blog-showcase.html">
-                    <div class="form-group">
-                        <input type="search" name="search-field" value="" placeholder="Search..." required="">
-                        <button type="submit"><i class="flaticon-magnifying-glass"></i></button>
-                    </div>
-                </form>
-            </div>
-        </div>
         <!-- End Header Search -->
     </header>
-    <!--End Main Header -->
 
     <!--Main Slider-->
     <section class="main-slider">
