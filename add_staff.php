@@ -1,8 +1,14 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "clinic_db"; // Change to your actual database name
+$dbname = "dtcmsdb"; // Change to your actual database name
 
 // Open connection
 $connection = new mysqli($servername, $username, $password, $dbname);
