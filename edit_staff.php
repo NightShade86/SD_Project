@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // GET method: Show the data of the staff
 
     if (!isset($_GET["staff_id"])) {
-        header("location: /clinic_management_system/view_staff.php");
+        header("location: view_staff.php");
         exit;
     }
 

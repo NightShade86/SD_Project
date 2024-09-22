@@ -3,12 +3,12 @@ if (isset($_GET["staff_id"])) {
     $deleteStaffID = $_GET["staff_id"]; // Use a different variable name
 
     $servername = "localhost";
-    $dbUsername = "root"; // Use a different variable name
+    $username = "root"; // Use a different variable name
     $password = "";
     $dbname = "dtcmsdb"; // Make sure the correct database is used
 
     // Open connection
-    $connection = new mysqli($servername, $dbUsername, $password, $dbname);
+    $connection = new mysqli($servername, $username, $password, $dbname);
 
     // Check connection
     if ($connection->connect_error) {
