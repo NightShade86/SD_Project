@@ -1,5 +1,5 @@
 <?php
-/* 
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -51,7 +51,7 @@ $email = $user['EMAIL'];
 $ic = $user['IC'];
 $usertype = $user['USERTYPE'];
 
-*/
+
 ?>
 
 <!DOCTYPE html>
