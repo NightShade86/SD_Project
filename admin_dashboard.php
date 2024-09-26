@@ -85,17 +85,19 @@ ini_set('display_errors', 1);
     <div class="row">
       <div class="col-md-2 p-0" id="sidebar">
         <nav class="nav flex-column">
-          <!-- Staff Dropdown -->
-          <div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-white py-3" href="#" id="staffDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-users"></i> Manage Staff
-            </a>
-            <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="staffDropdown">
-              <a class="dropdown-item" href="#view-staff">View Staff</a>
-              <a class="dropdown-item" href="#add-staff">Add Staff</a>
-              <a class="dropdown-item" href="#edit-staff">Edit Staff</a>
-            </div>
-          </div>
+          <!-- Staff Dropdown (inside sidebar) -->
+			<div class="nav-item dropdown">
+			  <a class="nav-link dropdown-toggle text-white py-3" href="#" id="staffDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fas fa-users"></i> Manage Staff
+			  </a>
+			  <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="staffDropdown">
+				<a class="dropdown-item" href="view_staff.php" id="view-staff-link">View Staff</a>
+				<a class="dropdown-item" href="add_staff.php" id="add-staff-link">Add Staff</a>
+				<a class="dropdown-item" href="edit_staff.php" id="edit-staff-link">Edit Staff</a>
+				<a class="dropdown-item" href="delete_staff.php" id="delete-staff-link">Delete Staff</a>
+			  </div>
+			</div>
+
 
           <!-- Patient Dropdown -->
           <div class="nav-item dropdown">
@@ -103,10 +105,10 @@ ini_set('display_errors', 1);
               <i class="fas fa-procedures"></i> Manage Patients
             </a>
             <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="patientDropdown">
-              <a class="dropdown-item" href="#view-patients">View Patients</a>
+              <a class="dropdown-item" href="view_patient.php" id="view-patient-link">View Patients</a>
               <a class="dropdown-item" href="#add-patient">Add Patient</a>
-              <a class="dropdown-item" href="#edit-patient">Edit Patient</a>
-              <a class="dropdown-item" href="#delete-patient">Delete Patient</a>
+              <a class="dropdown-item" href="edit_patient.php" id="edit-patient-link">Edit Patient</a>
+              <a class="dropdown-item" href="delete_patient.php" id="delete-patient-link">Delete Patient</a>
             </div>
           </div>
 

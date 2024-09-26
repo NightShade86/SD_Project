@@ -675,85 +675,95 @@ ini_set('display_errors', 1);
      
     <!-- End Appointment Section -->
 	
-     <!-- News Section 
-    <section class="news-section">
-        <div class="auto-container">
-            
-            <div class="sec-title text-center">
-                <span class="title">OUR BLOG</span>
-                <h2>Recent Articles and News</h2>
-                <span class="divider"></span>
-            </div>
+    <!-- Sent Feedback Section -->
+	<section class="feedback-section">
+		<div class="auto-container">
+			
+			<div class="sec-title text-center">
+				<span class="title">WE VALUE YOUR FEEDBACK</span>
+				<h2>Send Us Your Feedback</h2>
+				<span class="divider"></span>
+			</div>
 
-            <div class="row">
-               
-                <div class="news-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
-                    <div class="inner-box">
-                        <div class="image-box">
-                            <figure class="image"><a href="blog-post-image.html"><img src="images/resource/news-1.jpg" alt=""></a></figure>
-                            <a href="#" class="date">Sep 19, 2020</a>
-                        </div>
-                        <div class="lower-content">
-                            <h4><a href="blog-post-image.html">What is The Success rate<br> of a root canel?</a></h4>
-                            <div class="text">Nullam mauris vitae tortor sodales efficitur. Quisque orci ante. Proin amet turpis</div>
-                            <div class="post-info">
-                                <div class="post-author">By Admin Rose</div>
-                                <ul class="post-option">
-                                    <li><a href="#">0 <i class="far fa-heart"></i></a></li>
-                                    <li><a href="#">0 <i class="far fa-comments"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+			<div class="row">
+				<div class="feedback-block col-lg-8 col-md-10 col-sm-12 mx-auto wow fadeInUp">
+					<div class="inner-box">
+						<form action="submit_feedback.php" method="POST">
+							<div class="form-group">
+								<label for="name">Your Name:</label>
+								<input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
+							</div>
 
-                
-                <div class="news-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
-                    <div class="inner-box">
-                        <div class="image-box">
-                            <figure class="image"><a href="blog-post-image.html"><img src="images/resource/news-2.jpg" alt=""></a></figure>
-                            <a href="#" class="date">Sep 19, 2020</a>
-                        </div>
-                        <div class="lower-content">
-                            <h4><a href="blog-post-image.html">How to handle your kids’ <Br>mystery ailments?</a></h4>
-                            <div class="text">Nullam mauris vitae tortor sodales efficitur. Quisque orci ante. Proin amet turpis</div>
-                            <div class="post-info">
-                                <div class="post-author">By Admin Rose</div>
-                                <ul class="post-option">
-                                    <li><a href="#">0 <i class="far fa-heart"></i></a></li>
-                                    <li><a href="#">0 <i class="far fa-comments"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+							<div class="form-group">
+								<label for="email">Your Email:</label>
+								<input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+							</div>
 
-                
-                <div class="news-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
-                    <div class="inner-box">
-                        <div class="image-box">
-                            <figure class="image"><a href="blog-post-image.html"><img src="images/resource/news-3.jpg" alt=""></a></figure>
-                            <a href="#" class="date">Sep 19, 2020</a>
-                        </div>
-                        <div class="lower-content">
-                            <h4><a href="blog-post-image.html">How to help the cardiology <br>department</a></h4>
-                            <div class="text">Nullam mauris vitae tortor sodales efficitur. Quisque orci ante. Proin amet turpis</div>
-                            <div class="post-info">
-                                <div class="post-author">By Admin Rose</div>
-                                <ul class="post-option">
-                                    <li><a href="#">0 <i class="far fa-heart"></i></a></li>
-                                    <li><a href="#">0 <i class="far fa-comments"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+							<div class="form-group">
+								<label for="message">Your Feedback:</label>
+								<textarea id="message" name="message" class="form-control" rows="5" placeholder="Enter your feedback" required></textarea>
+							</div>
 
-            </div>
-        </div>
-    </section> -->
+							<div class="form-group text-center">
+								<button type="submit" class="btn btn-primary">Submit Feedback</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
-    <!--End News Section -->
+	<style>
+		.feedback-section {
+			padding: 50px 0;
+			background-color: #f9f9f9;
+		}
+		.sec-title .title {
+			font-size: 18px;
+			color: #777;
+		}
+		.sec-title h2 {
+			font-size: 32px;
+			color: #333;
+			margin-bottom: 10px;
+		}
+		.divider {
+			width: 50px;
+			height: 3px;
+			background-color: #3498db;
+			margin: 10px auto 30px;
+		}
+		.feedback-block {
+			background: #fff;
+			border-radius: 8px;
+			padding: 30px;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+		}
+		.form-group {
+			margin-bottom: 20px;
+		}
+		.form-control {
+			width: 100%;
+			padding: 10px;
+			font-size: 16px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+		}
+		.btn-primary {
+			background-color: #3498db;
+			color: #fff;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s;
+		}
+		.btn-primary:hover {
+			background-color: #2980b9;
+		}
+	</style>
+
 
        <!-- Main Footer -->
     <footer class="main-footer">

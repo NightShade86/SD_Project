@@ -8,10 +8,15 @@ ini_set('display_errors', 1);
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "dtcmsdb"; // Change to your actual database name
+$dbname = "dtcmsdb"; // Use your database name
 
-// Open connection
-$connection = new mysqli($servername, $username, $password, $dbname);
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check the connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
 // Initialize variables
 $firstname = "";
@@ -20,8 +25,8 @@ $no_tel = "";
 $email = "";
 $ic = "";
 $staff_id = "";
-$password = "";
-$usertype = "staff"; // Set default usertype as staff
+$pass = ""; // This will be set to the IC number
+$usertype = "1"; // Assume '1' for staff
 
 $errorMessage = "";
 $successMessage = "";
@@ -34,30 +39,79 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST["email"];
     $ic = $_POST["ic"];
     $staff_id = $_POST["staff_id"];
-    $password = $_POST["password"];
-    $usertype = $_POST["usertype"]; // Default to "staff"
+    
+    // Set the password to the IC number entered
+    $pass = $ic;
 
-    // Validate form inputs
-    if (empty($firstname) || empty($lastname) || empty($no_tel) || empty($email) || empty($ic) || empty($staff_id) || empty($password)) {
-        $errorMessage = "All fields are required";
-    } else {
-        // Insert data into staff_info table
-        $sql = "INSERT INTO staff_info (FIRSTNAME, LASTNAME, NO_TEL, EMAIL, IC, STAFF_ID, PASSWORD, USERTYPE) " .
-        "VALUES ('$firstname', '$lastname', '$no_tel', '$email', '$ic', '$staff_id', '$password', '$usertype')";
-        
-        $result = $connection->query($sql);
+    // === VALIDATIONS ===
 
-        if ($result) {
-            $successMessage = "Staff added successfully!";
-            // Redirect to another page or refresh form
-            header("Location: /clinic_management_system/index_staff.php");
-            exit;
-        } else {
-            $errorMessage = "Error: " . $sql . "<br>" . $connection->error;
+    // PHONE NUMBER VALIDATION
+    if (!preg_match('/^[0-9]+$/', $no_tel)) {
+        $errorMessage = "Please enter a valid phone number containing only digits.";
+    }
+
+    // EMAIL VALIDATION
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errorMessage = "Please enter a valid email, e.g., example@email.com";
+    }
+
+
+    // Check for existing email or username in the database
+    if (empty($errorMessage)) {
+        $check_sql = "SELECT * FROM staff_info WHERE EMAIL = ? OR STAFF_ID = ?";
+        $stmt = $conn->prepare($check_sql);
+        if ($stmt === false) {
+            die("MySQL prepare failed: " . $conn->error);
+        }
+
+        $stmt->bind_param("ss", $email, $staff_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $errorMessage = "Email or Username already exists.";
+            $stmt->close();
         }
     }
+
+    // Proceed only if there is no error
+    if (empty($errorMessage)) {
+        // Hash the password (which is the IC number)
+        $hashed_password = password_hash($pass, PASSWORD_DEFAULT);
+
+        // Insert data into staff_info table
+        $sql = "INSERT INTO staff_info (FIRSTNAME, LASTNAME, NO_TEL, EMAIL, IC, STAFF_ID, PASSWORD, USERTYPE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        $stmt = $conn->prepare($sql);
+        if ($stmt === false) {
+            die("MySQL prepare failed: " . $conn->error);
+        }
+
+        // Bind parameters
+        $stmt->bind_param("sssssssi", $firstname, $lastname, $no_tel, $email, $ic, $staff_id, $hashed_password, $usertype);
+
+        // Execute statement
+        if ($stmt->execute()) {
+            $_SESSION['success_message'] = "Staff added successfully!";
+            header("Location: view_staff.php");
+            exit();
+        } else {
+            $errorMessage = "There was an issue creating the staff. Error: " . $stmt->error;
+        }
+
+        $stmt->close();
+    }
+
+    // Display the error message if any
+    if (!empty($errorMessage)) {
+        echo "<div class='alert alert-danger'>$errorMessage</div>";
+    }
+
+    $conn->close();
 }
 ?>
+
+
 
 
 <!DOCTYPE html>
@@ -67,6 +121,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Staff</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <script>
+        // JavaScript to auto-fill password field with IC number
+        function autofillPassword() {
+            var icInput = document.getElementById("ic");
+            var passwordInput = document.getElementById("password");
+            passwordInput.value = icInput.value;  // Set password to the value of IC
+        }
+    </script>
 </head>
 <body>
     <div class="container my-5">
@@ -83,43 +145,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">First Name</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="firstname" value="<?php echo $firstname; ?>">
+                    <input type="text" class="form-control" name="firstname" value="<?php echo $firstname; ?>" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Last Name</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="lastname" value="<?php echo $lastname; ?>">
+                    <input type="text" class="form-control" name="lastname" value="<?php echo $lastname; ?>" required>
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Contact Number</label>
+                <label class="col-sm-3 col-form-label">Phone Number</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="no_tel" value="<?php echo $no_tel; ?>">
+                    <input type="text" class="form-control" name="no_tel" value="<?php echo $no_tel; ?>" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Email</label>
                 <div class="col-sm-6">
-                    <input type="email" class="form-control" name="email" value="<?php echo $email; ?>">
+                    <input type="email" class="form-control" name="email" value="<?php echo $email; ?>" required>
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">IC Number</label>
+                <label class="col-sm-3 col-form-label">IC</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="ic" value="<?php echo $ic; ?>">
+                    <input type="text" class="form-control" name="ic" id="ic" oninput="autofillPassword()" value="<?php echo $ic; ?>" required>
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Staff ID</label>
+                <label class="col-sm-3 col-form-label">Username</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="staff_id" value="<?php echo $staff_id; ?>">
+                    <input type="text" class="form-control" name="staff_id" value="<?php echo $staff_id; ?>" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Password</label>
                 <div class="col-sm-6">
-                    <input type="password" class="form-control" name="password" value="<?php echo $password; ?>">
+                    <input type="password" class="form-control" name="password" id="password" value="<?php echo $password; ?>" readonly>
                 </div>
             </div>
             <?php if (!empty($successMessage)) : ?>
@@ -144,3 +206,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 </body>
 </html>
+

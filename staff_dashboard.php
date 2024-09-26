@@ -86,16 +86,16 @@ ini_set('display_errors', 1);
     <div class="row">
       <div class="col-md-2 p-0" id="sidebar">
         <nav class="nav flex-column">
-          <!-- Patient Dropdown -->
+           <!-- Patient Dropdown -->
           <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-white py-3" href="#" id="patientDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fas fa-procedures"></i> Manage Patients
             </a>
             <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="patientDropdown">
-              <a class="dropdown-item" href="#view-patients">View Patients</a>
+              <a class="dropdown-item" href="view_patient.php" id="view-patient-link">View Patients</a>
               <a class="dropdown-item" href="#add-patient">Add Patient</a>
-              <a class="dropdown-item" href="#edit-patient">Edit Patient</a>
-              <a class="dropdown-item" href="#delete-patient">Delete Patient</a>
+              <a class="dropdown-item" href="edit_patient.php" id="edit-patient-link">Edit Patient</a>
+              <a class="dropdown-item" href="delete_patient.php" id="delete-patient-link">Delete Patient</a>
             </div>
           </div>
 

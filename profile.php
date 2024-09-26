@@ -1,4 +1,5 @@
 <?php
+/* 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -27,6 +28,7 @@ if ($_SESSION['loggedin']){
         $userR = "Patient";
     }
 }
+
 //Database Details
 $servername = "localhost";
 $username = "root";
@@ -36,7 +38,8 @@ $dbname = "dtcmsdb";
 // Establish connection
 $connection = new mysqli($servername, $username, $password, $dbname);
 $user_info = $connection->prepare("SELECT * FROM $table WHERE $id_column=?");
-$user_info->bind_param("s",$userid);
+
+$user_info->bind_param("s", $userid);
 $user_info->execute();
 $user_result = $user_info->get_result();
 $user = $user_result->fetch_assoc();
@@ -48,6 +51,7 @@ $email = $user['EMAIL'];
 $ic = $user['IC'];
 $usertype = $user['USERTYPE'];
 
+*/
 ?>
 
 <!DOCTYPE html>
@@ -62,16 +66,6 @@ $usertype = $user['USERTYPE'];
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<?php
-// Check if 'verified' exists in the URL
-if (isset($_GET['verified'])) {
-    $authenticatedisplay = "none";
-    $updatedisplay = "block";
-} else {
-    $authenticatedisplay = "block";
-    $updatedisplay = "none";
-}
-?>
 
 <body>
 
@@ -116,14 +110,16 @@ if (isset($_SESSION['success_message'])) {
             <div class="col-md-9">
                 <div class="tab-content">
 
-                    <div class="table-pane fade active show" id="view-profile">
-                        <div style="padding: 30px">
 
+                    <!-- View Profile Tab -->
+                    <div class="tab-pane fade show active" id="view-profile">
+                        <div style="padding: 30px">
                             <form>
                                 <h2>Profile</h2>
                                 <div class="form-group">
                                     <label style="font-weight: bold; color: #333;">First Name</label>
                                     <input type="text" name="fname" value="<?php echo $fname?>" readonly required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
+
                                 </div>
                                 <div class="form-group">
                                     <label style="font-weight: bold; color: #333;">Last Name</label>
@@ -145,11 +141,11 @@ if (isset($_SESSION['success_message'])) {
                                     <label style="font-weight: bold; color: #333;">Email</label>
                                     <input type="text" name="email" value="<?php echo $email?>" readonly required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
                                 </div>
-
                             </form>
                         </div>
                     </div>
 
+                    <!-- Edit Profile Tab -->
                     <div class="tab-pane fade" id="account-general">
                         <div class="card-body media align-items-center">
                             <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt class="d-block ui-w-80">
@@ -167,88 +163,64 @@ if (isset($_SESSION['success_message'])) {
                         <hr class="border-light m-0">
 
                         <div class="card-body">
-                            <!-- Authentication Form -->
-                            <div id="authenform" class="login-form register-form" style="display: <?php echo $authenticatedisplay; ?>; padding: 30px; border-radius: 10px;">
-                                <form action="user_authentication_patient.php" method="post">
-                                    <h2>Please enter your username and password to verify your identity.</h2>
-                                    <div class="form-group">
-                                        <label style="font-weight: bold; color: #333;">Username</label>
-                                        <input type="text" name="uname" placeholder="Enter your username here" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-                                    </div>
-                                    <div class="form-group">
-                                        <label style="font-weight: bold; color: #333;">Enter Your Password</label>
-                                        <input type="password" name="pwd" placeholder="Enter your password here" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-                                    </div>
-                                    <div class="form-group">
-                                        <button class="theme-btn btn-style-one" type="submit" name="login" style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer;">
-                                            <span class="btn-title">Authenticate</span>
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-
-                            <br><br>
-
-                            <hr class="border-light m-0">
-
-                            <!-- Update Form -->
-                            <div id="updateform" class="card-body" style="display: <?php echo $updatedisplay; ?>; padding: 30px; border-radius: 10px;">
-                                <form action="updateprofileprocess.php" method="post">
-                                    <div class="form-group">
-                                        <label for="firstname" style="font-weight: bold; color: #333;">First Name</label>
-                                        <input type="text" id="firstname" name="firstname" placeholder="Enter your first name" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="lastname" style="font-weight: bold; color: #333;">Last Name</label>
-                                        <input type="text" id="lastname" name="lastname" placeholder="Enter your last name" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="username" style="font-weight: bold; color: #333;">Username</label>
-                                        <input type="text" id="username" name="username" placeholder="Enter your username" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="ic" style="font-weight: bold; color: #333;">IC (Identity Card)</label>
-                                        <input type="text" id="ic" name="ic" placeholder="Enter your IC" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email" style="font-weight: bold; color: #333;">Email</label>
-                                        <input type="email" id="email" name="email" placeholder="Enter your email" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-                                    </div>
-                                    <div class="form-group">
-                                        <button class="theme-btn btn-style-one" type="submit" style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer;">
-                                            <span class="btn-title">Save Changes</span>
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade" id="account-change-password">
-                        <div class="card-body pb-2">
-                            <form action="change_password.php" method="post">
+                            <form action="updateprofileprocess.php" method="post">
                                 <div class="form-group">
-                                    <label class="form-label">Current password</label>
-                                    <input type="password" name="current_password" class="form-control" required>
+                                    <label for="firstname" style="font-weight: bold; color: #333;">First Name</label>
+                                    <input type="text" id="firstname" name="firstname" placeholder="Enter your first name" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label">New password</label>
-                                    <input type="password" name="new_password" class="form-control" required>
+                                    <label for="lastname" style="font-weight: bold; color: #333;">Last Name</label>
+                                    <input type="text" id="lastname" name="lastname" placeholder="Enter your last name" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-label">Confirm new password</label>
-                                    <input type="password" name="confirm_new_password" class="form-control" required>
+                                    <label for="email" style="font-weight: bold; color: #333;">Email</label>
+                                    <input type="email" id="email" name="email" placeholder="Enter your email address" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
                                 </div>
-                                <div class="text-right mt-3">
-                                    <button type="submit" class="btn btn-primary">Change Password</button>
+                                <div class="form-group">
+                                    <label for="pnum" style="font-weight: bold; color: #333;">Phone Number</label>
+                                    <input type="text" id="pnum" name="pnum" placeholder="Enter your phone number" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
                                 </div>
+                                <div class="form-group">
+                                    <label for="ic" style="font-weight: bold; color: #333;">Identification Card Number</label>
+                                    <input type="text" id="ic" name="ic" placeholder="Enter your IC" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Update Profile</button>
                             </form>
                         </div>
                     </div>
+
+                    <!-- Change Password Tab -->
+                    <div class="tab-pane fade" id="account-change-password">
+                        <div class="card-body pb-2">
+                            <form action="updatepasswordprocess.php" method="post">
+                                <div class="form-group">
+                                    <label class="form-label">Current password</label>
+                                    <input type="password" class="form-control" name="current-password" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">New password</label>
+                                    <input type="password" class="form-control" name="new-password" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">Repeat new password</label>
+                                    <input type="password" class="form-control" name="confirm-password" required>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Change Password</button>
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <div class="text-right mt-3">
         <button type="button" class="btn btn-primary">Save changes</button>&nbsp;
@@ -259,5 +231,4 @@ if (isset($_SESSION['success_message'])) {
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
