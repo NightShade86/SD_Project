@@ -23,10 +23,24 @@ if (isset($_SESSION['message'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Password Reset</title>
+
+    <!-- Include Bootstrap and custom styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/responsive.css" rel="stylesheet">
+
     <!-- Include SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        /* Custom styles for SweetAlert to match your project's fonts */
+        .swal2-popup {
+            font-family: inherit; /* Inherits the font from your page */
+        }
+    </style>
 </head>
 <body>
+
 <script>
     <?php if ($message): ?>
     Swal.fire({
