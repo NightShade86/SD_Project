@@ -84,6 +84,8 @@ ini_set('display_errors', 1);
 											<path d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 10a5 5 0 0 0-4.546 3 1 1 0 0 0 .657 1.07c.068.016.134.03.2.04A5.992 5.992 0 0 0 8 12a5.992 5.992 0 0 0 4.689 2.11c.066-.01.132-.024.2-.04a1 1 0 0 0 .657-1.07A5 5 0 0 0 8 10z"/>
 										</svg>
 										<?php 
+											$userid = $_SESSION['USER_ID'];
+											
 											if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 												echo " Welcome, " . htmlspecialchars($userid);
 											} else {
