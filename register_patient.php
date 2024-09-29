@@ -1,8 +1,14 @@
+<?php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Medicoz | Health and Medical HTML Template | Doctor Detail</title>
+<title>Medicoz | Health and Medical HTML Template | Register</title>
 
 <!-- Stylesheets -->
 <link href="css/bootstrap.css" rel="stylesheet">
@@ -38,8 +44,8 @@
                 <div class="inner-container">
                     <div class="top-left">
                         <ul class="contact-list clearfix">
-                            <li><i class="flaticon-hospital-1"></i>34, Jalan Besar, 72100 Bahau, Negeri Sembilan <br>Negeri Sembilan, Malaysia </li>
-                            <li><i class="flaticon-back-in-time"></i>Mon - Thursday 9.00 - 21.00. <br>Sunday and Saturday CLOSED</li>
+                            <li><i class="flaticon-hospital-1"></i>34, Jalan Besar, 72100 Bahau, Negeri Sembilan </li>
+                            <li><i class="flaticon-back-in-time"></i>Monday - Thursday 9.00am - 9.00pm , Friday 9.00am - 5.00pm. Sunday and Saturday CLOSED</li>
                         </ul>
                     </div>
                     <div class="top-right">
@@ -59,18 +65,18 @@
                 <div class="main-box">
 
                     <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img src="images/logo-9.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
                     </div>
 
                     <!--Nav Box-->
                     <div class="nav-outer">
                         <nav class="nav main-menu">
                             <ul class="navigation" id="navbar">
-                                <li><a href="index_patient.html">Home</a></li>
-								<li><a href="services_patient.html">Services</a></li>
-								<li class="current"><a href="doctor-detail_patient.html">Doctor Detail</a></li>
-								<li><a href="about-us_patient.html">About Us</a></li>
-								<li><a href="contact_patient.html">Contact</a></li>
+                                <li class="current"><a href="index_patient.php">Home</a></li>
+								<li><a href="services_patient.php">Services</a></li>
+								<li><a href="doctor-detail_patient.php">Doctor Detail</a></li>
+								<li><a href="about-us_patient.php">About Us</a></li>
+								<li><a href="contact_patient.php">Contact</a></li>
 								<li class="dropdown">
 									<span>
 										<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -109,7 +115,7 @@
 										?>
 									</ul>
 								</li>
-                              <!--     <span>Blog</span>
+                                  <!-- <span>Blog</span>
                                     <ul>
                                         <li><a href="blog-checkboard.html">Checkerboard</a></li>
                                         <li><a href="blog-masonry.html">Masonry</a></li>
@@ -129,16 +135,15 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="dropdown">
+                                <li class="dropdown current">
                                     <span>Shop</span>
                                     <ul>
                                         <li><a href="shop.html">Shop</a></li>
                                         <li><a href="shop-single.html">Shop Single</a></li>
                                         <li><a href="shopping-cart.html">Shopping Cart</a></li>
                                         <li><a href="checkout.html">Checkout</a></li>
-                                    </ul>
-                                </li>
-								<li class="dropdown"> --> 
+                                    </ul> 
+                                </li> --> 
 							</ul>
 						</nav>
 						<!-- Main Menu End-->
@@ -152,7 +157,7 @@
             <div class="auto-container">            
                 <div class="main-box">
                     <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img src="images/logo.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
                     </div>
 
                     <!--Keep This Empty / Menu will come through Javascript-->
@@ -162,20 +167,12 @@
 
         <!-- Mobile Header -->
         <div class="mobile-header">
-            <div class="logo"><a href="index.html"><img src="images/logo.png" alt="" title=""></a></div>
+            <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
 
             <!--Nav Box-->
             <div class="nav-outer clearfix">
 
                 <div class="outer-box">
-                    <!-- Search Btn -->
-                    <div class="search-box">
-                        <button class="search-btn mobile-search-btn"><i class="flaticon-magnifying-glass"></i></button>
-                    </div>
-
-                    <!-- Cart Btn -->
-                    <button class="cart-btn"><i class="icon flaticon-shopping-cart"></i><span class="count">3</span></button>
-
                     <a href="#nav-mobile" class="mobile-nav-toggler navbar-trigger"><span class="fa fa-bars"></span></a>
                 </div>
             </div>
@@ -183,319 +180,84 @@
 
         <!-- Mobile Nav -->
         <div id="nav-mobile"></div>
-
-        <!-- Header Search -->
-        <div class="search-popup">
-            <span class="search-back-drop"></span>
-            <button class="close-search"><span class="fa fa-times"></span></button>
-            
-            <div class="search-inner">
-                <form method="post" action="blog-showcase.html">
-                    <div class="form-group">
-                        <input type="search" name="search-field" value="" placeholder="Search..." required="">
-                        <button type="submit"><i class="flaticon-magnifying-glass"></i></button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <!-- End Header Search -->
-
-        <!-- Sidebar Cart  -->
-        <div class="sidebar-cart">
-            <span class="cart-back-drop"></span>
-            <div class="shopping-cart">
-                <div class="cart-header">
-                    <div class="title">Shopping Cart <span>(3)</span></div>
-                    <button class="close-cart"><span class="flaticon-add"></span></button>
-                </div>
-                <ul class="shopping-cart-items">
-                    <li class="cart-item">
-                        <img src="images/resource/products/product-thumb-1.jpg" alt="#" class="thumb" />
-                        <span class="item-name">First Aid Kit</span>
-                        <span class="item-quantity">1 x <span class="item-amount">$50.00</span></span>
-                        <a href="shop-single.html" class="product-detail"></a>
-                        <button class="remove">Remove</button>
-                    </li>
-
-                    <li class="cart-item">
-                        <img src="images/resource/products/product-thumb-2.jpg" alt="#" class="thumb"  />
-                        <span class="item-name">Vitamin Tablet</span>
-                        <span class="item-quantity">1 x <span class="item-amount">$25.00</span></span>
-                        <a href="shop-single.html" class="product-detail"></a>
-                        <button class="remove">Remove</button>
-                    </li>
-
-                    <li class="cart-item">
-                        <img src="images/resource/products/product-thumb-3.jpg" alt="#" class="thumb"  />
-                        <span class="item-name">Zinc Tablet</span>
-                        <span class="item-quantity">1 x <span class="item-amount">$15.00</span></span>
-                        <a href="shop-single.html" class="product-detail"></a>
-                        <button class="remove">Remove</button>
-                    </li>
-                </ul>
-
-                <div class="cart-footer">
-                    <div class="shopping-cart-total"><strong>Subtotal:</strong> $90.00</div>
-                    <a href="shopping-cart.html" class="theme-btn btn-style-three"><span class="btn-title">View Cart</span></a>
-                    <a href="checkout.html" class="theme-btn btn-style-one"><span class="btn-title">Checkout</span></a>
-                </div>
-            </div> <!-- End shopping-cart -->
-        </div>
-        <!-- End Sidebar Cart  -->
     </header>
     <!--End Main Header -->
 
     <!--Page Title-->
-    <section class="page-title" style="background-image: url(images/background/8.jpg);">
+    <section class="page-title" style="background-image: url(images/background/1-1.png);">
         <div class="auto-container">
             <div class="title-outer">
-                <h1>Doctor Detail</h1>
+                <h1>Register</h1>
                 <ul class="page-breadcrumb">
                     <li><a href="index.html">Home</a></li>
-                    <li>Doctors</li>
+                    <li>Register</li>
                 </ul> 
             </div>
         </div>
     </section>
     <!--End Page Title-->
-
-	<!-- Doctor Detail Section -->
-	<section class="doctor-detail-section">
-		<div class="auto-container">
-			<!-- Doctor 1: Dr. Tony Thong -->
-			<div class="row align-items-center">
-				<!-- Sidebar Side -->
-				<div class="sidebar-side col-lg-4 col-md-12 col-sm-12">
-					<div class="doctor-image">
-						<img src="Doctor_Thong.jpg" alt="Dr. Tony Thong">
+	<div class="spacer" style="height: 50px;"></div>
+		<section class="register-section" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background-image: linear-gradient(to bottom, #f7f7f7, #fff);">
+		  <div class="auto-container" style="width: 100%; max-width: 600px; background-color: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
+			<div class="row clearfix" style="display: flex; justify-content: center;">
+			  <div class="column col-lg-12 col-md-12 col-sm-12">
+				<!-- Register Form -->
+				<div class="login-form register-form" style="padding: 30px; border-radius: 10px;">
+				  <h2 style="text-align: center; color: #007bff;">Create Your Account</h2>
+				  <form method="POST" action="signup.php">
+					<div class="form-group">
+					  <label for="firstname" style="font-weight: bold;">First Name:</label>
+					  <input type="text" id="firstname" name="firstname" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;">
 					</div>
-				</div>
-				<!-- End Sidebar Side -->
-
-				<!-- Content Side -->
-				<div class="content-side col-lg-8 col-md-12 col-sm-12">
-					<div class="doctor-card">
-						<h3 class="name">Dr. Tony Thong</h3>
-						<span class="designation">(MBBS) University of Malaya</span>
-						<div class="text">
-							Dr. Tony Thong has dedicated his career to providing high-quality medical care and building a trusted healthcare facility in Bahau. His commitment to patient well-being has been central to the clinic's success.
-						</div>
-						<ul class="doctor-info-list">
-							<li>
-								<strong>Speciality:</strong>
-								<p>General Medicine <br>Patient Care</p>
-							</li>
-							<li>
-								<strong>Education:</strong>
-								<p>Bachelor of Medicine, Bachelor of Surgery (MBBS) from the University of Malaya</p>
-							</li>
-							<li>
-								<strong>Experience:</strong>
-								<p>Over 10 years of medical practice <br>President of Rotary Club Bahau</p>
-							</li>
-							<li>
-								<strong>Address:</strong>
-								<p>34, Jalan Besar, 72100 Bahau, Negeri Sembilan</p>
-							</li>
-							<li>
-								<strong>Phone:</strong>
-								<p><a href="tel:+60-06-4541048">+60-06-454 1048</a></p>
-							</li>
-							<li>
-								<strong>Email:</strong>
-								<p><a href="mailto:thongclinic@gmail.com">thongclinic@gmail.com</a></p>
-							</li>
-						</ul>
+					
+					<div class="form-group">
+					  <label for="lastname" style="font-weight: bold;">Last Name:</label>
+					  <input type="text" id="lastname" name="lastname" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;">
 					</div>
+					
+					<div class="form-group">
+					  <label for="no_tel" style="font-weight: bold;">Phone Number:</label>
+					  <input type="text" id="no_tel" name="no_tel" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;">
+					</div>
+
+					<div class="form-group">
+					  <label for="email" style="font-weight: bold;">Email:</label>
+					  <input type="email" id="email" name="email" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;">
+					</div>
+					
+					<div class="form-group">
+					  <label for="ic" style="font-weight: bold;">IC:</label>
+					  <input type="text" id="ic" name="ic" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;">
+					</div>
+					
+					<div class="form-group">
+					  <label for="user_id" style="font-weight: bold;">Username:</label>
+					  <input type="text" id="user_id" name="user_id" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd;">
+					</div>
+					
+					<div class="form-group">
+					  <label for="password" style="font-weight: bold;">Password:</label>
+					  <input type="password" id="password" name="password" required style="width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd;">
+					</div>
+					
+					<div class="form-group text-right">
+					  <button class="theme-btn btn-style-one" type="submit" name="submit-form" style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px;">
+						<span class="btn-title">Register Now</span>
+					  </button>
+					</div>
+				  </form>      
 				</div>
-				<!-- End Content Side -->
+				<!--End Register Form -->
+			  </div>
 			</div>
-			<!-- End Doctor 1 -->
+		  </div>
+		</section>
 
-			<!-- Doctor 2: Dr. Chia -->
-			<div class="row align-items-center">
-				<!-- Sidebar Side -->
-				<div class="sidebar-side col-lg-4 col-md-12 col-sm-12">
-					<div class="doctor-image">
-						<img src="Doctor_Chia.jpg" alt="Dr. Chia">
-					</div>
-				</div>
-				<!-- End Sidebar Side -->
+    <!--End Login Section-->
 
-				<!-- Content Side -->
-				<div class="content-side col-lg-8 col-md-12 col-sm-12">
-					<div class="doctor-card">
-						<h3 class="name">Dr. Chia</h3>
-						<span class="designation">(MBBS) University of Malaya</span>
-						<div class="text">
-							Dr. Chia, following in his father’s footsteps, brings additional expertise and dedication to the clinic, ensuring continued excellence in patient care.
-						</div>
-						<ul class="doctor-info-list">
-							<li>
-								<strong>Speciality:</strong>
-								<p>General Medicine <br>Patient Care</p>
-							</li>
-							<li>
-								<strong>Education:</strong>
-								<p>Bachelor of Medicine, Bachelor of Surgery (MBBS) from the University of Malaya</p>
-							</li>
-							<li>
-								<strong>Experience:</strong>
-								<p>Over 10 years of medical practice</p>
-							</li>
-							<li>
-								<strong>Address:</strong>
-								<p>34, Jalan Besar, 72100 Bahau, Negeri Sembilan</p>
-							</li>
-							<li>
-								<strong>Phone:</strong>
-								<p><a href="tel:+60-06-4541048">+60-06-454 1048</a></p>
-							</li>
-							<li>
-								<strong>Email:</strong>
-								<p><a href="mailto:thongclinic@gmail.com">thongclinic@gmail.com</a></p>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<!-- End Content Side -->
-			</div>
-			<!-- End Doctor 2 -->
-		</div>
-	</section>
-	<!-- End Doctor Detail Section -->
+   	<div class="spacer" style="height: 50px;"></div>
 
-	<!-- Doctor Detail CSS -->
-	<style>
-		.doctor-detail-section .row {
-		margin-bottom: 40px; /* Space between each doctor section */
-	}
-
-	.doctor-image img {
-		width: 100%;
-		max-width: 300px; /* Adjust max width for better alignment */
-		height: auto;
-		border-radius: 8px;
-		object-fit: cover;
-		border: 2px solid #ddd;
-		margin: 0 auto; /* Center the image within its column */
-	}
-
-	.doctor-card {
-		background-color: #f9f9f9;
-		padding: 20px;
-		border-radius: 8px;
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-	}
-
-	.doctor-card h3.name {
-		color: #2c3e50;
-		font-size: 24px;
-		margin-bottom: 10px;
-	}
-
-	.doctor-card .designation {
-		color: #8e8e8e;
-		font-size: 16px;
-		margin-bottom: 20px;
-		display: block;
-	}
-
-	.doctor-card .text {
-		margin-bottom: 20px;
-		color: #5a5a5a;
-		font-size: 16px;
-	}
-
-	.doctor-info-list {
-		list-style: none;
-		padding: 0;
-	}
-
-	.doctor-info-list li {
-		margin-bottom: 10px;
-	}
-
-	.doctor-info-list strong {
-		color: #2c3e50;
-		font-size: 16px;
-	}
-
-	.doctor-info-list p {
-		margin: 0;
-		color: #5a5a5a;
-	}
-
-	.doctor-info-list a {
-		color: #3498db;
-		text-decoration: none;
-	}
-
-	.doctor-info-list a:hover {
-		text-decoration: underline;
-	}
-
-	</style>
-	<!-- End Doctor Detail CSS -->
-
-
-    <!-- Team Section -->
-	<section class="team-section">
-		<div class="auto-container">
-			<!-- Section Title -->
-			<div class="section-title text-center">
-				<h2>Our Team of Doctors</h2>
-				<p>Meet the dedicated professionals providing exceptional care at our clinic.</p>
-			</div>
-
-			<div class="row justify-content-center">
-				<!-- Team Block -->
-				<div class="team-block col-lg-3 col-md-6 col-sm-12 wow fadeInUp">
-					<div class="inner-box">
-						<figure class="image"><img src="Doctor_Thong.jpg" alt="Dr. Tony Thong"></figure>
-						<div class="info-box">
-							<h4 class="name"><a href="doctor-detail.html">Dr. Tony Thong</a></h4>
-							<span class="designation">Doctor at Dr.Thong Clinic</span>
-						</div>
-					</div>
-				</div>
-
-				<!-- Team Block -->
-				<div class="team-block col-lg-3 col-md-6 col-sm-12 wow fadeInUp">
-					<div class="inner-box">
-						<figure class="image"><img src="Doctor_Chia.jpg" alt="Dr. Chia"></figure>
-						<div class="info-box">
-							<h4 class="name"><a href="doctor-detail.html">Dr. Chia</a></h4>
-							<span class="designation">Doctor at Dr.Thong Clinic</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End Team Section -->
-
-	<!-- Team Section CSS -->
-	<style>
-		.section-title {
-			margin-bottom: 40px; /* Space between title and team blocks */
-		}
-
-		.section-title h2 {
-			font-size: 32px;
-			color: #2c3e50;
-			font-weight: 700;
-		}
-
-		.section-title p {
-			font-size: 16px;
-			color: #5a5a5a;
-			margin-top: 10px;
-		}
-	</style>
-	<!-- End Team Section CSS -->
-	
-    <!-- Main Footer -->
+      <!-- Main Footer -->
     <footer class="main-footer">
         <!--Widgets Section-->
         <div class="widgets-section" style="background-image: url(images/background/7.jpg);">
@@ -618,8 +380,9 @@
                 <div class="inner-container clearfix">
                     <div class="footer-nav">
                         <ul class="clearfix">
-                           <li><a href="about-us_patient.html">Contact</a></li> 
-                           <li><a href="services_patient.html">Supplier</a></li>  
+                           <li><a href="index.html">Privacy Policy</a></li> 
+                           <li><a href="about-us.html">Contact</a></li> 
+                           <li><a href="services.html">Supplier</a></li>  
                         </ul>
                     </div>
                     
@@ -635,7 +398,7 @@
 </div><!-- End Page Wrapper -->
 
 
-<script src="js/jquery.js"></script> 
+<script src="js/jquery.js"></script>  
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.fancybox.js"></script>
@@ -643,7 +406,7 @@
 <script src="js/mmenu.polyfills.js"></script>
 <script src="js/mmenu.js"></script>
 <script src="js/appear.js"></script>
-<script src="js/mixitup.js"></script>
+<script src="js/jquery.bootstrap-touchspin.js"></script>
 <script src="js/owl.js"></script>
 <script src="js/wow.js"></script>
 <script src="js/script.js"></script>

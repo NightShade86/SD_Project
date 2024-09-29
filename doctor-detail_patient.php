@@ -1,8 +1,14 @@
+<?php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Medicoz | Health and Medical HTML Template | Services</title>
+<title>Medicoz | Health and Medical HTML Template | Doctor Detail</title>
 
 <!-- Stylesheets -->
 <link href="css/bootstrap.css" rel="stylesheet">
@@ -38,8 +44,8 @@
                 <div class="inner-container">
                     <div class="top-left">
                         <ul class="contact-list clearfix">
-                            <li><i class="flaticon-hospital-1"></i>34, Jalan Besar, 72100 Bahau, Negeri Sembilan </li>
-                            <li><i class="flaticon-back-in-time"></i>Monday - Thursday 9.00am - 9.00pm , Friday 9.00am - 5.00pm. Sunday and Saturday CLOSED</li>
+                            <li><i class="flaticon-hospital-1"></i>34, Jalan Besar, 72100 Bahau, Negeri Sembilan <br>Negeri Sembilan, Malaysia </li>
+                            <li><i class="flaticon-back-in-time"></i>Mon - Thursday 9.00 - 21.00. <br>Sunday and Saturday CLOSED</li>
                         </ul>
                     </div>
                     <div class="top-right">
@@ -59,18 +65,18 @@
                 <div class="main-box">
 
                     <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index.html"><img src="images/logo-9.png" alt="" title=""></a></div>
                     </div>
 
                     <!--Nav Box-->
                     <div class="nav-outer">
                         <nav class="nav main-menu">
                             <ul class="navigation" id="navbar">
-                                <li><a href="index_patient.html">Home</a></li>
-								<li class="current"><a href="services_patient.html">Services</a></li>
-								<li><a href="doctor-detail_patient.html">Doctor Detail</a></li>
-								<li><a href="about-us_patient.html">About Us</a></li>
-								<li><a href="contact_patient.html">Contact</a></li>
+                                <li><a href="index_patient.php">Home</a></li>
+								<li><a href="services_patient.php">Services</a></li>
+								<li class="current"><a href="doctor-detail_patient.php">Doctor Detail</a></li>
+								<li><a href="about-us_patient.php">About Us</a></li>
+								<li><a href="contact_patient.php">Contact</a></li>
 								<li class="dropdown">
 									<span>
 										<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -109,8 +115,7 @@
 										?>
 									</ul>
 								</li>
-                              <!-- <li class="dropdown">
-                                    <span>Blog</span>
+                              <!--     <span>Blog</span>
                                     <ul>
                                         <li><a href="blog-checkboard.html">Checkerboard</a></li>
                                         <li><a href="blog-masonry.html">Masonry</a></li>
@@ -138,10 +143,11 @@
                                         <li><a href="shopping-cart.html">Shopping Cart</a></li>
                                         <li><a href="checkout.html">Checkout</a></li>
                                     </ul>
-                                </li> --> 
-                            </ul>
-                        </nav>
-                        <!-- Main Menu End-->
+                                </li>
+								<li class="dropdown"> --> 
+							</ul>
+						</nav>
+						<!-- Main Menu End-->
                     </div>
                 </div>
             </div>
@@ -152,7 +158,7 @@
             <div class="auto-container">            
                 <div class="main-box">
                     <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index.html"><img src="images/logo.png" alt="" title=""></a></div>
                     </div>
 
                     <!--Keep This Empty / Menu will come through Javascript-->
@@ -162,12 +168,20 @@
 
         <!-- Mobile Header -->
         <div class="mobile-header">
-            <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
+            <div class="logo"><a href="index.html"><img src="images/logo.png" alt="" title=""></a></div>
 
             <!--Nav Box-->
             <div class="nav-outer clearfix">
 
                 <div class="outer-box">
+                    <!-- Search Btn -->
+                    <div class="search-box">
+                        <button class="search-btn mobile-search-btn"><i class="flaticon-magnifying-glass"></i></button>
+                    </div>
+
+                    <!-- Cart Btn -->
+                    <button class="cart-btn"><i class="icon flaticon-shopping-cart"></i><span class="count">3</span></button>
+
                     <a href="#nav-mobile" class="mobile-nav-toggler navbar-trigger"><span class="fa fa-bars"></span></a>
                 </div>
             </div>
@@ -175,190 +189,319 @@
 
         <!-- Mobile Nav -->
         <div id="nav-mobile"></div>
+
+        <!-- Header Search -->
+        <div class="search-popup">
+            <span class="search-back-drop"></span>
+            <button class="close-search"><span class="fa fa-times"></span></button>
+            
+            <div class="search-inner">
+                <form method="post" action="blog-showcase.html">
+                    <div class="form-group">
+                        <input type="search" name="search-field" value="" placeholder="Search..." required="">
+                        <button type="submit"><i class="flaticon-magnifying-glass"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- End Header Search -->
+
+        <!-- Sidebar Cart  -->
+        <div class="sidebar-cart">
+            <span class="cart-back-drop"></span>
+            <div class="shopping-cart">
+                <div class="cart-header">
+                    <div class="title">Shopping Cart <span>(3)</span></div>
+                    <button class="close-cart"><span class="flaticon-add"></span></button>
+                </div>
+                <ul class="shopping-cart-items">
+                    <li class="cart-item">
+                        <img src="images/resource/products/product-thumb-1.jpg" alt="#" class="thumb" />
+                        <span class="item-name">First Aid Kit</span>
+                        <span class="item-quantity">1 x <span class="item-amount">$50.00</span></span>
+                        <a href="shop-single.html" class="product-detail"></a>
+                        <button class="remove">Remove</button>
+                    </li>
+
+                    <li class="cart-item">
+                        <img src="images/resource/products/product-thumb-2.jpg" alt="#" class="thumb"  />
+                        <span class="item-name">Vitamin Tablet</span>
+                        <span class="item-quantity">1 x <span class="item-amount">$25.00</span></span>
+                        <a href="shop-single.html" class="product-detail"></a>
+                        <button class="remove">Remove</button>
+                    </li>
+
+                    <li class="cart-item">
+                        <img src="images/resource/products/product-thumb-3.jpg" alt="#" class="thumb"  />
+                        <span class="item-name">Zinc Tablet</span>
+                        <span class="item-quantity">1 x <span class="item-amount">$15.00</span></span>
+                        <a href="shop-single.html" class="product-detail"></a>
+                        <button class="remove">Remove</button>
+                    </li>
+                </ul>
+
+                <div class="cart-footer">
+                    <div class="shopping-cart-total"><strong>Subtotal:</strong> $90.00</div>
+                    <a href="shopping-cart.html" class="theme-btn btn-style-three"><span class="btn-title">View Cart</span></a>
+                    <a href="checkout.html" class="theme-btn btn-style-one"><span class="btn-title">Checkout</span></a>
+                </div>
+            </div> <!-- End shopping-cart -->
+        </div>
+        <!-- End Sidebar Cart  -->
     </header>
     <!--End Main Header -->
 
     <!--Page Title-->
-    <section class="page-title" style="background-image: url(images/background/1-1.png);">
+    <section class="page-title" style="background-image: url(images/background/8.jpg);">
         <div class="auto-container">
             <div class="title-outer">
-                <h1>Services</h1>
+                <h1>Doctor Detail</h1>
                 <ul class="page-breadcrumb">
                     <li><a href="index.html">Home</a></li>
-                    <li>Services</li>
+                    <li>Doctors</li>
                 </ul> 
             </div>
         </div>
     </section>
     <!--End Page Title-->
 
-	<!-- Services Section -->
-	<section class="services-section" style="background-image: url('background-image.jpg'); background-size: cover; background-position: center;">
-	  <div class="auto-container">
-		<div class="sec-title text-center">
-		  <span class="sub-title">OUR SERVICES</span>
-		  <h2>Comprehensive Medical Services for Your Well-Being</h2>
-		  <span class="divider"></span>
+	<!-- Doctor Detail Section -->
+	<section class="doctor-detail-section">
+		<div class="auto-container">
+			<!-- Doctor 1: Dr. Tony Thong -->
+			<div class="row align-items-center">
+				<!-- Sidebar Side -->
+				<div class="sidebar-side col-lg-4 col-md-12 col-sm-12">
+					<div class="doctor-image">
+						<img src="Doctor_Thong.jpg" alt="Dr. Tony Thong">
+					</div>
+				</div>
+				<!-- End Sidebar Side -->
+
+				<!-- Content Side -->
+				<div class="content-side col-lg-8 col-md-12 col-sm-12">
+					<div class="doctor-card">
+						<h3 class="name">Dr. Tony Thong</h3>
+						<span class="designation">(MBBS) University of Malaya</span>
+						<div class="text">
+							Dr. Tony Thong has dedicated his career to providing high-quality medical care and building a trusted healthcare facility in Bahau. His commitment to patient well-being has been central to the clinic's success.
+						</div>
+						<ul class="doctor-info-list">
+							<li>
+								<strong>Speciality:</strong>
+								<p>General Medicine <br>Patient Care</p>
+							</li>
+							<li>
+								<strong>Education:</strong>
+								<p>Bachelor of Medicine, Bachelor of Surgery (MBBS) from the University of Malaya</p>
+							</li>
+							<li>
+								<strong>Experience:</strong>
+								<p>Over 10 years of medical practice <br>President of Rotary Club Bahau</p>
+							</li>
+							<li>
+								<strong>Address:</strong>
+								<p>34, Jalan Besar, 72100 Bahau, Negeri Sembilan</p>
+							</li>
+							<li>
+								<strong>Phone:</strong>
+								<p><a href="tel:+60-06-4541048">+60-06-454 1048</a></p>
+							</li>
+							<li>
+								<strong>Email:</strong>
+								<p><a href="mailto:thongclinic@gmail.com">thongclinic@gmail.com</a></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- End Content Side -->
+			</div>
+			<!-- End Doctor 1 -->
+
+			<!-- Doctor 2: Dr. Chia -->
+			<div class="row align-items-center">
+				<!-- Sidebar Side -->
+				<div class="sidebar-side col-lg-4 col-md-12 col-sm-12">
+					<div class="doctor-image">
+						<img src="Doctor_Chia.jpg" alt="Dr. Chia">
+					</div>
+				</div>
+				<!-- End Sidebar Side -->
+
+				<!-- Content Side -->
+				<div class="content-side col-lg-8 col-md-12 col-sm-12">
+					<div class="doctor-card">
+						<h3 class="name">Dr. Chia</h3>
+						<span class="designation">(MBBS) University of Malaya</span>
+						<div class="text">
+							Dr. Chia, following in his father’s footsteps, brings additional expertise and dedication to the clinic, ensuring continued excellence in patient care.
+						</div>
+						<ul class="doctor-info-list">
+							<li>
+								<strong>Speciality:</strong>
+								<p>General Medicine <br>Patient Care</p>
+							</li>
+							<li>
+								<strong>Education:</strong>
+								<p>Bachelor of Medicine, Bachelor of Surgery (MBBS) from the University of Malaya</p>
+							</li>
+							<li>
+								<strong>Experience:</strong>
+								<p>Over 10 years of medical practice</p>
+							</li>
+							<li>
+								<strong>Address:</strong>
+								<p>34, Jalan Besar, 72100 Bahau, Negeri Sembilan</p>
+							</li>
+							<li>
+								<strong>Phone:</strong>
+								<p><a href="tel:+60-06-4541048">+60-06-454 1048</a></p>
+							</li>
+							<li>
+								<strong>Email:</strong>
+								<p><a href="mailto:thongclinic@gmail.com">thongclinic@gmail.com</a></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- End Content Side -->
+			</div>
+			<!-- End Doctor 2 -->
 		</div>
-		<div class="row justify-content-center">
-		  <!-- Service Block -->
-		  <div class="service-block col-lg-4 col-md-6 col-sm-12">
-			<div class="inner-box">
-			  <span class="icon flaticon-heartbeat"></span>
-			  <h5><a href="#">General Services</a></h5>
-			  <div class="text">
-				<ul>
-				  <li><strong>Medical Consultations:</strong> Comprehensive assessments and personalized care plans for various health conditions.</li>
-				  <li><strong>Preventive Care:</strong> Health screenings, vaccinations, and preventive advice to maintain your health.</li>
-				  <li><strong>Chronic Disease Management:</strong> Ongoing care for conditions like diabetes, hypertension, and kidney stones.</li>
-				</ul>
-			  </div>
-			</div>
-		  </div>
-
-		  <!-- Service Block -->
-		  <div class="service-block col-lg-4 col-md-6 col-sm-12">
-			<div class="inner-box">
-			  <span class="icon flaticon-heartbeat"></span>
-			  <h5><a href="#">Patient Care</a></h5>
-			  <div class="text">
-				<p>At Thong's Clinic, we prioritize personalized and attentive care for every patient. Our services cater to diverse needs, ensuring optimal health outcomes. Whether you need general consultations or specialized care, we're here to support your health and well-being.</p>
-			  </div>
-			</div>
-		  </div>
-
-		  <!-- Service Block -->
-		  <div class="service-block col-lg-4 col-md-6 col-sm-12">
-			<div class="inner-box">
-			  <span class="icon flaticon-lab"></span>
-			  <h5><a href="#">Diagnostic Services</a></h5>
-			  <div class="text">
-				<ul>
-				  <li><strong>Laboratory Tests:</strong> Basic tests, including blood work and urine analysis.</li>
-				  <li><strong>Imaging Services:</strong> X-rays and referrals for advanced imaging.</li>
-				  <li><strong>Influenza and COVID-19 Testing:</strong> Rapid and accurate testing for these infections.</li>
-				</ul>
-			  </div>
-			</div>
-		  </div>
-
-		  <!-- Service Block -->
-		  <div class="service-block col-lg-4 col-md-6 col-sm-12">
-			<div class="inner-box">
-			  <span class="icon flaticon-first-aid"></span>
-			  <h5><a href="#">Specialized Services</a></h5>
-			  <div class="text">
-				<ul>
-				  <li><strong>Pregnancy Check-Ups and Scans:</strong> Comprehensive prenatal care to ensure mother and baby's health.</li>
-				  <li><strong>Kidney Stones Treatment:</strong> Management and lifestyle advice for kidney stones (sakit batu karang).</li>
-				  <li><strong>Diabetes Care:</strong> Specialized plans including regular monitoring and dietary advice.</li>
-				</ul>
-			  </div>
-			</div>
-		  </div>
-		</div>
-	  </div>
 	</section>
-	<!-- End Services Section -->
-	
+	<!-- End Doctor Detail Section -->
 
-	<!-- Services Section CSS -->
+	<!-- Doctor Detail CSS -->
 	<style>
-	.services-section {
-	  padding: 60px 0;
-	  display: flex;
-	  justify-content: center;
-	  align-items: center;
-	  flex-direction: column;
-	  background-size: cover;
-	  background-position: center;
+		.doctor-detail-section .row {
+		margin-bottom: 40px; /* Space between each doctor section */
 	}
 
-	.sec-title {
-	  margin-bottom: 50px;
+	.doctor-image img {
+		width: 100%;
+		max-width: 300px; /* Adjust max width for better alignment */
+		height: auto;
+		border-radius: 8px;
+		object-fit: cover;
+		border: 2px solid #ddd;
+		margin: 0 auto; /* Center the image within its column */
 	}
 
+	.doctor-card {
+		background-color: #f9f9f9;
+		padding: 20px;
+		border-radius: 8px;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	}
 
-	.sec-title .sub-title {
-		font-size: 18px;
-		color: #3498db;
-		display: block;
+	.doctor-card h3.name {
+		color: #2c3e50;
+		font-size: 24px;
 		margin-bottom: 10px;
 	}
 
-	.sec-title h2 {
-		font-size: 32px;
-		margin-bottom: 20px;
-	}
-
-	.sec-title .divider {
-		width: 50px;
-		height: 4px;
-		background: #3498db;
-		margin: 0 auto;
-		margin-bottom: 40px;
-	}
-
-	.service-block {
-		margin-bottom: 30px;
-	}
-
-	.inner-box {
-    background-color: #fff;
-    padding: 30px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    height: 400px;
-    overflow-y: auto; 
-    -ms-overflow-style: none; 
-    scrollbar-width: none;
-	}
-
-	.inner-box::-webkit-scrollbar {
-		display: none; 
-	}
-
-	.icon {
-		font-size: 40px;
-		color: #3498db;
-		margin-bottom: 15px;
-	}
-
-	h5 {
-		font-size: 22px;
-		color: #2c3e50;
-		margin-bottom: 15px;
-	}
-
-	h5 a {
-		text-decoration: none;
-		color: #2c3e50;
-	}
-
-	.text {
+	.doctor-card .designation {
+		color: #8e8e8e;
 		font-size: 16px;
+		margin-bottom: 20px;
+		display: block;
+	}
+
+	.doctor-card .text {
+		margin-bottom: 20px;
 		color: #5a5a5a;
-		line-height: 1.8;
+		font-size: 16px;
 	}
 
-	.text ul {
-		padding-left: 20px;
-		list-style: disc;
+	.doctor-info-list {
+		list-style: none;
+		padding: 0;
 	}
 
-	.text ul li {
+	.doctor-info-list li {
 		margin-bottom: 10px;
 	}
 
-	.text p {
-		margin-bottom: 15px;
+	.doctor-info-list strong {
+		color: #2c3e50;
+		font-size: 16px;
 	}
+
+	.doctor-info-list p {
+		margin: 0;
+		color: #5a5a5a;
+	}
+
+	.doctor-info-list a {
+		color: #3498db;
+		text-decoration: none;
+	}
+
+	.doctor-info-list a:hover {
+		text-decoration: underline;
+	}
+
 	</style>
-	<!-- End Services Section CSS -->
-		
-		<div class="spacer" style="height: 50px;"></div>
-		
-       <!-- Main Footer -->
+	<!-- End Doctor Detail CSS -->
+
+
+    <!-- Team Section -->
+	<section class="team-section">
+		<div class="auto-container">
+			<!-- Section Title -->
+			<div class="section-title text-center">
+				<h2>Our Team of Doctors</h2>
+				<p>Meet the dedicated professionals providing exceptional care at our clinic.</p>
+			</div>
+
+			<div class="row justify-content-center">
+				<!-- Team Block -->
+				<div class="team-block col-lg-3 col-md-6 col-sm-12 wow fadeInUp">
+					<div class="inner-box">
+						<figure class="image"><img src="Doctor_Thong.jpg" alt="Dr. Tony Thong"></figure>
+						<div class="info-box">
+							<h4 class="name"><a href="doctor-detail.html">Dr. Tony Thong</a></h4>
+							<span class="designation">Doctor at Dr.Thong Clinic</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Team Block -->
+				<div class="team-block col-lg-3 col-md-6 col-sm-12 wow fadeInUp">
+					<div class="inner-box">
+						<figure class="image"><img src="Doctor_Chia.jpg" alt="Dr. Chia"></figure>
+						<div class="info-box">
+							<h4 class="name"><a href="doctor-detail.html">Dr. Chia</a></h4>
+							<span class="designation">Doctor at Dr.Thong Clinic</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Team Section -->
+
+	<!-- Team Section CSS -->
+	<style>
+		.section-title {
+			margin-bottom: 40px; /* Space between title and team blocks */
+		}
+
+		.section-title h2 {
+			font-size: 32px;
+			color: #2c3e50;
+			font-weight: 700;
+		}
+
+		.section-title p {
+			font-size: 16px;
+			color: #5a5a5a;
+			margin-top: 10px;
+		}
+	</style>
+	<!-- End Team Section CSS -->
+	
+    <!-- Main Footer -->
     <footer class="main-footer">
         <!--Widgets Section-->
         <div class="widgets-section" style="background-image: url(images/background/7.jpg);">
@@ -379,7 +522,7 @@
                             <!--Footer Column-->
                         </div>
                     </div>
-					
+
                     <!--Big Column-->
 				   <div class="big-column col-xl-6 col-lg-12 col-md-12 col-sm-12 d-flex justify-content-end">
 						<div class="row">
@@ -498,7 +641,7 @@
 </div><!-- End Page Wrapper -->
 
 
-<script src="js/jquery.js"></script>  
+<script src="js/jquery.js"></script> 
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.fancybox.js"></script>

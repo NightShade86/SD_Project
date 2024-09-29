@@ -1,5 +1,5 @@
 
-<a?php
+<?php
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -69,11 +69,11 @@ ini_set('display_errors', 1);
                     <div class="nav-outer">
                         <nav class="nav main-menu">
                             <ul class="navigation" id="navbar">
-                                <li class="current"><a href="index_patient.html">Home</a></li>
-								<li><a href="services_patient.html">Services</a></li>
-								<li><a href="doctor-detail_patient.html">Doctor Detail</a></li>
-								<li><a href="about-us_patient.html">About Us</a></li>
-								<li><a href="contact_patient.html">Contact</a></li>
+                                <li class="current"><a href="index_patient.php">Home</a></li>
+								<li><a href="services_patient.php">Services</a></li>
+								<li><a href="doctor-detail_patient.php">Doctor Detail</a></li>
+								<li><a href="about-us_patient.php">About Us</a></li>
+								<li><a href="contact_patient.php">Contact</a></li>
 								<li class="dropdown">
 									<span>
 										<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
