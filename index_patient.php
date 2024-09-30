@@ -1,5 +1,5 @@
 
-<a?php
+<?php
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -69,13 +69,51 @@ ini_set('display_errors', 1);
                     <div class="nav-outer">
                         <nav class="nav main-menu">
                             <ul class="navigation" id="navbar">
-                                <li class="current"><a href="index_patient.html">Home</a></li>
-								<li><a href="services_patient.html">Services</a></li>
-								<li><a href="doctor-detail_patient.html">Doctor Detail</a></li>
-								<li><a href="about-us_patient.html">About Us</a></li>
-								<li><a href="contact_patient.html">Contact</a></li>
-								<li><a href="profile.php">Profile</a></li>
-                                <li><a href="logout.php">Log Out</a></li>
+                                <li class="current"><a href="index_patient.php">Home</a></li>
+								<li><a href="services_patient.php">Services</a></li>
+								<li><a href="doctor-detail_patient.php">Doctor Detail</a></li>
+								<li><a href="about-us_patient.php">About Us</a></li>
+								<li><a href="contact_patient.php">Contact</a></li>
+								<li class="dropdown">
+									<span>
+										<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+											<path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1z"/>
+											<path d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 10a5 5 0 0 0-4.546 3 1 1 0 0 0 .657 1.07c.068.016.134.03.2.04A5.992 5.992 0 0 0 8 12a5.992 5.992 0 0 0 4.689 2.11c.066-.01.132-.024.2-.04a1 1 0 0 0 .657-1.07A5 5 0 0 0 8 10z"/>
+										</svg>
+										<?php 
+											 $userid = $_SESSION['USER_ID'];
+											 
+											if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+												echo " Welcome, " . htmlspecialchars($userid);
+											} else {
+												echo " Profile"; // Default text when user is not logged in
+											}
+										?>
+										<style>
+										.dropdown span {
+											display: flex;
+											align-items: center; /* Vertically center the icon and text */
+											font-size: 14px; /* Adjust font size as needed */
+										}
+
+										.dropdown span svg {
+											margin-right: 5px; /* Space between icon and text */
+											fill: #ffffff; /* Change the icon color if needed */
+										}
+
+										</style>
+									</span>
+									<ul>
+										<li><a href="profile.php">Profile</a></li>
+										<?php 
+											if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+												echo "<li><a href='logout.php'>Log Out</a></li>";
+											} else {
+												echo "<li><a href='login.php'>Log In</a></li>";
+											}
+										?>
+									</ul>
+								</li>
                                 <!-- <span>Blog</span>
                                     <ul>
                                         <li><a href="blog-checkboard.html">Checkerboard</a></li>
@@ -675,44 +713,182 @@ ini_set('display_errors', 1);
      
     <!-- End Appointment Section -->
 	
-    <!-- Sent Feedback Section -->
-	<section class="feedback-section">
-		<div class="auto-container">
-			
-			<div class="sec-title text-center">
-				<span class="title">WE VALUE YOUR FEEDBACK</span>
-				<h2>Send Us Your Feedback</h2>
-				<span class="divider"></span>
-			</div>
+   <!-- Sent Feedback PHP -->
+	
+	<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-			<div class="row">
-				<div class="feedback-block col-lg-8 col-md-10 col-sm-12 mx-auto wow fadeInUp">
-					<div class="inner-box">
-						<form action="submit_feedback.php" method="POST">
-							<div class="form-group">
-								<label for="name">Your Name:</label>
-								<input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
-							</div>
+if ($_SESSION['loggedin']) {
+    $userid = $_SESSION['USER_ID'];
+    $role = $_SESSION['role'];
+} else {
+    $userid = 'Guest';
+    $role = 'Guest';
+}
+?>
 
-							<div class="form-group">
-								<label for="email">Your Email:</label>
-								<input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
-							</div>
+<!-- Sent Feedback Section -->
+<section class="feedback-section">
+    <div class="auto-container">
+        
+        <div class="sec-title text-center">
+            <span class="title">WE VALUE YOUR FEEDBACK</span>
+            <h2>Send Us Your Feedback</h2>
+            <span class="divider"></span>
+        </div>
 
-							<div class="form-group">
-								<label for="message">Your Feedback:</label>
-								<textarea id="message" name="message" class="form-control" rows="5" placeholder="Enter your feedback" required></textarea>
-							</div>
+        <div class="row">
+            <div class="feedback-block col-lg-8 col-md-10 col-sm-12 mx-auto wow fadeInUp">
+                <div class="inner-box">
+                    <form action="feedback_process.php" method="post">
+                        <div class="form-group">
+                            <label for="fname">First Name:</label>
+                            <input type="text" id="fname" name="fname" class="form-control" placeholder="Please enter your first name" required>
+                        </div>
 
-							<div class="form-group text-center">
-								<button type="submit" class="btn btn-primary">Submit Feedback</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+                        <div class="form-group">
+                            <label for="lname">Last Name:</label>
+                            <input type="text" id="lname" name="lname" class="form-control" placeholder="Please enter your last name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Please enter your email" required>
+                        </div>
+
+                        <h3>1. Rating System</h3>
+
+                        <label for="overall_rating">Overall Satisfaction (1-10):</label><br>
+                        <input type="range" name="overall_rating" id="overall_rating" min="1" max="10" value="5" oninput="updateValue('overall_rating_value', this.value)">
+                        <span id="overall_rating_value">5</span><br><br>
+
+                        <label for="design_rating">Design (1-10):</label><br>
+                        <input type="range" name="design_rating" id="design_rating" min="1" max="10" value="5" oninput="updateValue('design_rating_value', this.value)">
+                        <span id="design_rating_value">5</span><br><br>
+
+                        <label for="usability_rating">Usability (1-10):</label><br>
+                        <input type="range" name="usability_rating" id="usability_rating" min="1" max="10" value="5" oninput="updateValue('usability_rating_value', this.value)">
+                        <span id="usability_rating_value">5</span><br><br>
+
+                        <label for="performance_rating">Performance (1-10):</label><br>
+                        <input type="range" name="performance_rating" id="performance_rating" min="1" max="10" value="5" oninput="updateValue('performance_rating_value', this.value)">
+                        <span id="performance_rating_value">5</span><br><br>
+
+                        <label for="content_rating">Content Relevance (1-10):</label><br>
+                        <input type="range" name="content_rating" id="content_rating" min="1" max="10" value="5" oninput="updateValue('content_rating_value', this.value)">
+                        <span id="content_rating_value">5</span><br><br>
+
+                        <h3>2. Open-ended Questions</h3>
+
+                        <div class="form-group">
+                            <label for="positive_feedback">What did you like most about our website?</label>
+                            <textarea id="positive_feedback" name="positive_feedback" class="form-control" rows="5" placeholder="Enter your feedback" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="improvements">What can we improve?</label>
+                            <textarea id="improvements" name="improvements" class="form-control" rows="5" placeholder="Enter your feedback" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="missing_info">Was there anything you were looking for but couldn’t find?</label>
+                            <textarea id="missing_info" name="missing_info" class="form-control" rows="5" placeholder="Enter your feedback" required></textarea>
+                        </div>
+
+                        <h3>3. Multiple-choice Questions</h3>
+
+                        <div class="form-group">
+                            <label for="navigation_difficulty">How easy was it to navigate the website?</label>
+                            <select name="navigation_difficulty" id="navigation_difficulty" class="form-control">
+                                <option value="Very Easy">Very Easy</option>
+                                <option value="Easy">Easy</option>
+                                <option value="Neutral">Neutral</option>
+                                <option value="Difficult">Difficult</option>
+                                <option value="Very Difficult">Very Difficult</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="visit_reason">What best describes your reason for visiting?</label>
+                            <select name="visit_reason" id="visit_reason" class="form-control">
+                                <option value="Browsing">Browsing</option>
+                                <option value="Looking for Information">Looking for Information</option>
+                                <option value="Customer Support">Customer Support</option>
+                                <option value="Create an account">Create an account</option>
+                                <option value="Create an appointment">Create an appointment</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="website_discovery">How did you find our website?</label>
+                            <select name="website_discovery" id="website_discovery" class="form-control">
+                                <option value="Search Engine">Search Engine</option>
+                                <option value="Social Media">Social Media</option>
+                                <option value="Referral">Referral</option>
+                            </select>
+                        </div>
+
+                        <h3>4. Usability & Functionality</h3>
+
+                        <div class="form-group">
+                            <label for="functionality_issue">Did any part of the site not work as expected?</label>
+                            <textarea id="functionality_issue" name="functionality_issue" class="form-control" rows="5" placeholder="Describe any issue"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="loading_speed">Did the website load quickly?</label>
+                            <select name="loading_speed" id="loading_speed" class="form-control">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+
+                        <h3>5. NPS (Net Promoter Score)</h3>
+
+                        <label for="recommendation_rate">How likely are you to recommend our website to a friend? (0-10)</label><br>
+                        <input type="range" name="recommendation_rate" id="recommendation_rate" min="1" max="10" value="5" oninput="updateValue('recommendation_rate_value', this.value)">
+                        <span id="recommendation_rate_value">5</span><br><br>
+
+                        <h3>6. Additional Comments</h3>
+
+                        <div class="form-group">
+                            <label for="additional_comments">Any additional comments or suggestions?</label>
+                            <textarea id="additional_comments" name="additional_comments" class="form-control" rows="5"></textarea>
+                        </div>
+
+                        <h3>8. Consent for Follow-up</h3>
+
+                        <div class="form-group">
+                            <label for="follow_up">Would you like to be contacted about your feedback?</label>
+                            <select name="follow_up" id="follow_up" class="form-control">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+
+                        <input type="hidden" name="userid" id="userid" value="<?php echo $userid; ?>">
+                        <input type="hidden" name="role" id="role" value="<?php echo $role; ?>">
+
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary">Submit Feedback</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Feedback Scripts -->
+<script>
+    function updateValue(spanId, value) {
+        document.getElementById(spanId).textContent = value;
+    }
+</script>
 
 	<style>
 		.feedback-section {

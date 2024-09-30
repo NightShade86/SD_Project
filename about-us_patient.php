@@ -1,3 +1,9 @@
+<?php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,13 +72,51 @@
                 <div class="nav-outer">
                     <nav class="nav main-menu">
                         <ul class="navigation" id="navbar">
-								<li><a href="index_patient.html">Home</a></li>
-								<li><a href="services_patient.html">Services</a></li>
-								<li><a href="doctor-detail_patient.html">Doctor Detail</a></li>
-								<li class="current"><a href="about-us_patient.html">About Us</a></li>
-								<li><a href="contact_patient.html">Contact</a></li>
-								<li><a href="profile.php">Profile</a></li>
-                                <li><a href="logout.php">Log Out</a></li>
+								<li><a href="index_patient.php">Home</a></li>
+								<li><a href="services_patient.php">Services</a></li>
+								<li><a href="doctor-detail_patient.php">Doctor Detail</a></li>
+								<li class="current"><a href="about-us_patient.php">About Us</a></li>
+								<li><a href="contact_patient.php">Contact</a></li>
+								<li class="dropdown">
+									<span>
+										<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+											<path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1z"/>
+											<path d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 10a5 5 0 0 0-4.546 3 1 1 0 0 0 .657 1.07c.068.016.134.03.2.04A5.992 5.992 0 0 0 8 12a5.992 5.992 0 0 0 4.689 2.11c.066-.01.132-.024.2-.04a1 1 0 0 0 .657-1.07A5 5 0 0 0 8 10z"/>
+										</svg>
+										<?php 
+											$userid = $_SESSION['USER_ID'];
+											
+											if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+												echo " Welcome, " . htmlspecialchars($userid);
+											} else {
+												echo " Profile"; // Default text when user is not logged in
+											}
+										?>
+										<style>
+										.dropdown span {
+											display: flex;
+											align-items: center; /* Vertically center the icon and text */
+											font-size: 14px; /* Adjust font size as needed */
+										}
+
+										.dropdown span svg {
+											margin-right: 5px; /* Space between icon and text */
+											fill: #ffffff; /* Change the icon color if needed */
+										}
+
+										</style>
+									</span>
+									<ul>
+										<li><a href="profile.php">Profile</a></li>
+										<?php 
+											if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+												echo "<li><a href='logout.php'>Log Out</a></li>";
+											} else {
+												echo "<li><a href='login.php'>Log In</a></li>";
+											}
+										?>
+									</ul>
+								</li>
                             <!-- <li class="dropdown">
                                 <span>Blog</span>
                                 <ul>

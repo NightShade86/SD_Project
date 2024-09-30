@@ -71,7 +71,7 @@ ini_set('display_errors', 1);
                     <div class="nav-outer">
                         <nav class="nav main-menu">
                             <ul class="navigation" id="navbar">
-                                <li><a href="index_guess.html">Home</a></li>
+                                <li><a href="index_guess.php">Home</a></li>
 								<li><a href="services_guess.html">Services</a></li>
 								<li><a href="doctor-detail_guess.html">Doctor Detail</a></li>
 								<li><a href="about-us_guess.html">About Us</a></li>

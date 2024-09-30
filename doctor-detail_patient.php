@@ -8,7 +8,7 @@ ini_set('display_errors', 1);
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Medicoz | Health and Medical HTML Template | Login</title>
+<title>Medicoz | Health and Medical HTML Template | Doctor Detail</title>
 
 <!-- Stylesheets -->
 <link href="css/bootstrap.css" rel="stylesheet">
@@ -44,8 +44,8 @@ ini_set('display_errors', 1);
                 <div class="inner-container">
                     <div class="top-left">
                         <ul class="contact-list clearfix">
-							<li><i class="flaticon-hospital-1"></i>34, Jalan Besar, 72100 Bahau, Negeri Sembilan </li>
-                            <li><i class="flaticon-back-in-time"></i>Monday - Thursday 9.00am - 9.00pm , Friday 9.00am - 5.00pm. Sunday and Saturday CLOSED</li>
+                            <li><i class="flaticon-hospital-1"></i>34, Jalan Besar, 72100 Bahau, Negeri Sembilan <br>Negeri Sembilan, Malaysia </li>
+                            <li><i class="flaticon-back-in-time"></i>Mon - Thursday 9.00 - 21.00. <br>Sunday and Saturday CLOSED</li>
                         </ul>
                     </div>
                     <div class="top-right">
@@ -65,7 +65,7 @@ ini_set('display_errors', 1);
                 <div class="main-box">
 
                     <div class="logo-box">
-                        <div class="logo"><a href="index_patient.php"><img src="images/file.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index.html"><img src="images/logo-9.png" alt="" title=""></a></div>
                     </div>
 
                     <!--Nav Box-->
@@ -74,7 +74,7 @@ ini_set('display_errors', 1);
                             <ul class="navigation" id="navbar">
                                 <li><a href="index_patient.php">Home</a></li>
 								<li><a href="services_patient.php">Services</a></li>
-								<li><a href="doctor-detail_patient.php">Doctor Detail</a></li>
+								<li class="current"><a href="doctor-detail_patient.php">Doctor Detail</a></li>
 								<li><a href="about-us_patient.php">About Us</a></li>
 								<li><a href="contact_patient.php">Contact</a></li>
 								<li class="dropdown">
@@ -117,7 +117,7 @@ ini_set('display_errors', 1);
 										?>
 									</ul>
 								</li>
-                                  <!--  <span>Blog</span>
+                              <!--     <span>Blog</span>
                                     <ul>
                                         <li><a href="blog-checkboard.html">Checkerboard</a></li>
                                         <li><a href="blog-masonry.html">Masonry</a></li>
@@ -145,7 +145,8 @@ ini_set('display_errors', 1);
                                         <li><a href="shopping-cart.html">Shopping Cart</a></li>
                                         <li><a href="checkout.html">Checkout</a></li>
                                     </ul>
-                                </li> -->
+                                </li>
+								<li class="dropdown"> --> 
 							</ul>
 						</nav>
 						<!-- Main Menu End-->
@@ -159,7 +160,7 @@ ini_set('display_errors', 1);
             <div class="auto-container">            
                 <div class="main-box">
                     <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index.html"><img src="images/logo.png" alt="" title=""></a></div>
                     </div>
 
                     <!--Keep This Empty / Menu will come through Javascript-->
@@ -169,10 +170,20 @@ ini_set('display_errors', 1);
 
         <!-- Mobile Header -->
         <div class="mobile-header">
-            <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
+            <div class="logo"><a href="index.html"><img src="images/logo.png" alt="" title=""></a></div>
 
             <!--Nav Box-->
             <div class="nav-outer clearfix">
+
+                <div class="outer-box">
+                    <!-- Search Btn -->
+                    <div class="search-box">
+                        <button class="search-btn mobile-search-btn"><i class="flaticon-magnifying-glass"></i></button>
+                    </div>
+
+                    <!-- Cart Btn -->
+                    <button class="cart-btn"><i class="icon flaticon-shopping-cart"></i><span class="count">3</span></button>
+
                     <a href="#nav-mobile" class="mobile-nav-toggler navbar-trigger"><span class="fa fa-bars"></span></a>
                 </div>
             </div>
@@ -180,74 +191,318 @@ ini_set('display_errors', 1);
 
         <!-- Mobile Nav -->
         <div id="nav-mobile"></div>
+
+        <!-- Header Search -->
+        <div class="search-popup">
+            <span class="search-back-drop"></span>
+            <button class="close-search"><span class="fa fa-times"></span></button>
+            
+            <div class="search-inner">
+                <form method="post" action="blog-showcase.html">
+                    <div class="form-group">
+                        <input type="search" name="search-field" value="" placeholder="Search..." required="">
+                        <button type="submit"><i class="flaticon-magnifying-glass"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- End Header Search -->
+
+        <!-- Sidebar Cart  -->
+        <div class="sidebar-cart">
+            <span class="cart-back-drop"></span>
+            <div class="shopping-cart">
+                <div class="cart-header">
+                    <div class="title">Shopping Cart <span>(3)</span></div>
+                    <button class="close-cart"><span class="flaticon-add"></span></button>
+                </div>
+                <ul class="shopping-cart-items">
+                    <li class="cart-item">
+                        <img src="images/resource/products/product-thumb-1.jpg" alt="#" class="thumb" />
+                        <span class="item-name">First Aid Kit</span>
+                        <span class="item-quantity">1 x <span class="item-amount">$50.00</span></span>
+                        <a href="shop-single.html" class="product-detail"></a>
+                        <button class="remove">Remove</button>
+                    </li>
+
+                    <li class="cart-item">
+                        <img src="images/resource/products/product-thumb-2.jpg" alt="#" class="thumb"  />
+                        <span class="item-name">Vitamin Tablet</span>
+                        <span class="item-quantity">1 x <span class="item-amount">$25.00</span></span>
+                        <a href="shop-single.html" class="product-detail"></a>
+                        <button class="remove">Remove</button>
+                    </li>
+
+                    <li class="cart-item">
+                        <img src="images/resource/products/product-thumb-3.jpg" alt="#" class="thumb"  />
+                        <span class="item-name">Zinc Tablet</span>
+                        <span class="item-quantity">1 x <span class="item-amount">$15.00</span></span>
+                        <a href="shop-single.html" class="product-detail"></a>
+                        <button class="remove">Remove</button>
+                    </li>
+                </ul>
+
+                <div class="cart-footer">
+                    <div class="shopping-cart-total"><strong>Subtotal:</strong> $90.00</div>
+                    <a href="shopping-cart.html" class="theme-btn btn-style-three"><span class="btn-title">View Cart</span></a>
+                    <a href="checkout.html" class="theme-btn btn-style-one"><span class="btn-title">Checkout</span></a>
+                </div>
+            </div> <!-- End shopping-cart -->
+        </div>
+        <!-- End Sidebar Cart  -->
     </header>
     <!--End Main Header -->
 
     <!--Page Title-->
-    <section class="page-title" style="background-image: url(images/background/1-1.png);">
+    <section class="page-title" style="background-image: url(images/background/8.jpg);">
         <div class="auto-container">
             <div class="title-outer">
-                <h1>Login</h1>
+                <h1>Doctor Detail</h1>
                 <ul class="page-breadcrumb">
                     <li><a href="index.html">Home</a></li>
-                    <li>Shop</li>
+                    <li>Doctors</li>
                 </ul> 
             </div>
         </div>
     </section>
     <!--End Page Title-->
 
-	<!--Login Section-->
-	<section class="login-section" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background-image: linear-gradient(to bottom, #f7f7f7, #fff);">
-		<div class="auto-container" style="width: 100%; max-width: 400px; background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
-			<div class="row clearfix" style="display: flex; justify-content: center;">
-				<div class="column col-lg-12 col-md-12 col-sm-12">
-					<!-- Login Form -->
-					<div class="login-form" style="background-color: #f7f7f7; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
-						<h2 style="text-align: center; color: #333; font-weight: bold;">Login</h2>
-						<!-- Error Message -->
-						<?php if (isset($_SESSION['error'])): ?>
-							<div class="error" style="color: red; text-align: center; padding: 10px; border-radius: 5px; background-color: #ffe6e6;">
-								<?php
-								echo $_SESSION['error'];
-								unset($_SESSION['error']);
-								?>
-							</div>
-						<?php endif; ?>
-						<form method="post" action="login_process.php">
-							<div class="form-group">
-								<label style="font-weight: bold; color: #333;">Username or Email</label>
-								<input type="text" name="uname" placeholder="Name or Email" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-							</div>
-							
-							<div class="form-group">
-								<label style="font-weight: bold; color: #333;">Enter Your Password</label>
-								<input type="password" name="pwd" placeholder="Password" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-							</div>
-							
-							<div class="form-group">
-								<input type="checkbox" name="remember_me" id="account-option-1" style="margin-right: 10px;">&nbsp; 
-								<label for="account-option-1" style="font-weight: bold; color: #333;">Remember me</label>
-							</div>
-							
-							<div class="form-group">
-								<button class="theme-btn btn-style-one" type="submit" name="login" style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer;">
-									<span class="btn-title">LOGIN</span>
-								</button>
-							</div>
-
-							<div class="form-group pass">
-								<a href="forgot_password.php" class="psw" style="color: #337ab7; text-decoration: none;">Lost your password?</a>
-							</div>
-						</form>
+	<!-- Doctor Detail Section -->
+	<section class="doctor-detail-section">
+		<div class="auto-container">
+			<!-- Doctor 1: Dr. Tony Thong -->
+			<div class="row align-items-center">
+				<!-- Sidebar Side -->
+				<div class="sidebar-side col-lg-4 col-md-12 col-sm-12">
+					<div class="doctor-image">
+						<img src="Doctor_Thong.jpg" alt="Dr. Tony Thong">
 					</div>
-					<!--End Login Form -->
+				</div>
+				<!-- End Sidebar Side -->
+
+				<!-- Content Side -->
+				<div class="content-side col-lg-8 col-md-12 col-sm-12">
+					<div class="doctor-card">
+						<h3 class="name">Dr. Tony Thong</h3>
+						<span class="designation">(MBBS) University of Malaya</span>
+						<div class="text">
+							Dr. Tony Thong has dedicated his career to providing high-quality medical care and building a trusted healthcare facility in Bahau. His commitment to patient well-being has been central to the clinic's success.
+						</div>
+						<ul class="doctor-info-list">
+							<li>
+								<strong>Speciality:</strong>
+								<p>General Medicine <br>Patient Care</p>
+							</li>
+							<li>
+								<strong>Education:</strong>
+								<p>Bachelor of Medicine, Bachelor of Surgery (MBBS) from the University of Malaya</p>
+							</li>
+							<li>
+								<strong>Experience:</strong>
+								<p>Over 10 years of medical practice <br>President of Rotary Club Bahau</p>
+							</li>
+							<li>
+								<strong>Address:</strong>
+								<p>34, Jalan Besar, 72100 Bahau, Negeri Sembilan</p>
+							</li>
+							<li>
+								<strong>Phone:</strong>
+								<p><a href="tel:+60-06-4541048">+60-06-454 1048</a></p>
+							</li>
+							<li>
+								<strong>Email:</strong>
+								<p><a href="mailto:thongclinic@gmail.com">thongclinic@gmail.com</a></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- End Content Side -->
+			</div>
+			<!-- End Doctor 1 -->
+
+			<!-- Doctor 2: Dr. Chia -->
+			<div class="row align-items-center">
+				<!-- Sidebar Side -->
+				<div class="sidebar-side col-lg-4 col-md-12 col-sm-12">
+					<div class="doctor-image">
+						<img src="Doctor_Chia.jpg" alt="Dr. Chia">
+					</div>
+				</div>
+				<!-- End Sidebar Side -->
+
+				<!-- Content Side -->
+				<div class="content-side col-lg-8 col-md-12 col-sm-12">
+					<div class="doctor-card">
+						<h3 class="name">Dr. Chia</h3>
+						<span class="designation">(MBBS) University of Malaya</span>
+						<div class="text">
+							Dr. Chia, following in his father’s footsteps, brings additional expertise and dedication to the clinic, ensuring continued excellence in patient care.
+						</div>
+						<ul class="doctor-info-list">
+							<li>
+								<strong>Speciality:</strong>
+								<p>General Medicine <br>Patient Care</p>
+							</li>
+							<li>
+								<strong>Education:</strong>
+								<p>Bachelor of Medicine, Bachelor of Surgery (MBBS) from the University of Malaya</p>
+							</li>
+							<li>
+								<strong>Experience:</strong>
+								<p>Over 10 years of medical practice</p>
+							</li>
+							<li>
+								<strong>Address:</strong>
+								<p>34, Jalan Besar, 72100 Bahau, Negeri Sembilan</p>
+							</li>
+							<li>
+								<strong>Phone:</strong>
+								<p><a href="tel:+60-06-4541048">+60-06-454 1048</a></p>
+							</li>
+							<li>
+								<strong>Email:</strong>
+								<p><a href="mailto:thongclinic@gmail.com">thongclinic@gmail.com</a></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- End Content Side -->
+			</div>
+			<!-- End Doctor 2 -->
+		</div>
+	</section>
+	<!-- End Doctor Detail Section -->
+
+	<!-- Doctor Detail CSS -->
+	<style>
+		.doctor-detail-section .row {
+		margin-bottom: 40px; /* Space between each doctor section */
+	}
+
+	.doctor-image img {
+		width: 100%;
+		max-width: 300px; /* Adjust max width for better alignment */
+		height: auto;
+		border-radius: 8px;
+		object-fit: cover;
+		border: 2px solid #ddd;
+		margin: 0 auto; /* Center the image within its column */
+	}
+
+	.doctor-card {
+		background-color: #f9f9f9;
+		padding: 20px;
+		border-radius: 8px;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	}
+
+	.doctor-card h3.name {
+		color: #2c3e50;
+		font-size: 24px;
+		margin-bottom: 10px;
+	}
+
+	.doctor-card .designation {
+		color: #8e8e8e;
+		font-size: 16px;
+		margin-bottom: 20px;
+		display: block;
+	}
+
+	.doctor-card .text {
+		margin-bottom: 20px;
+		color: #5a5a5a;
+		font-size: 16px;
+	}
+
+	.doctor-info-list {
+		list-style: none;
+		padding: 0;
+	}
+
+	.doctor-info-list li {
+		margin-bottom: 10px;
+	}
+
+	.doctor-info-list strong {
+		color: #2c3e50;
+		font-size: 16px;
+	}
+
+	.doctor-info-list p {
+		margin: 0;
+		color: #5a5a5a;
+	}
+
+	.doctor-info-list a {
+		color: #3498db;
+		text-decoration: none;
+	}
+
+	.doctor-info-list a:hover {
+		text-decoration: underline;
+	}
+
+	</style>
+	<!-- End Doctor Detail CSS -->
+
+
+    <!-- Team Section -->
+	<section class="team-section">
+		<div class="auto-container">
+			<!-- Section Title -->
+			<div class="section-title text-center">
+				<h2>Our Team of Doctors</h2>
+				<p>Meet the dedicated professionals providing exceptional care at our clinic.</p>
+			</div>
+
+			<div class="row justify-content-center">
+				<!-- Team Block -->
+				<div class="team-block col-lg-3 col-md-6 col-sm-12 wow fadeInUp">
+					<div class="inner-box">
+						<figure class="image"><img src="Doctor_Thong.jpg" alt="Dr. Tony Thong"></figure>
+						<div class="info-box">
+							<h4 class="name"><a href="doctor-detail.html">Dr. Tony Thong</a></h4>
+							<span class="designation">Doctor at Dr.Thong Clinic</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Team Block -->
+				<div class="team-block col-lg-3 col-md-6 col-sm-12 wow fadeInUp">
+					<div class="inner-box">
+						<figure class="image"><img src="Doctor_Chia.jpg" alt="Dr. Chia"></figure>
+						<div class="info-box">
+							<h4 class="name"><a href="doctor-detail.html">Dr. Chia</a></h4>
+							<span class="designation">Doctor at Dr.Thong Clinic</span>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-    <!--End Login Section-->
-	<div class="spacer" style="height: 50px;"></div>
+	<!-- End Team Section -->
+
+	<!-- Team Section CSS -->
+	<style>
+		.section-title {
+			margin-bottom: 40px; /* Space between title and team blocks */
+		}
+
+		.section-title h2 {
+			font-size: 32px;
+			color: #2c3e50;
+			font-weight: 700;
+		}
+
+		.section-title p {
+			font-size: 16px;
+			color: #5a5a5a;
+			margin-top: 10px;
+		}
+	</style>
+	<!-- End Team Section CSS -->
+	
     <!-- Main Footer -->
     <footer class="main-footer">
         <!--Widgets Section-->
@@ -260,9 +515,6 @@ ini_set('display_errors', 1);
                             <!--Footer Column-->
                             <div class="footer-column col-xl-7 col-lg-6 col-md-6 col-sm-12">
                                 <div class="footer-widget about-widget">
-                                    <div class="logo">
-                                        <a href="index.html"><img src="images/logo-2.png" alt="" /></a>
-                                    </div>
                                     <div class="text">
                                         <p>Thong's Clinic was established by Dr. Tony Thong, a dedicated physician with a vision to enhance healthcare services in Bahau. Since its inception, the clinic has grown and evolved, always maintaining its commitment to exceptional care. </p>
                                         <p>We are among the most qualified Doctos in the MY with over 10 years of quality training and experience.</p>
@@ -375,7 +627,7 @@ ini_set('display_errors', 1);
                     <div class="footer-nav">
                         <ul class="clearfix">
                            <li><a href="about-us_patient.html">Contact</a></li> 
-                           <li><a href="services_patient.html">Services</a></li>  
+                           <li><a href="services_patient.html">Supplier</a></li>  
                         </ul>
                     </div>
                     
@@ -391,7 +643,7 @@ ini_set('display_errors', 1);
 </div><!-- End Page Wrapper -->
 
 
-<script src="js/jquery.js"></script>  
+<script src="js/jquery.js"></script> 
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.fancybox.js"></script>
@@ -399,7 +651,7 @@ ini_set('display_errors', 1);
 <script src="js/mmenu.polyfills.js"></script>
 <script src="js/mmenu.js"></script>
 <script src="js/appear.js"></script>
-<script src="js/jquery.bootstrap-touchspin.js"></script>
+<script src="js/mixitup.js"></script>
 <script src="js/owl.js"></script>
 <script src="js/wow.js"></script>
 <script src="js/script.js"></script>
