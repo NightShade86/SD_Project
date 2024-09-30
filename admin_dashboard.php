@@ -392,7 +392,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                     
 
-                    <div class="content bg-white p-4 shadow-sm rounded" id="add-staff" style="display: none;">
+				<div class="content bg-white p-4 shadow-sm rounded" id="add-staff" style="display: none;">
                         <h2>New Staff</h2>
                         <?php if (!empty($errorMessage)) : ?>
                             <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -452,7 +452,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                             </div>
                         </form>
-                    </div>
+                    
 
                     <?php
                     // Initialize variables
@@ -546,15 +546,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $connection->close();
                     }
                     ?>
+				</div>
                     <!-- ... (rest of the code remains the same) -->
 
-                    <div class="content bg-white p-4 shadow-sm rounded" id="edit-staff" style="display: none;">
+                <div class="content bg-white p-4 shadow-sm rounded" id="edit-staff" style="display: none;">
                         <h2>Edit Staff Information</h2>
 
                         <?php if (!empty($errorMessage)) : ?>
                             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                                 <strong><?php echo $errorMessage; ?></strong>
- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         <?php endif; ?>
                         <form method="post">
@@ -619,7 +620,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                             </div>
                         </form>
-                    </div>
+                    
 
                     <?php
                     // Initialize variables
@@ -706,6 +707,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             document.getElementById("password").value = icNumber;
                         }
                     </script>
+					
+				</div>
 
                     <div class="content bg-white p-4 shadow-sm rounded" id="delete-staff" style="display: none;">
                         <h2>Delete Staff</h2>
