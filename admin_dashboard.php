@@ -12,165 +12,6 @@ if ($connection->connect_error) {
     die("Connection failed: " . $connection->connect_error);
 }
 */
-// Function to add staff
-function addStaff($connection, $data) {
-    try {
-        $stmt = $connection->prepare("INSERT INTO staff_info (FIRSTNAME, LASTNAME, NO_TEL, EMAIL, IC, STAFF_ID, PASSWORD, USERTYPE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssssi", $data["firstname"], $data["lastname"], $data["no_tel"], $data["email"], $data["ic"], $data["staff_id"], $data["password"], $data["usertype"]);
-        $stmt->execute();
-        $stmt->close();
-        return true;
-    } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
-        return false;
-    }
-}
-
-// Function to edit staff
-function editStaff($connection, $data) {
-    try {
-        $stmt = $connection->prepare("UPDATE staff_info SET FIRSTNAME = ?, LASTNAME = ?, NO_TEL = ?, EMAIL = ?, IC = ? WHERE STAFF_ID = ?");
-        $stmt->bind_param("ssssss", $data["firstname"], $data["lastname"], $data["no_tel"], $data["email"], $data["ic"], $data["staff_id"]);
-        $stmt->execute();
-        $stmt->close();
-        return true;
-    } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
-        return false;
-    }
-}
-
-// Function to delete staff
-function deleteStaff($connection, $staff_id) {
-    try {
-        $stmt = $connection->prepare("DELETE FROM staff_info WHERE STAFF_ID = ?");
-        $stmt->bind_param("s", $staff_id);
-        $stmt->execute();
-        $stmt->close();
-        return true;
-    } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
-        return false;
-    }
-}
-
-// Function to add patient
-function addPatient($connection, $data) {
-    try {
-        $stmt = $connection->prepare("INSERT INTO user_info (FIRSTNAME, LASTNAME, NO_TEL, EMAIL, IC, USER_ID) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssss", $data["firstname"], $data["lastname"], $data["no_tel"], $data["email"], $data["ic"], $data["patient_id"]);
-        $stmt->execute();
-        $stmt->close();
-        return true;
-    } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
-        return false;
-    }
-}
-
-// Function to edit patient
-function editPatient($connection, $data) {
-    try {
-        $stmt = $connection->prepare("UPDATE user_info SET FIRSTNAME = ?, LASTNAME = ?, NO_TEL = ?, EMAIL = ?, IC = ? WHERE USER_ID = ?");
-        $stmt->bind_param("ssssss", $data["firstname"], $data["lastname"], $data["no_tel"], $data["email"], $data["ic"], $data["patient_id"]);
-        $stmt->execute();
-        $stmt->close();
-        return true;
-    } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
-        return false;
-    }
-}
-
-// Function to delete patient
-function deletePatient($connection, $patient_id) {
-    try {
-        $stmt = $connection->prepare("DELETE FROM user_info WHERE USER_ID = ?");
-        $stmt->bind_param("s", $patient_id);
-        $stmt->execute();
-        $stmt->close();
-        return true;
-    } catch (Exception $e) {
-        echo "Error: " . $e->getMessage();
-        return false;
-    }
-}
-
-// Check if form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["add_staff"])) {
-        $data = array(
-            "firstname" => $_POST["firstname"],
-            "lastname" => $_POST["lastname"],
-            "no_tel" => $_POST["no_tel"],
-            "email" => $_POST["email"],
-            "ic" => $_POST["ic"],
-            "staff_id" => $_POST["staff_id"],
-            "password" => password_hash($_POST["password"], PASSWORD_DEFAULT),
-            "usertype" => $_POST["usertype"]
-        );
-        if (addStaff($connection, $data)) {
-            echo "Staff added successfully!";
-        } else {
-            echo "Error adding staff!";
-        }
-    } elseif (isset($_POST["edit_staff"])) {
-        $data = array(
-            "firstname" => $_POST["firstname"],
-            "lastname" => $_POST["lastname"],
-            "no_tel" => $_POST["no_tel"],
-            "email" => $_POST["email"],
-            "ic" => $_POST["ic"],
-            "staff_id" => $_POST["staff_id"]
-        );
-        if (editStaff($connection, $data)) {
-            echo "Staff updated successfully!";
-        } else {
-            echo "Error updating staff!";
-        }
-    } elseif (isset($_POST["delete_staff"])) {
-        $staff_id = $_POST["staff_id"];
-        if (deleteStaff($connection, $staff_id)) {
-            echo "Staff deleted successfully!";
-        } else {
-            echo "Error deleting staff!";
-        }
-    } elseif (isset($_POST["add_patient"])) {
-        $data = array(
-            "firstname" => $_POST["firstname"],
-            "lastname" => $_POST["lastname"],
-            "no_tel" => $_POST["no_tel"],
-            "email" => $_POST["email"],
-            "ic" => $_POST["ic"],
-            "patient_id" => $_POST["patient_id"]
-        );
-        if (addPatient($connection, $data)) {
-            echo "Patient added successfully!";
-        } else {
-            echo "Error adding patient!";
-        }
-    } elseif (isset($_POST["edit_patient"])) {
-        $data = array(
-            "firstname" => $_POST["firstname"],
-            "lastname" => $_POST["lastname"],
-            "no_tel" => $_POST["no_tel"],
-            "email" => $_POST["email"],
-            "ic" => $_POST["ic"],
-            "patient_id" => $_POST["patient_id"]
-        );
-        if (editPatient($connection, $data)) {
-            echo "Patient updated successfully!";
-        } else {
-            echo "Error updating patient!";
-        }
-    } elseif (isset($_POST["delete_patient"])) {
-        $patient_id = $_POST["patient_id"];
-        if (deletePatient($connection, $patient_id)) {
-            echo "Patient deleted successfully!";
-        } else {
-            echo "Error deleting patient!";
-        }
-    }
 }
 
 // HTML content
@@ -558,7 +399,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <a class="btn btn-outline-primary" href="#" role="button">Cancel</a>
                                 </div>
                             </div>
-                        </form>
+                        
                     
 
                     <?php
@@ -653,6 +494,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $connection->close();
                     }
                     ?>
+					</form>
 				</div>
                     
 
@@ -726,7 +568,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <a class="btn btn-outline-primary" href="#" role="button">Cancel</a>
                                 </div>
                             </div>
-                        </form>
+                        
                     
 
                     <?php
@@ -807,14 +649,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
                     ?>
 
-                    <script>
-                        // Function to autofill password with IC number
-                        function autofillPassword() {
-                            var icNumber = document.getElementById("ic_number").value;
-                            document.getElementById("password").value = icNumber;
-                        }
-                    </script>
-					
+						<script>
+							// Function to autofill password with IC number
+							function autofillPassword() {
+								var icNumber = document.getElementById("ic_number").value;
+								document.getElementById("password").value = icNumber;
+							}
+						</script>
+					</form>
 				</div>
 
                     <div class="content bg-white p-4 shadow-sm rounded" id="delete-staff" style="display: none;">
@@ -829,7 +671,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <a class="btn btn-outline-primary" href="#" role="button">Cancel</a>
                                 </div>
                             </div>
-                        </form>
+                        
+						<?php
+						if (isset($_GET["staff_id"])) {
+							$deleteStaffID = $_GET["staff_id"]; // Use a different variable name
+
+							$servername = "localhost";
+							$dbUsername = "root"; // Use a different variable name
+							$password = "";
+							$dbname = "dtcmsdb"; // Make sure the correct database is used
+
+							// Open connection
+							$connection = new mysqli($servername, $dbUsername, $password, $dbname);
+
+							// Check connection
+							if ($connection->connect_error) {
+								die("Connection failed: " . $connection->connect_error);
+							}
+
+							// Prepare and execute the delete query
+							$sqlDelete = "DELETE FROM staff_info WHERE STAFF_ID = ?";
+							$stmtDelete = $connection->prepare($sqlDelete);
+							$stmtDelete->bind_param("s", $deleteStaffID); // Bind the staff_id
+							$stmtDelete->execute();
+
+							// Check if any rows were affected (i.e., if deletion was successful)
+							if ($stmtDelete->affected_rows > 0) {
+								echo "Record with Staff ID $deleteStaffID deleted successfully.";
+							} else {
+								echo "No records deleted. Perhaps the record with Staff ID $deleteStaffID does not exist.";
+							}
+
+							// Close statement and connection
+							$stmtDelete->close();
+							$connection->close();
+						} else {
+							echo "No staff ID specified for deletion.";
+						}
+						?>
+						</form>
                     </div>
 					
 					<div class="content bg-white p-4 shadow-sm rounded" id="patient-section" style="display: none;">
@@ -1015,6 +895,82 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 									<a class="btn btn-outline-primary" href="#" role="button">Cancel</a>
 								</div>
 							</div>
+						
+						<?php
+						$patient_id = "";  
+						$firstname = "";
+						$lastname = "";
+						$no_tel = "";
+						$email = "";
+						$ic = "";
+						$password = ""; 
+						$errorMessage = "";
+						$successMessage = "";
+
+						if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+							// GET method: Show the data of the patient
+
+							if (!isset($_GET["patient_id"])) {
+								header("location: /clinicdb/SD_Project/view_patient.php");
+								exit;
+							}
+
+							$patient_id = $_GET["patient_id"];
+
+							// Read the row of the selected patient from the database table
+							$sql = "SELECT * FROM user_info WHERE USER_ID='$patient_id' AND USERTYPE='2'"; // USERTYPE=2 is for patient
+							$result = $connection->query($sql);
+							$row = $result->fetch_assoc();
+
+							if (!$row) {
+								header("location: view_patient.php");
+								exit;
+							}
+
+							$firstname = $row["FIRSTNAME"];
+							$lastname = $row["LASTNAME"];
+							$no_tel = $row["NO_TEL"];
+							$email = $row["EMAIL"];
+							$ic = $row["IC"];
+							$password = $row["PASSWORD"]; // Populate password field
+
+						} else {
+							$patient_id = $_POST["patient_id"];
+							$firstname = $_POST["firstname"];
+							$lastname = $_POST["lastname"];
+							$no_tel = $_POST["no_tel"];
+							$email = $_POST["email"];
+							$ic = $_POST["ic"];
+							$password = $_POST["password"]; // Get the password field value from the form
+
+							// Validate form inputs
+							if (empty($patient_id) || empty($firstname) || empty($lastname) || empty($no_tel) || empty($email) || empty($ic)) {
+								$errorMessage = "All fields are required";
+							} else {
+								// Construct the SQL query to update the data in the database
+								if (!empty($password)) {
+									// If a new password is provided, hash the password and update all fields
+									$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+									$sql = "UPDATE user_info SET FIRSTNAME='$firstname', LASTNAME='$lastname', NO_TEL='$no_tel', EMAIL='$email', IC='$ic', PASSWORD='$hashed_password' WHERE USER_ID='$patient_id' AND USERTYPE='2'";
+								} else {
+									// If no new password is provided, update only other fields
+									$sql = "UPDATE user_info SET FIRSTNAME='$firstname', LASTNAME='$lastname', NO_TEL='$no_tel', EMAIL='$email', IC='$ic' WHERE USER_ID='$patient_id' AND USERTYPE='2'";
+								}
+
+								// Execute the SQL query
+								$result = $connection->query($sql);
+
+								if (!$result) {
+									$errorMessage = "Error: " . $sql . "<br>" . $connection->error;
+								} else {
+									$successMessage = "Patient information updated successfully!";
+									// Redirect to patient listing page
+									header("Location: view_patient.php");
+									exit;
+								}
+							}
+						}
+						?>
 						</form>
 					</div>
 
@@ -1030,8 +986,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 									<a class="btn btn-outline-primary" href="#" role="button">Cancel</a>
 								</div>
 							</div>
-						</form>
+						
+						<?php
+						if (isset($_GET["patient_id"])) {
+							$deletePatientID = $_GET["patient_id"]; // Use a different variable name for patient ID
+
+							$servername = "localhost";
+							$username = "root"; 
+							$password = "";
+							$dbname = "dtcmsdb"; 
+
+							// Open connection
+							$connection = new mysqli($servername, $username, $password, $dbname);
+
+							// Check connection
+							if ($connection->connect_error) {
+								die("Connection failed: " . $connection->connect_error);
+							}
+
+							// Prepare and execute the delete query
+							$sqlDelete = "DELETE FROM user_info WHERE USER_ID = ? AND USERTYPE = 2"; // Only delete if USERTYPE is '2' (for patients)
+							$stmtDelete = $connection->prepare($sqlDelete);
+							$stmtDelete->bind_param("s", $deletePatientID); // Bind the patient_id
+							$stmtDelete->execute();
+
+							// Check if any rows were affected (i.e., if deletion was successful)
+							if ($stmtDelete->affected_rows > 0) {
+								echo "Record with Patient ID $deletePatientID deleted successfully.";
+							} else {
+								echo "No records deleted. Perhaps the record with Patient ID $deletePatientID does not exist.";
+							}
+
+							// Close statement and connection
+							$stmtDelete->close();
+							$connection->close();
+						} else {
+							echo "No patient ID specified for deletion.";
+						}
+						?>
 					</div>
+					</form>
                 </main>
             </div>
         </div>
