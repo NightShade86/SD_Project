@@ -144,7 +144,7 @@ if (!array_key_exists($section, $sections)) {
 							<i class="fas fa-users"></i> Manage Staff
 						</a>
 						<div class="dropdown-menu dropdown-menu-dark" aria-labelledby="staffDropdown">
-							<a class="dropdown-item" href="?section=staff" id="view-staff-link">View Staff</ a>
+							<a class="dropdown-item" href="?section=staff" id="view-staff-link">View Staff</a>
 							<a class="dropdown-item" href="?section=add-staff" id="add-staff-link">Add Staff</a>
 							<a class="dropdown-item" href="?section=edit-staff" id="edit-staff-link">Edit Staff</a>
 							<a class="dropdown-item" href="?section=delete-staff" id="delete-staff-link">Delete Staff</a>
