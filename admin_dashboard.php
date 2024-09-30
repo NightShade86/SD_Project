@@ -3,33 +3,11 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Initialize variables
-$section = "";
+// Initialize the section variable
+$section = isset($_GET["section"]) ? $_GET["section"] : "staff";
 
-// Check if a section is specified in the URL
-if (isset($_GET ["section"])) {
-    $section = $_GET["section"];
-}
-
-// Define the sections
-$sections = array(
-    "staff" => "staff-section",
-    "add-staff" => "add-staff",
-    "edit-staff" => "edit-staff",
-    "delete-staff" => "delete-staff",
-    "patient" => "patient-section",
-    "add-patient" => "add-patient",
-    "edit-patient" => "edit-patient",
-    "delete-patient" => "delete-patient",
-);
-
-// Set the default section
-if (empty($section)) {
-    $section = "staff";
-}
-
-// Check if the section is valid
-if (!array_key_exists($section, $sections)) {
+// Set the default section if invalid
+if (!in_array($section, ["patients", "staff", "add-staff", "edit-staff", "delete-staff", "add-patient", "edit-patient", "delete-patient"])) {
     $section = "staff";
 }
 ?>
@@ -42,28 +20,23 @@ if (!array_key_exists($section, $sections)) {
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-	
-	<!-- jQuery and Bootstrap JavaScript -->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-		<script>
-				// JavaScript code to make the dropdown menus work
-		$(document).ready(function() {
-			// Add event listener to the dropdown toggle buttons
-			$('.dropdown-toggle').on('click', function() {
-				// Toggle the dropdown menu
-				$(this).next('.dropdown-menu').toggle();
-			});
+    
+    <!-- jQuery and Bootstrap JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.dropdown-toggle').on('click', function() {
+                $(this).next('.dropdown-menu').toggle();
+            });
 
-			// Add event listener to the dropdown menu items
-			$('.dropdown-menu a').on('click', function() {
-				// Hide the dropdown menu
-				$(this).parent('.dropdown-menu').hide();
-			});
-		});
-	</script>
-    <style>
+            $('.dropdown-menu a').on('click', function() {
+                $(this).parent('.dropdown-menu').hide();
+            });
+        });
+    </script>
+   <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f6f9;
@@ -137,31 +110,30 @@ if (!array_key_exists($section, $sections)) {
         <div class="row">
             <div class="col-md-2 p-0" id="sidebar">
                 <nav class="nav flex-column">
-                    
-					<!-- Staff Dropdown (inside sidebar) -->
-					<div class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle text-white py-3" href="#" id="staffDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<i class="fas fa-users"></i> Manage Staff
-						</a>
-						<div class="dropdown-menu dropdown-menu-dark" aria-labelledby="staffDropdown">
-							<a class="dropdown-item" href="?section=staff" id="view-staff-link">View Staff</a>
-							<a class="dropdown-item" href="?section=add-staff" id="add-staff-link">Add Staff</a>
-							<a class="dropdown-item" href="?section=edit-staff" id="edit-staff-link">Edit Staff</a>
-							<a class="dropdown-item" href="?section=delete-staff" id="delete-staff-link">Delete Staff</a>
-						</div>
-					</div>
-										
-					<div class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle text-white py-3" href="#" id="patientDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<i class="fas fa-procedures"></i> Manage Patients
-						</a>
-						<div class="dropdown-menu dropdown-menu-dark" aria-labelledby="patientDropdown">
-							<a class="dropdown-item" href="?section=patient" id="view-patient-link">View Patients</a>
-							<a class="dropdown-item" href="?section=add-patient" id="add-patient-link">Add Patient</a>
-							<a class="dropdown-item" href="?section=edit-patient" id="edit-patient-link">Edit Patient</a>
-							<a class="dropdown-item" href="?section=delete-patient" id="delete-patient-link">Delete Patient</a>
-						</div>
-					</div>
+                    <!-- Staff Dropdown -->
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white py-3" href="#" id="staffDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-users"></i> Manage Staff
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="staffDropdown">
+                            <a class="dropdown-item" href="?section=staff">View Staff</a>
+                            <a class="dropdown-item" href="?section=add-staff">Add Staff</a>
+                            <a class="dropdown-item" href="?section=edit-staff">Edit Staff</a>
+                            <a class="dropdown-item" href="?section=delete-staff">Delete Staff</a>
+                        </div>
+                    </div>
+                    <!-- Patients Dropdown -->
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white py-3" href="#" id="patientDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-procedures"></i> Manage Patients
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="patientDropdown">
+                            <a class="dropdown-item" href="?section=patients">View Patients</a>
+                            <a class="dropdown-item" href="?section=add-patient">Add Patient</a>
+                            <a class="dropdown-item" href="?section=edit-patient">Edit Patient</a>
+                            <a class="dropdown-item" href="?section=delete-patient">Delete Patient</a>
+                        </div>
+                    </div>
 					
 					<div class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle text-white py-3" href="#" id="appointmentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -172,7 +144,7 @@ if (!array_key_exists($section, $sections)) {
 							<a class="dropdown-item" href="#add-appointment">Add Appointment</a>
 						</div>
 					</div>
-
+					
                     <!-- Static Links -->
                     <a class="nav-link text-white" href="#view-bills"><i class="fas fa-file-invoice-dollar"></i> View Bills</a>
                     <a class="nav-link text-white" href="#view-transaction"><i class="fas fa-exchange-alt"></i> View Transactions</a>
@@ -180,7 +152,7 @@ if (!array_key_exists($section, $sections)) {
                     <a class="nav-link text-white" href="#view-feedback"><i class="fas fa-comments"></i> View Feedback</a>
                 </nav>
             </div>
-			
+            
             <div class="col-md-10 offset-md-2">
                 <header>
                     <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
@@ -201,35 +173,28 @@ if (!array_key_exists($section, $sections)) {
                     </nav>
                 </header>
                 <main class="mt-4">
-                    <?php
-                    // Display the selected section
-                    foreach ($sections as $key => $value) {
-                        if ($key == $section) {
-                            echo "<div class='content bg-white p-4 shadow-sm rounded' id='" . $value . "'>";
-                        } else {
-                            echo "<div class='content bg-white p-4 shadow-sm rounded' id='" . $value . "' style='display: none;'>";
-                        }
-                        // Your section content here
-                        if ($value == "staff-section") {
+                    <div class='content bg-white p-4 shadow-sm rounded'>
+                        <?php
+                        // Include the corresponding section file based on the selected section
+                        if ($section == "staff") {
                             include 'view_staff.php';
-                        } elseif ($value == "add-staff") {
+                        } elseif ($section == "add-staff") {
                             include 'add_staff.php';
-                        } elseif ($value == "edit-staff") {
+                        } elseif ($section == "edit-staff") {
                             include 'edit_staff.php';
-                        } elseif ($value == "delete-staff") {
+                        } elseif ($section == "delete-staff") {
                             include 'delete_staff.php';
-                        } elseif ($value == "patient-section") {
+                        } elseif ($section == "patients") {
                             include 'view_patient.php';
-                        } elseif ($value == "add-patient") {
+                        } elseif ($section == "add-patient") {
                             include 'add_patient.php';
-                        } elseif ($value == "edit-patient") {
+                        } elseif ($section == "edit-patient") {
                             include 'edit_patient.php';
-                        } elseif ($value == "delete-patient") {
+                        } elseif ($section == "delete-patient") {
                             include 'delete_patient.php';
                         }
-                        echo "</div>";
-                    }
-                    ?>
+                        ?>
+                    </div>
                 </main>
             </div>
         </div>
@@ -239,3 +204,4 @@ if (!array_key_exists($section, $sections)) {
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>
+
