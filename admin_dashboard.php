@@ -1,22 +1,17 @@
 <?php
-session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-// Database connection settings
+// Establish a database connection
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "dtcmsdb";
 
-// Create a new database connection
-$connection = new mysqli($servername, $username, $password, $dbname);
+/*$connection = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($connection->connect_error) {
     die("Connection failed: " . $connection->connect_error);
 }
-
+*/
 // Function to add staff
 function addStaff($connection, $data) {
     try {
@@ -59,6 +54,48 @@ function deleteStaff($connection, $staff_id) {
     }
 }
 
+// Function to add patient
+function addPatient($connection, $data) {
+    try {
+        $stmt = $connection->prepare("INSERT INTO user_info (FIRSTNAME, LASTNAME, NO_TEL, EMAIL, IC, USER_ID) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssss", $data["firstname"], $data["lastname"], $data["no_tel"], $data["email"], $data["ic"], $data["patient_id"]);
+        $stmt->execute();
+        $stmt->close();
+        return true;
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+        return false;
+    }
+}
+
+// Function to edit patient
+function editPatient($connection, $data) {
+    try {
+        $stmt = $connection->prepare("UPDATE user_info SET FIRSTNAME = ?, LASTNAME = ?, NO_TEL = ?, EMAIL = ?, IC = ? WHERE USER_ID = ?");
+        $stmt->bind_param("ssssss", $data["firstname"], $data["lastname"], $data["no_tel"], $data["email"], $data["ic"], $data["patient_id"]);
+        $stmt->execute();
+        $stmt->close();
+        return true;
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+        return false;
+    }
+}
+
+// Function to delete patient
+function deletePatient($connection, $patient_id) {
+    try {
+        $stmt = $connection->prepare("DELETE FROM user_info WHERE USER_ID = ?");
+        $stmt->bind_param("s", $patient_id);
+        $stmt->execute();
+        $stmt->close();
+        return true;
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
+        return false;
+    }
+}
+
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["add_staff"])) {
@@ -80,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (isset($_POST["edit_staff"])) {
         $data = array(
             "firstname" => $_POST["firstname"],
-            "lastname" => $_POST ["lastname"],
+            "lastname" => $_POST["lastname"],
             "no_tel" => $_POST["no_tel"],
             "email" => $_POST["email"],
             "ic" => $_POST["ic"],
@@ -98,6 +135,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             echo "Error deleting staff!";
         }
+    } elseif (isset($_POST["add_patient"])) {
+        $data = array(
+            "firstname" => $_POST["firstname"],
+            "lastname" => $_POST["lastname"],
+            "no_tel" => $_POST["no_tel"],
+            "email" => $_POST["email"],
+            "ic" => $_POST["ic"],
+            "patient_id" => $_POST["patient_id"]
+        );
+        if (addPatient($connection, $data)) {
+            echo "Patient added successfully!";
+        } else {
+            echo "Error adding patient!";
+        }
+    } elseif (isset($_POST["edit_patient"])) {
+        $data = array(
+            "firstname" => $_POST["firstname"],
+            "lastname" => $_POST["lastname"],
+            "no_tel" => $_POST["no_tel"],
+            "email" => $_POST["email"],
+            "ic" => $_POST["ic"],
+            "patient_id" => $_POST["patient_id"]
+        );
+        if (editPatient($connection, $data)) {
+            echo "Patient updated successfully!";
+        } else {
+            echo "Error updating patient!";
+        }
+    } elseif (isset($_POST["delete_patient"])) {
+        $patient_id = $_POST["patient_id"];
+        if (deletePatient($connection, $patient_id)) {
+            echo "Patient deleted successfully!";
+        } else {
+            echo "Error deleting patient!";
+        }
     }
 }
 
@@ -114,7 +186,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	
 	<!-- Bootstrap JavaScript -->
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4. 0.0/js/bootstrap.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<script>
 				// JavaScript code to make the dropdown menus work
 		$(document).ready(function() {
@@ -176,7 +248,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         #sidebar .nav-link:hover {
             background-color: #495057;
             color: #ffffff;
-        }
+ }
 
         .navbar-brand {
             font-weight: bold;
@@ -218,8 +290,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 							<a class="dropdown-item" href="#" id="delete-staff-link" onclick="showDeleteStaff()">Delete Staff</a>
 						</div>
 					</div>
+										
+					<div class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle text-white py-3" href="#" id="patientDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-procedures"></i> Manage Patients
+						</a>
+						<div class="dropdown-menu dropdown-menu-dark" aria-labelledby="patientDropdown">
+							<a class="dropdown-item" href="#" id="view-patient-link" onclick="showPatientSection()">View Patients</a>
+							<a class="dropdown-item" href="#" id="add-patient-link" onclick="showAddPatient()">Add Patient</a>
+							<a class="dropdown-item" href="#" id="edit-patient-link" onclick="showEditPatient()">Edit Patient</a>
+							<a class="dropdown-item" href="#" id="delete-patient-link" onclick="showDeletePatient()">Delete Patient</a>
+						</div>
+					</div>
 					
-					<script>
+					<div class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle text-white py-3" href="#" id="appointmentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-calendar-alt"></i> Manage Appointments
+						</a>
+						<div class="dropdown-menu dropdown-menu-dark" aria-labelledby="appointmentDropdown">
+							<a class="dropdown-item" href="#view-appointment">View Appointments</a>
+							<a class="dropdown-item" href="#add-appointment">Add Appointment</a>
+						</div>
+					</div>
+
+                    <!-- Static Links -->
+                    <a class="nav-link text-white" href="#view-bills"><i class="fas fa-file-invoice-dollar"></i> View Bills</a>
+                    <a class="nav-link text-white" href="#view-transaction"><i class="fas fa-exchange-alt"></i> View Transactions</a>
+                    <a class="nav-link text-white" href="#generate-sales-report"><i class="fas fa-chart-line"></i> Generate Sales Report</a>
+                    <a class="nav-link text-white" href="#view-feedback"><i class="fas fa-comments"></i> View Feedback</a>
+                </nav>
+				<script>
 					// JavaScript code to toggle the sections
 					function showStaffSection() {
 						document.getElementById("staff-section").style.display = "block";
@@ -248,38 +348,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 						document.getElementById("edit-staff").style.display = "none";
 						document.getElementById("delete-staff").style.display = "block";
 					}
+					
+					function togglePatientSection(sectionId) {
+						document.getElementById("patient-section").style.display = "none";
+						document.getElementById("add-patient").style.display = "none";
+						document.getElementById("edit-patient").style.display = "none";
+						document.getElementById("delete-patient").style.display = "none";
+						document.getElementById(sectionId).style.display = "block";
+					}
+					
+					function showPatientSection() {
+						document.getElementById("patient-section").style.display = "block";
+						document.getElementById("add-patient").style.display = "none";
+						document.getElementById("edit-patient").style.display = "none";
+						document.getElementById("delete-patient").style.display = "none";
+					}
+
+					function showAddPatient() {
+						document.getElementById("patient-section").style.display = "none";
+						document.getElementById("add-patient").style.display = "block";
+						document.getElementById("edit-patient").style.display = "none";
+						document.getElementById("delete-patient").style.display = "none";
+					}
+
+					function showEditPatient() {
+						document.getElementById("patient-section").style.display = "none";
+						document.getElementById("add-patient").style.display = "none";
+						document.getElementById("edit-patient").style.display = "block";
+						document.getElementById("delete-patient").style.display = "none";
+					}
+
+					function showDeletePatient() {
+						document.getElementById("patient-section").style.display = "none";
+						document.getElementById("add-patient").style.display = "none";
+						document.getElementById("edit-patient").style.display = "none";
+						document.getElementById("delete-patient").style.display = "block";
+					}
 				</script>
-					
-					<div class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle text-white py-3" href="#" id="patientDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<i class="fas fa-procedures"></i> Manage Patients
-						</a>
-						<div class="dropdown-menu dropdown-menu-dark" aria-labelledby="patientDropdown">
-							<a class="dropdown-item" href="view_patient.php" id="view-patient-link">View Patients</a>
-							<a class="dropdown-item" href="#add-patient">Add Patient</a>
-							<a class="dropdown-item" href="edit_patient.php" id="edit-patient-link">Edit Patient</a>
-							<a class="dropdown-item" href="delete_patient.php" id="delete-patient-link">Delete Patient</a>
-						</div>
-					</div>
-
-					
-					<div class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle text-white py-3" href="#" id="appointmentDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<i class="fas fa-calendar-alt"></i> Manage Appointments
-						</a>
-						<div class="dropdown-menu dropdown-menu-dark" aria-labelledby="appointmentDropdown">
-							<a class="dropdown-item" href="#view-appointment">View Appointments</a>
-							<a class="dropdown-item" href="#add-appointment">Add Appointment</a>
-						</div>
-					</div>
-
-                    <!-- Static Links -->
-                    <a class="nav-link text-white" href="#view-bills"><i class="fas fa-file-invoice-dollar"></i> View Bills</a>
-                    <a class="nav-link text-white" href="#view-transaction"><i class="fas fa-exchange-alt"></i> View Transactions</a>
-                    <a class="nav-link text-white" href="#generate-sales-report"><i class="fas fa-chart-line"></i> Generate Sales Report</a>
-                    <a class="nav-link text-white" href="#view-feedback"><i class="fas fa-comments"></i> View Feedback</a>
-                </nav>
             </div>
+			
             <div class="col-md-10 offset-md-2">
                 <header>
                     <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
@@ -331,7 +438,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <th>First Name</th>
                                     <th>Last Name</th>
                                     <th>Phone</th>
-                                    <th>Email</th>
+                                    <th>Email</th >
                                     <th>IC</th>
                                     <th>Staff ID</th>
                                     <th>Actions</th>
@@ -339,7 +446,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </thead>
                             <tbody>
                                 <?php
-                                // Initialize database connection
+                                // Initialize the SQL query
                                 $sql = "SELECT * FROM staff_info";
 
                                 // Check if search query is provided
@@ -350,10 +457,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 }
 
                                 // Execute the SQL query
-                                $result = $connection->query($sql); 
+                                $result = $connection->query($sql);
 
                                 if (!$result) {
-                                    die ("Invalid query: " . $connection->error);
+                                    die("Invalid query: " . $connection->error);
                                 }
 
                                 // Count total number of staff
@@ -444,7 +551,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-sm-3 col-sm-3 d-grid">
+                                <div class="col-sm-3 d-grid">
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                                 <div class="col-sm-3 d-grid">
@@ -547,7 +654,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
                     ?>
 				</div>
-                    <!-- ... (rest of the code remains the same) -->
+                    
 
                 <div class="content bg-white p-4 shadow-sm rounded" id="edit-staff" style="display: none;">
                         <h2>Edit Staff Information</h2>
@@ -560,7 +667,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <?php endif; ?>
                         <form method="post">
                             <div class="row mb-3">
-                                <label class="col-sm-3 col-form-label">Staff ID</label>
+                                <label class="col-sm- 3 col-form-label">Staff ID</label>
                                 <div class="col-sm-6">
                                     <input type="text" class="form-control" name="staff_id" value="<?php echo $staff_id; ?>" readonly>
                                 </div>
@@ -669,7 +776,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $no_tel = $_POST["no_tel"];
                         $email = $_POST["email"];
                         $ic = $_POST["ic"];
-                        $password = $_POST["password"]; // Get the password field value from the form
+                        $password = $_POST["password"]; // Getthe password field value from the form
 
                         // Validate form inputs
                         if (empty($staff_id) || empty($firstname) || empty($lastname) || empty($no_tel) || empty($email) || empty($ic)) {
@@ -712,40 +819,219 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <div class="content bg-white p-4 shadow-sm rounded" id="delete-staff" style="display: none;">
                         <h2>Delete Staff</h2>
-
-                        <?php if (isset($_GET["staff_id"])) : ?>
-                            <?php
-                            $deleteStaffID = $_GET["staff_id"]; // Use a different variable name
-
-                            // Open connection
-                            $connection = new mysqli($servername, $username, $password, $dbname);
-
-                            // Check connection
-                            if ($connection->connect_error) {
-                                die("Connection failed: " . $connection->connect_error);
-                            }
-
-                            // Prepare and execute the delete query
-                            $sqlDelete = "DELETE FROM staff_info WHERE STAFF_ID = ?";
-                            $stmtDelete = $connection->prepare($sqlDelete);
-                            $stmtDelete->bind_param("s", $deleteStaffID); // Bind the staff_id
-                            $stmtDelete->execute();
-
-                            // Check if any rows were affected (i.e., if deletion was successful)
-                            if ($stmtDelete->affected_rows > 0) {
-                                echo "Record with Staff ID $deleteStaffID deleted successfully.";
-                            } else {
-                                echo "No records deleted. Perhaps the record with Staff ID $deleteStaffID does not exist.";
-                            }
-
-                            // Close statement and connection
-                            $stmtDelete->close();
-                            $connection->close();
-                            ?>
-                        <?php else : ?>
-                            <p>No staff ID specified for deletion.</p>
-                        <?php endif; ?>
+                        <p>Are you sure you want to delete this staff?</p>
+                        <form method="post">
+                            <div class="row mb-3">
+                                <div class="col-sm-3 d-grid">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </div>
+                                <div class="col-sm-3 d-grid">
+                                    <a class="btn btn-outline-primary" href="#" role="button">Cancel</a>
+                                </div>
+                            </div>
+                        </form>
                     </div>
+					
+					<div class="content bg-white p-4 shadow-sm rounded" id="patient-section" style="display: none;">
+						<h2>Patient Management</h2>
+						<a class="btn btn-primary" href="#add-patient" role="button">
+							<i class="fas fa-user-plus"></i> New Patient
+						</a>
+						<br>
+						<form class="mt-3 mb-3" method="GET">
+							<div class="row">
+								<div class="col">
+									<input type="text" class="form-control" name="search" placeholder="Search by Patient ID">
+								</div>
+								<div class="col-auto">
+									<button type="submit" class="btn btn-primary">Search</button>
+								</div>
+								<div class="col-auto">
+									<a class="btn btn-success" href="#">Show All</a>
+								</div>
+							</div>
+						</form>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>No</th>
+									<th>First Name</th>
+									<th>Last Name</th>
+									<th>Phone</th>
+									<th>Email</th>
+									<th>IC</th>
+									<th>Patient ID</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php
+								// Initialize the SQL query
+								$sql = "SELECT * FROM user_info";
+
+								// Check if search query is provided
+								if (isset($_GET['search'])) {
+									$search = $_GET['search'];
+									// Add WHERE clause to filter by patient_id
+									$sql .= " WHERE USER_ID = '$search'";
+								}
+
+								// Execute the SQL query
+								$result = $connection->query($sql);
+
+								if (!$result) {
+									die("Invalid query: " . $connection->error);
+								}
+
+								// Count total number of patients
+								$totalPatients = $result->num_rows;
+								echo "<p>Total Patients: $totalPatients</p>";
+
+								// Initialize a counter variable for numbering
+								$no = 1;
+
+								// Read data of each row
+								while ($row = $result->fetch_assoc()) {
+									echo "<tr>";
+									echo "<td >{$no}</td>"; // Display number
+									echo "<td>{$row['FIRSTNAME']}</td>";
+									echo "<td>{$row['LASTNAME']}</td>";
+									echo "<td>{$row['NO_TEL']}</td>";
+									echo "<td>{$row['EMAIL']}</td>";
+									echo "<td>{$row['IC']}</td>";
+									echo "<td>{$row['USER_ID']}</td>"; 
+									echo "<td>";
+									// Edit button with icon
+									echo "<a class='btn btn-primary btn-sm me-3' href='#edit-patient?patient_id={$row['USER_ID']}'>";
+									echo "<i class='fas fa-edit'></i> Edit</a>";
+									// Delete button with icon
+									echo "<a class='btn btn-danger btn-sm' href='#delete-patient?patient_id={$row['USER_ID']}' onclick='return confirm(\"Are you sure you want to delete this record?\")'>";
+									echo "<i class='fas fa-trash'></i> Delete</a>";
+									echo "</td>";
+									echo "</tr>";
+									
+									// Increment the counter
+									$no++;
+								}
+								?>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="content bg-white p-4 shadow-sm rounded" id="add-patient" style="display: none;">
+						<h2>New Patient</h2>
+						<form method="post">
+							<div class="row mb-3">
+								<label class="col-sm-3 col-form-label">First Name</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" name="firstname" required>
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label class="col-sm-3 col-form-label">Last Name</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" name="lastname" required>
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label class="col-sm-3 col-form-label">Phone Number</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" name="no_tel" required>
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label class="col-sm-3 col-form-label">Email</label>
+								<div class="col-sm-6">
+									<input type="email" class="form-control" name="email" required>
+								</div>
+							</div>
+							<div class="row mb-3">
+					 <label class="col-sm-3 col-form-label">IC Number</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" name="ic" required>
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label class="col-sm-3 col-form-label">Patient ID</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" name="patient_id" required>
+								</div>
+							</div>
+							<div class="row mb-3">
+								<div class="col-sm-3 d-grid">
+									<button type="submit" class="btn btn-primary">Submit</button>
+								</div>
+								<div class="col-sm-3 d-grid">
+									<a class="btn btn-outline-primary" href="#" role="button">Cancel</a>
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<div class="content bg-white p-4 shadow-sm rounded" id="edit-patient" style="display: none;">
+						<h2>Edit Patient Information</h2>
+						<form method="post">
+							<div class="row mb-3">
+								<label class="col-sm-3 col-form-label">Patient ID</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" name="patient_id" readonly>
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label class="col-sm-3 col-form-label">First Name</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" name="firstname">
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label class="col-sm-3 col-form-label">Last Name</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" name="lastname">
+								</div>
+						 </div>
+							<div class="row mb-3">
+								<label class="col-sm-3 col-form-label">Phone Number</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" name="no_tel">
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label class="col-sm-3 col-form-label">Email</label>
+								<div class="col-sm-6">
+									<input type="email" class="form-control" name="email">
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label class="col-sm-3 col-form-label">IC Number</label>
+								<div class="col-sm-6">
+									<input type="text" class="form-control" name="ic">
+								</div>
+							</div>
+							<div class="row mb-3">
+								<div class="col-sm-3 d-grid">
+									<button type="submit" class="btn btn-primary">Submit</button>
+								</div>
+								<div class="col-sm-3 d-grid">
+									<a class="btn btn-outline-primary" href="#" role="button">Cancel</a>
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<div class="content bg-white p-4 shadow-sm rounded" id="delete-patient" style="display: none;">
+						<h2>Delete Patient</h2>
+						<p>Are you sure you want to delete this patient?</p>
+						<form method="post">
+							<div class="row mb-3">
+								<div class="col-sm-3 d-grid">
+									<button type="submit" class="btn btn-danger">Delete</button>
+								</div>
+								<div class="col-sm-3 d-grid">
+									<a class="btn btn-outline-primary" href="#" role="button">Cancel</a>
+								</div>
+							</div>
+						</form>
+					</div>
                 </main>
             </div>
         </div>
