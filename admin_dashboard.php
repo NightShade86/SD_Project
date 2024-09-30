@@ -179,52 +179,6 @@ if (!array_key_exists($section, $sections)) {
                     <a class="nav-link text-white" href="#generate-sales-report"><i class="fas fa-chart-line"></i> Generate Sales Report</a>
                     <a class="nav-link text-white" href="#view-feedback"><i class="fas fa-comments"></i> View Feedback</a>
                 </nav>
-				<script>
-					// JavaScript code to toggle the sections
-					function showSection(sectionId, sections) {
-						sections.forEach(id => {
-							document.getElementById(id).style.display = (id === sectionId) ? "block" : "none";
-						});
-					}
-
-					// Define the sections for staff and patient management
-					const staffSections = ["staff-section", "add-staff", "edit-staff", "delete-staff"];
-					const patientSections = ["patient-section", "add-patient", "edit-patient", "delete-patient"];
-
-					// Functions to show specific staff sections
-					function showStaffSection() {
-						showSection("staff-section", staffSections);
-					}
-
-					function showAddStaff() {
-						showSection("add-staff", staffSections);
-					}
-
-					function showEditStaff() {
-						showSection("edit-staff", staffSections);
-					}
-
-					function showDeleteStaff() {
-						showSection("delete-staff", staffSections);
-					}
-
-					// Functions to show specific patient sections
-					function showPatientSection() {
-						showSection("patient-section", patientSections);
-					}
-
-					function showAddPatient() {
-						showSection("add-patient", patientSections);
-					}
-
-					function showEditPatient() {
-						showSection("edit-patient", patientSections);
-					}
-
-					function showDeletePatient() {
-						showSection("delete-patient", patientSections);
-					}
-				</script>
             </div>
 			
             <div class="col-md-10 offset-md-2">
