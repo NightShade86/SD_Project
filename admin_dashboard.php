@@ -210,7 +210,7 @@ if (!array_key_exists($section, $sections)) {
                             echo "<div class='content bg-white p-4 shadow-sm rounded' id='" . $value . "' style='display: none;'>";
                         }
                         // Your section content here
-                        if ($value == "staff") {
+                        if ($value == "staff-section") {
                             include 'view_staff.php';
                         } elseif ($value == "add-staff") {
                             include 'add_staff.php';
@@ -218,7 +218,7 @@ if (!array_key_exists($section, $sections)) {
                             include 'edit_staff.php';
                         } elseif ($value == "delete-staff") {
                             include 'delete_staff.php';
-                        } elseif ($value == "patient") {
+                        } elseif ($value == "patient-section") {
                             include 'view_patient.php';
                         } elseif ($value == "add-patient") {
                             include 'add_patient.php';
