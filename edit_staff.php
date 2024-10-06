@@ -1,4 +1,8 @@
 <?php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -22,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // GET method: Show the data of the staff
 
     if (!isset($_GET["staff_id"])) {
-        header("location: view_staff.php");
+        header("location: admin_dashboard.php?section=staff");
         exit;
     }
 
@@ -34,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $row = $result->fetch_assoc();
 
     if (!$row) {
-        header("location: view_staff.php");
+        header("location: admin_dashboard.php?section=staff");
         exit;
     }
 
@@ -76,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         } else {
             $successMessage = "Staff information updated successfully!";
             // Redirect to staff listing page
-            header("Location: view_staff.php");
+            header("Location: admin_dashboard.php?section=staff");
             exit;
         }
     }

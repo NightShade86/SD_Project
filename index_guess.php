@@ -69,10 +69,10 @@ ini_set('display_errors', 1);
                         <nav class="nav main-menu">
                             <ul class="navigation" id="navbar">
                                 <li class="current"><a href="index_guess.php">Home</a></li>
-								<li><a href="services_guess.php">Services</a></li>
-								<li><a href="doctor-detail_guess.php">Doctor Detail</a></li>
-								<li><a href="about-us_guess.php">About Us</a></li>
-								<li><a href="contact_guess.php">Contact</a></li>
+								<li><a href="services_guess.html">Services</a></li>
+								<li><a href="doctor-detail_guess.html">Doctor Detail</a></li>
+								<li><a href="about-us_guess.html">About Us</a></li>
+								<li><a href="contact_guess.html">Contact</a></li>
 								<li><a href="login_guess.php">Login</a></li>
                                 <li><a href="register_guess.php">Register</a></li>
                                 <!-- <span>Blog</span>

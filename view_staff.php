@@ -10,13 +10,7 @@
 </head>
 <body>
     <div class="container my-5">
-        <!-- Logout button with icon -->
-        <div class="d-flex justify-content-end">
-            <a class="btn btn-danger" href="/clinic_management_system/logout.php" role="button">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
-        </div>
-        
+       
         <h2>List of Staff</h2>
         
         <!-- New Staff button with icon -->
@@ -58,18 +52,16 @@
         // Initialize the SQL query
         $sql = "SELECT * FROM staff_info";
 
-        // Check if search query is provided
-        if (isset($_GET['search'])) {
+        // Prepare the SQL query
+        if (isset($_GET['search']) && !empty($_GET['search'])) {
             $search = $_GET['search'];
-            // Add WHERE clause to filter by staff_id
-            $sql .= " WHERE STAFF_ID = '$search'";
-        }
-
-        // Execute the SQL query
-        $result = $connection->query($sql);
-
-        if (!$result) {
-            die("Invalid query: " . $connection->error);
+            $sql .= " WHERE STAFF_ID = ?";
+            $stmt = $connection->prepare($sql);
+            $stmt->bind_param("s", $search); // 's' stands for string
+            $stmt->execute();
+            $result = $stmt->get_result();
+        } else {
+            $result = $connection->query($sql);
         }
 
         // Count total number of staff
@@ -118,6 +110,9 @@
                     // Increment the counter
                     $no++;
                 }
+
+                // Close connection
+                $connection->close();
                 ?>
             </tbody>
         </table>

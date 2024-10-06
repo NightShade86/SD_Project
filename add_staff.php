@@ -1,14 +1,18 @@
 <?php
+// Start output buffering to prevent the headers already sent issue
+ob_start();
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "dtcmsdb"; // Use your database name
+$dbname = "dtcmsdb"; 
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -55,7 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $errorMessage = "Please enter a valid email, e.g., example@email.com";
     }
 
-
     // Check for existing email or username in the database
     if (empty($errorMessage)) {
         $check_sql = "SELECT * FROM staff_info WHERE EMAIL = ? OR STAFF_ID = ?";
@@ -93,7 +96,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Execute statement
         if ($stmt->execute()) {
             $_SESSION['success_message'] = "Staff added successfully!";
-            header("Location: view_staff.php");
+            // Redirect before any output
+            header("Location: admin_dashboard.php?section=staff");
             exit();
         } else {
             $errorMessage = "There was an issue creating the staff. Error: " . $stmt->error;
@@ -102,18 +106,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->close();
     }
 
-    // Display the error message if any
-    if (!empty($errorMessage)) {
-        echo "<div class='alert alert-danger'>$errorMessage</div>";
-    }
-
     $conn->close();
 }
 ?>
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -181,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row mb-3">
                 <label class="col-sm-3 col-form-label">Password</label>
                 <div class="col-sm-6">
-                    <input type="password" class="form-control" name="password" id="password" value="<?php echo $password; ?>" readonly>
+                    <input type="password" class="form-control" name="password" id="password" value="<?php echo $pass; ?>" readonly>
                 </div>
             </div>
             <?php if (!empty($successMessage)) : ?>
@@ -207,3 +202,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </body>
 </html>
 
+<?php
+// End the output buffer and send headers
+ob_end_flush();
+?>
