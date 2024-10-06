@@ -1,3 +1,10 @@
+
+<?php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,21 +40,21 @@
     <div class="preloader"></div>
     
     <!-- Main Header-->
-    <header class="main-header header-style-one">
+        <header class="main-header header-style-two">
 
         <!-- Header top -->
-        <div class="header-top">
-            <div class="auto-container">
-                <div class="inner-container">
-                    <div class="top-left">
-                        <ul class="contact-list clearfix">
-                            <li><i class="flaticon-hospital-1"></i>34, Jalan Besar, 72100 Bahau, Negeri Sembilan </li>
-                            <li><i class="flaticon-back-in-time"></i>Monday - Thursday 9.00am - 9.00pm , Friday 9.00am - 5.00pm. Sunday and Saturday CLOSED</li>
-                        </ul>
-                    </div>
+     <div class="header-top-two">
+        <div class="auto-container">
+            <div class="inner-container">
+                <div class="top-left">
+                    <ul class="contact-list clearfix">
+                        <li><i class="flaticon-hospital-1"></i>34, Jalan Besar, 72100 Bahau, Negeri Sembilan </li>
+                        <li><i class="flaticon-back-in-time"></i>Monday - Thursday 9.00am - 9.00pm , Friday 9.00am - 5.00pm. Sunday and Saturday CLOSED</li>
+                    </ul>
                 </div>
             </div>
         </div>
+    </div>
         <!-- End Header Top -->
         
         <!-- Header Lower -->
@@ -56,36 +63,58 @@
                 <!-- Main box -->
                 <div class="main-box">
                     <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img src="images/logo.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
                     </div>
-
                     <!--Nav Box-->
                     <div class="nav-outer">
                         <nav class="nav main-menu">
                             <ul class="navigation" id="navbar">
-                                <li class="current dropdown">
-                                    <span>Home</span>
-                                    <ul>
-                                        <li class="current"><a href="index_patient.html">Home Medical</a></li>
-                                    </ul>
-                                </li>
+                                <li class="current"><a href="index_patient.php">Home</a></li>
+								<li><a href="services_patient.php">Services</a></li>
+								<li><a href="doctor-detail_patient.php">Doctor Detail</a></li>
+								<li><a href="about-us_patient.php">About Us</a></li>
+								<li><a href="contact_patient.php">Contact</a></li>
+								<li class="dropdown">
+									<span>
+										<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+											<path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1z"/>
+											<path d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 10a5 5 0 0 0-4.546 3 1 1 0 0 0 .657 1.07c.068.016.134.03.2.04A5.992 5.992 0 0 0 8 12a5.992 5.992 0 0 0 4.689 2.11c.066-.01.132-.024.2-.04a1 1 0 0 0 .657-1.07A5 5 0 0 0 8 10z"/>
+										</svg>
+										<?php 
+											 $userid = $_SESSION['USER_ID'];
+											 
+											if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+												echo " Welcome, " . htmlspecialchars($userid);
+											} else {
+												echo " Profile"; // Default text when user is not logged in
+											}
+										?>
+										<style>
+										.dropdown span {
+											display: flex;
+											align-items: center; /* Vertically center the icon and text */
+											font-size: 14px; /* Adjust font size as needed */
+										}
 
-                                <li class="dropdown">
-                                    <span>Pages</span>
-                                    <ul>
-                                        <li><a href="about-us_patient.html">About Us</a></li>
-                                        <li><a href="services_patient.html">Services</a></li>
-										<li><a href="contact_patient.html">Contact</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <span>Doctors</span>
-                                    <ul>
-                                        <li><a href="doctor-detail_patient.html">Doctor Detail</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <span>Blog</span>
+										.dropdown span svg {
+											margin-right: 5px; /* Space between icon and text */
+											fill: #ffffff; /* Change the icon color if needed */
+										}
+
+										</style>
+									</span>
+									<ul>
+										<li><a href="profile.php">Profile</a></li>
+										<?php 
+											if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+												echo "<li><a href='logout.php'>Log Out</a></li>";
+											} else {
+												echo "<li><a href='login.php'>Log In</a></li>";
+											}
+										?>
+									</ul>
+								</li>
+                                <!-- <span>Blog</span>
                                     <ul>
                                         <li><a href="blog-checkboard.html">Checkerboard</a></li>
                                         <li><a href="blog-masonry.html">Masonry</a></li>
@@ -112,15 +141,7 @@
                                         <li><a href="shop-single.html">Shop Single</a></li>
                                         <li><a href="shopping-cart.html">Shopping Cart</a></li>
                                         <li><a href="checkout.html">Checkout</a></li>
-                                    </ul>
-                                </li>
-								<li class="dropdown">
-                                    <span>Profile</span>
-                                    <ul>
-										<li><a href="profile.html">Profile</a></li>
-										<li><a href="logout.php">Logout</a></li>
-                                    </ul>
-                                </li>
+                                    </ul> -->
                             </ul>
                         </nav>
                         <!-- Main Menu End-->
@@ -128,68 +149,6 @@
                 </div>
             </div>
         </div>
-		
-		<style>
-			.nav-outer {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		flex-wrap: wrap;
-		padding: 10px 20px;
-	}
-
-	.nav.main-menu .navigation {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 10px;
-		padding: 0;
-		margin: 0;
-		list-style: none;
-	}
-
-	.nav.main-menu .navigation > li {
-		position: relative;
-	}
-
-	.dropdown ul {
-		position: absolute;
-		left: 0;
-		top: 100%;
-		display: none;
-		flex-direction: column;
-		background-color: #fff;
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-		min-width: 200px;
-	}
-
-	.dropdown:hover ul,
-	.dropdown:focus-within ul {
-		display: block;
-	}
-
-	@media (max-width: 768px) {
-		.nav-outer {
-			flex-direction: column;
-			align-items: flex-start;
-		}
-
-		.nav.main-menu .navigation {
-			flex-direction: column;
-			width: 100%;
-		}
-
-		.nav.main-menu .navigation > li {
-			width: 100%;
-		}
-
-		.dropdown ul {
-			position: static;
-			box-shadow: none;
-		}
-	}
-
-		</style>
-
         <!-- Sticky Header  -->
         <div class="sticky-header">
             <div class="auto-container">            
@@ -212,11 +171,6 @@
             <div class="nav-outer clearfix">
 
                 <div class="outer-box">
-                    <!-- Search Btn -->
-                    <div class="search-box">
-                        <button class="search-btn mobile-search-btn"><i class="flaticon-magnifying-glass"></i></button>
-                    </div>
-
                     <a href="#nav-mobile" class="mobile-nav-toggler navbar-trigger"><span class="fa fa-bars"></span></a>
                 </div>
             </div>
@@ -224,24 +178,8 @@
 
         <!-- Mobile Nav -->
         <div id="nav-mobile"></div>
-
-        <!-- Header Search -->
-        <div class="search-popup">
-            <span class="search-back-drop"></span>
-            <button class="close-search"><span class="fa fa-times"></span></button>
-            
-            <div class="search-inner">
-                <form method="post" action="blog-showcase.html">
-                    <div class="form-group">
-                        <input type="search" name="search-field" value="" placeholder="Search..." required="">
-                        <button type="submit"><i class="flaticon-magnifying-glass"></i></button>
-                    </div>
-                </form>
-            </div>
-        </div>
         <!-- End Header Search -->
     </header>
-    <!--End Main Header -->
 
     <!--Main Slider-->
     <section class="main-slider">
@@ -251,7 +189,7 @@
                     <li data-index="rs-1" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-thumb=""  data-rotate="0"  data-saveperformance="off"  data-title="Slide" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
                         
                         <!-- MAIN IMAGE -->
-                        <img alt="" class="rev-slidebg" data-bgfit="cover" data-bgparallax="20" data-bgposition="center center" data-bgrepeat="no-repeat" data-no-retina="" src="images/main-slider/2.jpg">
+                        <img alt="" class="rev-slidebg" data-bgfit="cover" data-bgparallax="20" data-bgposition="center center" data-bgrepeat="no-repeat" data-no-retina="" src="images/main-slider/1-1.png">
 
                         <div class="tp-caption" 
                         data-paddingbottom="[0,0,0,0]"
@@ -327,8 +265,8 @@
                         data-textalign="['top','top','top','top']"
                         data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","to":"o:1;","ease":"Power4.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'>
                             <div class="btn-box">
-                                <a href="about-us.html" class="theme-btn btn-style-one"><span class="btn-title">About Us</span></a>
-                                <a href="departments.html" class="theme-btn btn-style-two"><span class="btn-title">Our Services</span></a>
+                                <a href="about-us_patient.html" class="theme-btn btn-style-one"><span class="btn-title">About Us</span></a>
+                                <a href="services_patient.html" class="theme-btn btn-style-two"><span class="btn-title">Our Services</span></a>
                             </div>
                         </div>
                     </li>
@@ -336,7 +274,7 @@
                     <li data-index="rs-2" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-thumb=""  data-rotate="0"  data-saveperformance="off"  data-title="Slide" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
                         
                         <!-- MAIN IMAGE -->
-                        <img alt="" class="rev-slidebg" data-bgfit="cover" data-bgparallax="20" data-bgposition="center center" data-bgrepeat="no-repeat" data-no-retina="" src="images/main-slider/1.jpg">
+                        <img alt="" class="rev-slidebg" data-bgfit="cover" data-bgparallax="20" data-bgposition="center center" data-bgrepeat="no-repeat" data-no-retina="" src="images/main-slider/1-1.png">
 
                         <div class="tp-caption" 
                         data-paddingbottom="[0,0,0,0]"
@@ -719,12 +657,12 @@
 	</style>
 	<!-- End Team Section CSS -->
 
-    <!-- Appointment Section -->
+    <!-- Appointment Section 
     <section class="appointment-section">
         <div class="image-layer" style="background-image: url(images/background/2.jpg);"></div>
         <div class="auto-container">
             <div class="row">
-                <!-- Content Column -->
+                 
                 <div class="content-column col-lg-6 col-md-12 col-sm-12">
                     <div class="inner-column">
                         <span class="title">Need a Doctor for Check-up?</span>
@@ -741,7 +679,7 @@
             <div class="fun-fact-section">
                 <div class="auto-container">
 			<div class="row justify-content-center">
-				<!--Column-->
+			
 				<div class="counter-column col-lg-3 col-md-6 col-sm-12 wow fadeInUp">
 					<div class="count-box">
 						<div class="icon-box"><span class="icon flaticon-user-experience"></span></div>
@@ -750,7 +688,7 @@
 					</div>
 				</div>
 				
-				<!--Column-->
+				
 				<div class="counter-column col-lg-3 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="800ms">
 					<div class="count-box">
 						<div class="icon-box"><span class="icon flaticon-hospital"></span></div>
@@ -759,7 +697,7 @@
 					</div>
 				</div>
 
-				<!--Column-->
+				
 				<div class="counter-column col-lg-3 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="1200ms">
 					<div class="count-box">
 						<div class="icon-box"><span class="icon flaticon-add-friend"></span></div>
@@ -771,87 +709,238 @@
 		</div>
             </div>
         </div>
-    </section>
+    </section> -->
+     
     <!-- End Appointment Section -->
 	
-     <!-- News Section -->
-    <section class="news-section">
-        <div class="auto-container">
-            <!-- Sec Title -->
-            <div class="sec-title text-center">
-                <span class="title">OUR BLOG</span>
-                <h2>Recent Articles and News</h2>
-                <span class="divider"></span>
-            </div>
+   <!-- Sent Feedback PHP -->
+	
+	<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-            <div class="row">
-                <!-- News Block -->
-                <div class="news-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
-                    <div class="inner-box">
-                        <div class="image-box">
-                            <figure class="image"><a href="blog-post-image.html"><img src="images/resource/news-1.jpg" alt=""></a></figure>
-                            <a href="#" class="date">Sep 19, 2020</a>
+if ($_SESSION['loggedin']) {
+    $userid = $_SESSION['USER_ID'];
+    $role = $_SESSION['role'];
+} else {
+    $userid = 'Guest';
+    $role = 'Guest';
+}
+?>
+
+<!-- Sent Feedback Section -->
+<section class="feedback-section">
+    <div class="auto-container">
+        
+        <div class="sec-title text-center">
+            <span class="title">WE VALUE YOUR FEEDBACK</span>
+            <h2>Send Us Your Feedback</h2>
+            <span class="divider"></span>
+        </div>
+
+        <div class="row">
+            <div class="feedback-block col-lg-8 col-md-10 col-sm-12 mx-auto wow fadeInUp">
+                <div class="inner-box">
+                    <form action="feedback_process.php" method="post">
+                        <div class="form-group">
+                            <label for="fname">First Name:</label>
+                            <input type="text" id="fname" name="fname" class="form-control" placeholder="Please enter your first name" required>
                         </div>
-                        <div class="lower-content">
-                            <h4><a href="blog-post-image.html">What is The Success rate<br> of a root canel?</a></h4>
-                            <div class="text">Nullam mauris vitae tortor sodales efficitur. Quisque orci ante. Proin amet turpis</div>
-                            <div class="post-info">
-                                <div class="post-author">By Admin Rose</div>
-                                <ul class="post-option">
-                                    <li><a href="#">0 <i class="far fa-heart"></i></a></li>
-                                    <li><a href="#">0 <i class="far fa-comments"></i></a></li>
-                                </ul>
-                            </div>
+
+                        <div class="form-group">
+                            <label for="lname">Last Name:</label>
+                            <input type="text" id="lname" name="lname" class="form-control" placeholder="Please enter your last name" required>
                         </div>
-                    </div>
+
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Please enter your email" required>
+                        </div>
+
+                        <h3>1. Rating System</h3>
+
+                        <label for="overall_rating">Overall Satisfaction (1-10):</label><br>
+                        <input type="range" name="overall_rating" id="overall_rating" min="1" max="10" value="5" oninput="updateValue('overall_rating_value', this.value)">
+                        <span id="overall_rating_value">5</span><br><br>
+
+                        <label for="design_rating">Design (1-10):</label><br>
+                        <input type="range" name="design_rating" id="design_rating" min="1" max="10" value="5" oninput="updateValue('design_rating_value', this.value)">
+                        <span id="design_rating_value">5</span><br><br>
+
+                        <label for="usability_rating">Usability (1-10):</label><br>
+                        <input type="range" name="usability_rating" id="usability_rating" min="1" max="10" value="5" oninput="updateValue('usability_rating_value', this.value)">
+                        <span id="usability_rating_value">5</span><br><br>
+
+                        <label for="performance_rating">Performance (1-10):</label><br>
+                        <input type="range" name="performance_rating" id="performance_rating" min="1" max="10" value="5" oninput="updateValue('performance_rating_value', this.value)">
+                        <span id="performance_rating_value">5</span><br><br>
+
+                        <label for="content_rating">Content Relevance (1-10):</label><br>
+                        <input type="range" name="content_rating" id="content_rating" min="1" max="10" value="5" oninput="updateValue('content_rating_value', this.value)">
+                        <span id="content_rating_value">5</span><br><br>
+
+                        <h3>2. Open-ended Questions</h3>
+
+                        <div class="form-group">
+                            <label for="positive_feedback">What did you like most about our website?</label>
+                            <textarea id="positive_feedback" name="positive_feedback" class="form-control" rows="5" placeholder="Enter your feedback" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="improvements">What can we improve?</label>
+                            <textarea id="improvements" name="improvements" class="form-control" rows="5" placeholder="Enter your feedback" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="missing_info">Was there anything you were looking for but couldn’t find?</label>
+                            <textarea id="missing_info" name="missing_info" class="form-control" rows="5" placeholder="Enter your feedback" required></textarea>
+                        </div>
+
+                        <h3>3. Multiple-choice Questions</h3>
+
+                        <div class="form-group">
+                            <label for="navigation_difficulty">How easy was it to navigate the website?</label>
+                            <select name="navigation_difficulty" id="navigation_difficulty" class="form-control">
+                                <option value="Very Easy">Very Easy</option>
+                                <option value="Easy">Easy</option>
+                                <option value="Neutral">Neutral</option>
+                                <option value="Difficult">Difficult</option>
+                                <option value="Very Difficult">Very Difficult</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="visit_reason">What best describes your reason for visiting?</label>
+                            <select name="visit_reason" id="visit_reason" class="form-control">
+                                <option value="Browsing">Browsing</option>
+                                <option value="Looking for Information">Looking for Information</option>
+                                <option value="Customer Support">Customer Support</option>
+                                <option value="Create an account">Create an account</option>
+                                <option value="Create an appointment">Create an appointment</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="website_discovery">How did you find our website?</label>
+                            <select name="website_discovery" id="website_discovery" class="form-control">
+                                <option value="Search Engine">Search Engine</option>
+                                <option value="Social Media">Social Media</option>
+                                <option value="Referral">Referral</option>
+                            </select>
+                        </div>
+
+                        <h3>4. Usability & Functionality</h3>
+
+                        <div class="form-group">
+                            <label for="functionality_issue">Did any part of the site not work as expected?</label>
+                            <textarea id="functionality_issue" name="functionality_issue" class="form-control" rows="5" placeholder="Describe any issue"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="loading_speed">Did the website load quickly?</label>
+                            <select name="loading_speed" id="loading_speed" class="form-control">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+
+                        <h3>5. NPS (Net Promoter Score)</h3>
+
+                        <label for="recommendation_rate">How likely are you to recommend our website to a friend? (0-10)</label><br>
+                        <input type="range" name="recommendation_rate" id="recommendation_rate" min="1" max="10" value="5" oninput="updateValue('recommendation_rate_value', this.value)">
+                        <span id="recommendation_rate_value">5</span><br><br>
+
+                        <h3>6. Additional Comments</h3>
+
+                        <div class="form-group">
+                            <label for="additional_comments">Any additional comments or suggestions?</label>
+                            <textarea id="additional_comments" name="additional_comments" class="form-control" rows="5"></textarea>
+                        </div>
+
+                        <h3>8. Consent for Follow-up</h3>
+
+                        <div class="form-group">
+                            <label for="follow_up">Would you like to be contacted about your feedback?</label>
+                            <select name="follow_up" id="follow_up" class="form-control">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+
+                        <input type="hidden" name="userid" id="userid" value="<?php echo $userid; ?>">
+                        <input type="hidden" name="role" id="role" value="<?php echo $role; ?>">
+
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary">Submit Feedback</button>
+                        </div>
+                    </form>
                 </div>
-
-                <!-- News Block -->
-                <div class="news-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
-                    <div class="inner-box">
-                        <div class="image-box">
-                            <figure class="image"><a href="blog-post-image.html"><img src="images/resource/news-2.jpg" alt=""></a></figure>
-                            <a href="#" class="date">Sep 19, 2020</a>
-                        </div>
-                        <div class="lower-content">
-                            <h4><a href="blog-post-image.html">How to handle your kids’ <Br>mystery ailments?</a></h4>
-                            <div class="text">Nullam mauris vitae tortor sodales efficitur. Quisque orci ante. Proin amet turpis</div>
-                            <div class="post-info">
-                                <div class="post-author">By Admin Rose</div>
-                                <ul class="post-option">
-                                    <li><a href="#">0 <i class="far fa-heart"></i></a></li>
-                                    <li><a href="#">0 <i class="far fa-comments"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- News Block -->
-                <div class="news-block col-lg-4 col-md-6 col-sm-12 wow fadeInUp">
-                    <div class="inner-box">
-                        <div class="image-box">
-                            <figure class="image"><a href="blog-post-image.html"><img src="images/resource/news-3.jpg" alt=""></a></figure>
-                            <a href="#" class="date">Sep 19, 2020</a>
-                        </div>
-                        <div class="lower-content">
-                            <h4><a href="blog-post-image.html">How to help the cardiology <br>department</a></h4>
-                            <div class="text">Nullam mauris vitae tortor sodales efficitur. Quisque orci ante. Proin amet turpis</div>
-                            <div class="post-info">
-                                <div class="post-author">By Admin Rose</div>
-                                <ul class="post-option">
-                                    <li><a href="#">0 <i class="far fa-heart"></i></a></li>
-                                    <li><a href="#">0 <i class="far fa-comments"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
-    </section>
-    <!--End News Section -->
+    </div>
+</section>
+
+<!-- Feedback Scripts -->
+<script>
+    function updateValue(spanId, value) {
+        document.getElementById(spanId).textContent = value;
+    }
+</script>
+
+	<style>
+		.feedback-section {
+			padding: 50px 0;
+			background-color: #f9f9f9;
+		}
+		.sec-title .title {
+			font-size: 18px;
+			color: #777;
+		}
+		.sec-title h2 {
+			font-size: 32px;
+			color: #333;
+			margin-bottom: 10px;
+		}
+		.divider {
+			width: 50px;
+			height: 3px;
+			background-color: #3498db;
+			margin: 10px auto 30px;
+		}
+		.feedback-block {
+			background: #fff;
+			border-radius: 8px;
+			padding: 30px;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+		}
+		.form-group {
+			margin-bottom: 20px;
+		}
+		.form-control {
+			width: 100%;
+			padding: 10px;
+			font-size: 16px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+		}
+		.btn-primary {
+			background-color: #3498db;
+			color: #fff;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s;
+		}
+		.btn-primary:hover {
+			background-color: #2980b9;
+		}
+	</style>
+
+
        <!-- Main Footer -->
     <footer class="main-footer">
         <!--Widgets Section-->
@@ -864,9 +953,6 @@
                             <!--Footer Column-->
                             <div class="footer-column col-xl-7 col-lg-6 col-md-6 col-sm-12">
                                 <div class="footer-widget about-widget">
-                                    <div class="logo">
-                                        <a href="index.html"><img src="images/logo-2.png" alt="" /></a>
-                                    </div>
                                     <div class="text">
                                         <p>Thong's Clinic was established by Dr. Tony Thong, a dedicated physician with a vision to enhance healthcare services in Bahau. Since its inception, the clinic has grown and evolved, always maintaining its commitment to exceptional care. </p>
                                         <p>We are among the most qualified Doctos in the MY with over 10 years of quality training and experience.</p>
@@ -978,9 +1064,8 @@
                 <div class="inner-container clearfix">
                     <div class="footer-nav">
                         <ul class="clearfix">
-                           <li><a href="index.html">Privacy Policy</a></li> 
-                           <li><a href="about-us.html">Contact</a></li> 
-                           <li><a href="services.html">Supplier</a></li>  
+                           <li><a href="about-us_guess.html">Contact</a></li> 
+                           <li><a href="services_guess.html">Services</a></li>  
                         </ul>
                     </div>
                     

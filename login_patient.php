@@ -1,3 +1,9 @@
+<?php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,35 +65,59 @@
                 <div class="main-box">
 
                     <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img src="images/logo-9.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index_patient.php"><img src="images/file.png" alt="" title=""></a></div>
                     </div>
 
                     <!--Nav Box-->
                     <div class="nav-outer">
                         <nav class="nav main-menu">
                             <ul class="navigation" id="navbar">
-                                <li class="dropdown">
-                                    <span>Home</span>
-                                    <ul>
-                                        <li><a href="index_patient.html">Home Medical</a></li>
-                                    </ul>
-                                </li>
+                                <li><a href="index_patient.php">Home</a></li>
+								<li><a href="services_patient.php">Services</a></li>
+								<li><a href="doctor-detail_patient.php">Doctor Detail</a></li>
+								<li><a href="about-us_patient.php">About Us</a></li>
+								<li><a href="contact_patient.php">Contact</a></li>
+								<li class="dropdown">
+									<span>
+										<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+											<path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1z"/>
+											<path d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 10a5 5 0 0 0-4.546 3 1 1 0 0 0 .657 1.07c.068.016.134.03.2.04A5.992 5.992 0 0 0 8 12a5.992 5.992 0 0 0 4.689 2.11c.066-.01.132-.024.2-.04a1 1 0 0 0 .657-1.07A5 5 0 0 0 8 10z"/>
+										</svg>
+										<?php 
+											$userid = $_SESSION['USER_ID'];
+											
+											if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+												echo " Welcome, " . htmlspecialchars($userid);
+											} else {
+												echo " Profile"; // Default text when user is not logged in
+											}
+										?>
+										<style>
+										.dropdown span {
+											display: flex;
+											align-items: center; /* Vertically center the icon and text */
+											font-size: 14px; /* Adjust font size as needed */
+										}
 
-                                <li class="dropdown">
-                                    <span>Pages</span>
-                                    <ul>
-                                        <li><a href="about-us_patient.html">About Us</a></li>
-                                        <li><a href="services_patient.html">Services</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <span>Doctors</span>
-                                    <ul>
-                                        <li><a href="doctor-detail_patient.html">Doctor Detail</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <span>Blog</span>
+										.dropdown span svg {
+											margin-right: 5px; /* Space between icon and text */
+											fill: #ffffff; /* Change the icon color if needed */
+										}
+
+										</style>
+									</span>
+									<ul>
+										<li><a href="profile.php">Profile</a></li>
+										<?php 
+											if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+												echo "<li><a href='logout.php'>Log Out</a></li>";
+											} else {
+												echo "<li><a href='login.php'>Log In</a></li>";
+											}
+										?>
+									</ul>
+								</li>
+                                  <!--  <span>Blog</span>
                                     <ul>
                                         <li><a href="blog-checkboard.html">Checkerboard</a></li>
                                         <li><a href="blog-masonry.html">Masonry</a></li>
@@ -115,22 +145,10 @@
                                         <li><a href="shopping-cart.html">Shopping Cart</a></li>
                                         <li><a href="checkout.html">Checkout</a></li>
                                     </ul>
-                                </li>
-								<li class="dropdown current">
-                                    <span>Login</span>
-                                    <ul>
-										<li><a href="profile.html">Profile</a></li>
-										<li><a href="logout.php">Log Out</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="contact_patient.html">Contact</a></li>	
+                                </li> -->
 							</ul>
 						</nav>
 						<!-- Main Menu End-->
-
-						<div class="outer-box">
-							
-						</div>
                     </div>
                 </div>
             </div>
@@ -141,7 +159,7 @@
             <div class="auto-container">            
                 <div class="main-box">
                     <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img src="images/logo.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
                     </div>
 
                     <!--Keep This Empty / Menu will come through Javascript-->
@@ -151,20 +169,10 @@
 
         <!-- Mobile Header -->
         <div class="mobile-header">
-            <div class="logo"><a href="index.html"><img src="images/logo.png" alt="" title=""></a></div>
+            <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
 
             <!--Nav Box-->
             <div class="nav-outer clearfix">
-
-                <div class="outer-box">
-                    <!-- Search Btn -->
-                    <div class="search-box">
-                        <button class="search-btn mobile-search-btn"><i class="flaticon-magnifying-glass"></i></button>
-                    </div>
-
-                    <!-- Cart Btn -->
-                    <button class="cart-btn"><i class="icon flaticon-shopping-cart"></i><span class="count">3</span></button>
-
                     <a href="#nav-mobile" class="mobile-nav-toggler navbar-trigger"><span class="fa fa-bars"></span></a>
                 </div>
             </div>
@@ -172,71 +180,11 @@
 
         <!-- Mobile Nav -->
         <div id="nav-mobile"></div>
-
-        <!-- Header Search -->
-        <div class="search-popup">
-            <span class="search-back-drop"></span>
-            <button class="close-search"><span class="fa fa-times"></span></button>
-            
-            <div class="search-inner">
-                <form method="post" action="blog-showcase.html">
-                    <div class="form-group">
-                        <input type="search" name="search-field" value="" placeholder="Search..." required="">
-                        <button type="submit"><i class="flaticon-magnifying-glass"></i></button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <!-- End Header Search -->
-
-        <!-- Sidebar Cart  -->
-        <div class="sidebar-cart">
-            <span class="cart-back-drop"></span>
-            <div class="shopping-cart">
-                <div class="cart-header">
-                    <div class="title">Shopping Cart <span>(3)</span></div>
-                    <button class="close-cart"><span class="flaticon-add"></span></button>
-                </div>
-                <ul class="shopping-cart-items">
-                    <li class="cart-item">
-                        <img src="images/resource/products/product-thumb-1.jpg" alt="#" class="thumb" />
-                        <span class="item-name">First Aid Kit</span>
-                        <span class="item-quantity">1 x <span class="item-amount">$50.00</span></span>
-                        <a href="shop-single.html" class="product-detail"></a>
-                        <button class="remove">Remove</button>
-                    </li>
-
-                    <li class="cart-item">
-                        <img src="images/resource/products/product-thumb-2.jpg" alt="#" class="thumb"  />
-                        <span class="item-name">Vitamin Tablet</span>
-                        <span class="item-quantity">1 x <span class="item-amount">$25.00</span></span>
-                        <a href="shop-single.html" class="product-detail"></a>
-                        <button class="remove">Remove</button>
-                    </li>
-
-                    <li class="cart-item">
-                        <img src="images/resource/products/product-thumb-3.jpg" alt="#" class="thumb"  />
-                        <span class="item-name">Zinc Tablet</span>
-                        <span class="item-quantity">1 x <span class="item-amount">$15.00</span></span>
-                        <a href="shop-single.html" class="product-detail"></a>
-                        <button class="remove">Remove</button>
-                    </li>
-                </ul>
-
-                <div class="cart-footer">
-                    <div class="shopping-cart-total"><strong>Subtotal:</strong> $90.00</div>
-                    <a href="shopping-cart.html" class="theme-btn btn-style-three"><span class="btn-title">View Cart</span></a>
-                    <a href="checkout.html" class="theme-btn btn-style-one"><span class="btn-title">Checkout</span></a>
-                </div>
-            </div> <!-- End shopping-cart -->
-        </div>
-        <!-- End Sidebar Cart  -->
-
     </header>
     <!--End Main Header -->
 
     <!--Page Title-->
-    <section class="page-title" style="background-image: url(images/background/8.jpg);">
+    <section class="page-title" style="background-image: url(images/background/1-1.png);">
         <div class="auto-container">
             <div class="title-outer">
                 <h1>Login</h1>
@@ -426,9 +374,8 @@
                 <div class="inner-container clearfix">
                     <div class="footer-nav">
                         <ul class="clearfix">
-                           <li><a href="index.html">Privacy Policy</a></li> 
-                           <li><a href="about-us.html">Contact</a></li> 
-                           <li><a href="services.html">Supplier</a></li>  
+                           <li><a href="about-us_patient.html">Contact</a></li> 
+                           <li><a href="services_patient.html">Services</a></li>  
                         </ul>
                     </div>
                     

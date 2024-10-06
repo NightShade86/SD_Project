@@ -1,5 +1,5 @@
 <?php
-// Retrieve data based on the feature
+// Sample data based on the feature parameter
 $feature = isset($_GET['feature']) ? $_GET['feature'] : '';
 $data = [];
 
@@ -51,7 +51,7 @@ switch ($feature) {
             ["month" => "September", "total_sales" => "$4500", "number_of_transactions" => 25]
         ];
         break;
-    
+
     case 'view-feedback':
         // Sample data for 'view-feedback'
         $data = [
@@ -60,17 +60,15 @@ switch ($feature) {
         ];
         break;
 
-    //case 'view-profile':
-        // Simulating fetching profile data
-        // Replace with actual database connection and query
-        // Assuming profile id is 1 for this example
-       // $profile_id = 1;
-        // Replace with your database connection code
-      //  $pdo = new PDO('mysql:host=localhost;dbname=your_database', 'username', 'password');
-      //  $stmt = $pdo->prepare("SELECT profile_pic, address, email FROM profiles WHERE id = ?");
-      //  $stmt->execute([$profile_id]);
-      //  $data = $stmt->fetch(PDO::FETCH_ASSOC);
-      //  break;
+    case 'view-profile':
+        // Profile data example
+        $data = [
+            "id" => 1,
+            "profile_pic" => "profile_pic_url.jpg",
+            "address" => "123 Main Street",
+            "email" => "admin@example.com"
+        ];
+        break;
 
     default:
         // Return an error message for unknown features
@@ -82,4 +80,3 @@ header('Content-Type: application/json');
 
 // Return the data as JSON
 echo json_encode($data);
-?>

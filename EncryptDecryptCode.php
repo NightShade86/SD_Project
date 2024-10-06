@@ -1,8 +1,4 @@
 <?php
-session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 // Encryption and Decryption Configuration
 define('ENCRYPTION_METHOD', 'AES-256-CBC'); // Encryption method
 define('SECRET_KEY', 'my_secret_key');      // Secret key
@@ -29,7 +25,7 @@ function decryptPassword($encryptedPassword) {
 }
 
 // Example usage
-$originalPassword = '12354';
+$originalPassword = 'my_secure_password';
 echo "Original Password: " . $originalPassword . "\n";
 
 // Encrypt the password

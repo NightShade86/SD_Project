@@ -1,3 +1,9 @@
+<?php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,28 +72,52 @@
                     <div class="nav-outer">
                         <nav class="nav main-menu">
                             <ul class="navigation" id="navbar">
-                                <li class="dropdown">
-                                    <span>Home</span>
-                                    <ul>
-                                        <li><a href="index_patient.html">Home Medical</a></li>
-                                    </ul>
-                                </li>
+                                <li><a href="index_patient.php">Home</a></li>
+								<li><a href="services_patient.php">Services</a></li>
+								<li class="current"><a href="doctor-detail_patient.php">Doctor Detail</a></li>
+								<li><a href="about-us_patient.php">About Us</a></li>
+								<li><a href="contact_patient.php">Contact</a></li>
+								<li class="dropdown">
+									<span>
+										<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+											<path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1z"/>
+											<path d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 10a5 5 0 0 0-4.546 3 1 1 0 0 0 .657 1.07c.068.016.134.03.2.04A5.992 5.992 0 0 0 8 12a5.992 5.992 0 0 0 4.689 2.11c.066-.01.132-.024.2-.04a1 1 0 0 0 .657-1.07A5 5 0 0 0 8 10z"/>
+										</svg>
+										<?php 
+											$userid = $_SESSION['USER_ID'];
+											
+											if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+												echo " Welcome, " . htmlspecialchars($userid);
+											} else {
+												echo " Profile"; // Default text when user is not logged in
+											}
+										?>
+										<style>
+										.dropdown span {
+											display: flex;
+											align-items: center; /* Vertically center the icon and text */
+											font-size: 14px; /* Adjust font size as needed */
+										}
 
-                                <li class="dropdown">
-                                    <span>Pages</span>
-                                    <ul>
-                                        <li><a href="about-us_patient.html">About Us</a></li>
-                                        <li><a href="services_patient.html">Services</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown current">
-                                    <span>Doctors</span>
-                                    <ul>
-                                        <li class="current"><a href="doctor-detail.html">Doctor Detail</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <span>Blog</span>
+										.dropdown span svg {
+											margin-right: 5px; /* Space between icon and text */
+											fill: #ffffff; /* Change the icon color if needed */
+										}
+
+										</style>
+									</span>
+									<ul>
+										<li><a href="profile.php">Profile</a></li>
+										<?php 
+											if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+												echo "<li><a href='logout.php'>Log Out</a></li>";
+											} else {
+												echo "<li><a href='login.php'>Log In</a></li>";
+											}
+										?>
+									</ul>
+								</li>
+                              <!--     <span>Blog</span>
                                     <ul>
                                         <li><a href="blog-checkboard.html">Checkerboard</a></li>
                                         <li><a href="blog-masonry.html">Masonry</a></li>
@@ -116,21 +146,10 @@
                                         <li><a href="checkout.html">Checkout</a></li>
                                     </ul>
                                 </li>
-								<li class="dropdown">
-                                    <span>Login</span>
-                                    <ul>
-										<li><a href="profile.html">Profile</a></li>
-										<li><a href="logout.php">Log Out</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="contact_patient.html">Contact</a></li>
+								<li class="dropdown"> --> 
 							</ul>
 						</nav>
 						<!-- Main Menu End-->
-
-						<div class="outer-box">
-							
-						</div>
                     </div>
                 </div>
             </div>
@@ -496,9 +515,6 @@
                             <!--Footer Column-->
                             <div class="footer-column col-xl-7 col-lg-6 col-md-6 col-sm-12">
                                 <div class="footer-widget about-widget">
-                                    <div class="logo">
-                                        <a href="index.html"><img src="images/logo-2.png" alt="" /></a>
-                                    </div>
                                     <div class="text">
                                         <p>Thong's Clinic was established by Dr. Tony Thong, a dedicated physician with a vision to enhance healthcare services in Bahau. Since its inception, the clinic has grown and evolved, always maintaining its commitment to exceptional care. </p>
                                         <p>We are among the most qualified Doctos in the MY with over 10 years of quality training and experience.</p>
@@ -610,9 +626,8 @@
                 <div class="inner-container clearfix">
                     <div class="footer-nav">
                         <ul class="clearfix">
-                           <li><a href="index.html">Privacy Policy</a></li> 
-                           <li><a href="about-us.html">Contact</a></li> 
-                           <li><a href="services.html">Supplier</a></li>  
+                           <li><a href="about-us_patient.html">Contact</a></li> 
+                           <li><a href="services_patient.html">Supplier</a></li>  
                         </ul>
                     </div>
                     

@@ -1811,7 +1811,7 @@ hr {
   display: -webkit-box;
   display: flex;
   -webkit-box-pack: justify;
-  justify-content: space-between;
+  justify-content: space-around; 
   -webkit-box-align: center;
   align-items: center;
   margin-bottom: 30px;
@@ -1892,23 +1892,90 @@ hr {
   -webkit-transition: all 300ms ease;
   transition: all 300ms ease;
 }
+/* Ensures nav-outer takes full width and uses flexbox */
+.nav-outer {
+    display: flex;
+    justify-content: space-between; /* Space between logo and menu */
+    align-items: center; /* Vertically centers items */
+    width: 100%; /* Full width */
+}
 
+/* Main menu styles */
+.main-menu {
+    display: flex; /* Aligns menu items in a row */
+    flex-grow: 1; /* Allows the menu to take remaining space */
+	flex-direction: column;
+}
+
+/* Navigation list styles */
+.main-menu .navigation {
+    list-style: none; /* Removes default list styling */
+    padding: 0;
+    margin: 0;
+    display: flex; /* Uses flexbox for horizontal layout */
+}
+
+/* Push the profile dropdown to the right */
+.main-menu .navigation > li:last-child {
+    margin-left: auto; /* Automatically pushes the last item (Profile) to the right */
+}
+
+/* Navigation item styles */
+.main-menu .navigation > li {
+    position: relative;
+    margin-right: 20px; /* Spacing between menu items */
+}
+
+/* Link styles */
 .main-menu .navigation > li > span,
 .main-menu .navigation > li > a {
-  position: relative;
-  display: block;
-  text-align: center;
-  opacity: 1;
-  font-size: 14px;
-  line-height: 30px;
-  font-weight: 600;
-  color: #222222;
-  cursor: pointer;
-  text-transform: uppercase;
-  font-family: "Titillium Web", sans-serif;
-  -webkit-transition: all 300ms ease;
-  transition: all 300ms ease;
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    line-height: 30px;
+    font-weight: 600;
+    color: #222222;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-family: "Titillium Web", sans-serif;
+    transition: all 300ms ease;
 }
+
+/* Dropdown styles */
+.main-menu .navigation > li.dropdown ul {
+    display: none; /* Hide by default */
+    position: absolute;
+    top: 100%; /* Align under dropdown */
+    left: 0;
+    background-color: #fff;
+    padding: 10px 0;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    min-width: 160px; /* Set minimum width */
+    z-index: 100; /* Make sure it appears above other content */
+}
+
+/* Show dropdown on hover */
+.main-menu .navigation > li.dropdown:hover ul {
+    display: block; /* Show on hover */
+}
+
+/* Dropdown item styles */
+.main-menu .navigation > li.dropdown ul li {
+    padding: 10px 20px; /* Spacing for dropdown items */
+}
+
+/* Dropdown link styles */
+.main-menu .navigation > li.dropdown ul li a {
+    color: #333;
+    text-decoration: none;
+    display: block; /* Block display for clickable area */
+}
+
+/* Hover effect for dropdown links */
+.main-menu .navigation > li.dropdown ul li a:hover {
+    background-color: #f5f5f5; /* Highlight on hover */
+}
+
 
 .main-menu .navigation > li.current  span.current,
 .main-menu .navigation > li.current > a,
@@ -1987,6 +2054,7 @@ hr {
 
 .main-menu .navigation > li > ul > li:last-child {
   border-bottom: none;
+  margin-left: auto;
 }
 
 .main-menu .navigation > li > ul > li > span,

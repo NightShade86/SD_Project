@@ -1,3 +1,8 @@
+<?php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +13,7 @@
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 <link href="css/responsive.css" rel="stylesheet">
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--Color Themes-->
 <link id="theme-color-file" href="css/color-themes/default-theme.css" rel="stylesheet">
 
@@ -59,35 +64,21 @@
                 <div class="main-box">
 
                     <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img src="images/logo-9.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index_guess.html"><img src="images/file.png" alt="" title=""></a></div>
                     </div>
 
                     <!--Nav Box-->
                     <div class="nav-outer">
                         <nav class="nav main-menu">
                             <ul class="navigation" id="navbar">
-                                <li class="dropdown">
-                                    <span>Home</span>
-                                    <ul>
-                                        <li><a href="index_guess.html">Home Medical</a></li>
-                                    </ul>
-                                </li>
-
-                                <li class="dropdown">
-                                    <span>Pages</span>
-                                    <ul>
-                                        <li><a href="about-us_guess.html">About Us</a></li>
-                                        <li><a href="services_guess.html">Services</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <span>Doctors</span>
-                                    <ul>
-                                        <li><a href="doctor-detail_guess.html">Doctor Detail</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <span>Blog</span>
+                                <li><a href="index_guess.php">Home</a></li>
+								<li><a href="services_guess.html">Services</a></li>
+								<li><a href="doctor-detail_guess.html">Doctor Detail</a></li>
+								<li><a href="about-us_guess.html">About Us</a></li>
+								<li><a href="contact_guess.html">Contact</a></li>
+								<li class="current"><a href="login_guess.php">Login</a></li>
+                                <li><a href="register_guess.php">Register</a></li>
+                                <!--    <span>Blog</span>
                                     <ul>
                                         <li><a href="blog-checkboard.html">Checkerboard</a></li>
                                         <li><a href="blog-masonry.html">Masonry</a></li>
@@ -114,23 +105,10 @@
                                         <li><a href="shop-single.html">Shop Single</a></li>
                                         <li><a href="shopping-cart.html">Shopping Cart</a></li>
                                         <li><a href="checkout.html">Checkout</a></li>
-                                    </ul>
-								<li class="dropdown current">
-                                    <span>Login</span>
-                                    <ul>
-										<li><a href="login_guess.html">Login</a></li>
-										<li><a href="register_guess.html">Register</a></li>
-                                    </ul>
-                                </li>
-                                </li>
-                                <li><a href="contact_guess.html">Contact</a></li>
+                                    </ul> -->
 							</ul>
 						</nav>
 						<!-- Main Menu End-->
-
-						<div class="outer-box">
-							
-						</div>
                     </div>
                 </div>
             </div>
@@ -157,14 +135,6 @@
             <div class="nav-outer clearfix">
 
                 <div class="outer-box">
-                    <!-- Search Btn -->
-                    <div class="search-box">
-                        <button class="search-btn mobile-search-btn"><i class="flaticon-magnifying-glass"></i></button>
-                    </div>
-
-                    <!-- Cart Btn -->
-                    <button class="cart-btn"><i class="icon flaticon-shopping-cart"></i><span class="count">3</span></button>
-
                     <a href="#nav-mobile" class="mobile-nav-toggler navbar-trigger"><span class="fa fa-bars"></span></a>
                 </div>
             </div>
@@ -172,76 +142,16 @@
 
         <!-- Mobile Nav -->
         <div id="nav-mobile"></div>
-
-        <!-- Header Search -->
-        <div class="search-popup">
-            <span class="search-back-drop"></span>
-            <button class="close-search"><span class="fa fa-times"></span></button>
-            
-            <div class="search-inner">
-                <form method="post" action="blog-showcase.html">
-                    <div class="form-group">
-                        <input type="search" name="search-field" value="" placeholder="Search..." required="">
-                        <button type="submit"><i class="flaticon-magnifying-glass"></i></button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <!-- End Header Search -->
-
-        <!-- Sidebar Cart  -->
-        <div class="sidebar-cart">
-            <span class="cart-back-drop"></span>
-            <div class="shopping-cart">
-                <div class="cart-header">
-                    <div class="title">Shopping Cart <span>(3)</span></div>
-                    <button class="close-cart"><span class="flaticon-add"></span></button>
-                </div>
-                <ul class="shopping-cart-items">
-                    <li class="cart-item">
-                        <img src="images/resource/products/product-thumb-1.jpg" alt="#" class="thumb" />
-                        <span class="item-name">First Aid Kit</span>
-                        <span class="item-quantity">1 x <span class="item-amount">$50.00</span></span>
-                        <a href="shop-single.html" class="product-detail"></a>
-                        <button class="remove">Remove</button>
-                    </li>
-
-                    <li class="cart-item">
-                        <img src="images/resource/products/product-thumb-2.jpg" alt="#" class="thumb"  />
-                        <span class="item-name">Vitamin Tablet</span>
-                        <span class="item-quantity">1 x <span class="item-amount">$25.00</span></span>
-                        <a href="shop-single.html" class="product-detail"></a>
-                        <button class="remove">Remove</button>
-                    </li>
-
-                    <li class="cart-item">
-                        <img src="images/resource/products/product-thumb-3.jpg" alt="#" class="thumb"  />
-                        <span class="item-name">Zinc Tablet</span>
-                        <span class="item-quantity">1 x <span class="item-amount">$15.00</span></span>
-                        <a href="shop-single.html" class="product-detail"></a>
-                        <button class="remove">Remove</button>
-                    </li>
-                </ul>
-
-                <div class="cart-footer">
-                    <div class="shopping-cart-total"><strong>Subtotal:</strong> $90.00</div>
-                    <a href="shopping-cart.html" class="theme-btn btn-style-three"><span class="btn-title">View Cart</span></a>
-                    <a href="checkout.html" class="theme-btn btn-style-one"><span class="btn-title">Checkout</span></a>
-                </div>
-            </div> <!-- End shopping-cart -->
-        </div>
-        <!-- End Sidebar Cart  -->
-
     </header>
     <!--End Main Header -->
 
     <!--Page Title-->
-    <section class="page-title" style="background-image: url(images/background/8.jpg);">
+    <section class="page-title" style="background-image: url(images/background/1-1.png);">
         <div class="auto-container">
             <div class="title-outer">
                 <h1>Login</h1>
                 <ul class="page-breadcrumb">
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index_guess.html">Home</a></li>
                     <li>Shop</li>
                 </ul> 
             </div>
@@ -257,14 +167,27 @@
 					<!-- Login Form -->
 					<div class="login-form" style="background-color: #f7f7f7; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
 						<h2 style="text-align: center; color: #333; font-weight: bold;">Login</h2>
-						<!-- Error Message -->
+						<!-- SweetAlert Messages -->
 						<?php if (isset($_SESSION['error'])): ?>
-							<div class="error" style="color: red; text-align: center; padding: 10px; border-radius: 5px; background-color: #ffe6e6;">
-								<?php
-								echo $_SESSION['error'];
-								unset($_SESSION['error']);
-								?>
-							</div>
+						    <script>
+							    Swal.fire({
+							        title: 'Error!',
+							        text: '<?php echo $_SESSION["error"]; ?>',
+							        icon: 'error'
+							    });
+						    </script>
+						    <?php unset($_SESSION['error']); // Clear the error after displaying it ?>
+						<?php endif; ?>
+
+						<?php if (isset($_SESSION['success'])): ?>
+						    <script>
+							    Swal.fire({
+							        title: 'Success!',
+							        text: '<?php echo $_SESSION["success"]; ?>',
+							        icon: 'success'
+							    });
+						    </script>
+						    <?php unset($_SESSION['success']); // Clear the success message after displaying it ?>
 						<?php endif; ?>
 						<form method="post" action="login_process.php">
 							<div class="form-group">
@@ -426,9 +349,8 @@
                 <div class="inner-container clearfix">
                     <div class="footer-nav">
                         <ul class="clearfix">
-                           <li><a href="index.html">Privacy Policy</a></li> 
-                           <li><a href="about-us.html">Contact</a></li> 
-                           <li><a href="services.html">Supplier</a></li>  
+                           <li><a href="about-us_guess.html">Contact</a></li> 
+                           <li><a href="services_guess.html">Supplier</a></li>  
                         </ul>
                     </div>
                     

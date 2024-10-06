@@ -1,4 +1,9 @@
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 $email = $_POST["email"];
 
@@ -32,21 +37,28 @@ if ($mysqli->affected_rows) {
     $mail->Subject = "Password Reset";
     $mail->Body = <<<END
 
-    Click <a href="http://example.com/reset_password.php?token=$token">here</a> 
+    Click <a href="http://localhost/clinicdb/SD_Project/reset_password.php?token=$token">here</a> 
     to reset your password.
 
     END;
 
     try {
-
         $mail->send();
-
+        // Store a success message in the session
+        $_SESSION['message'] = 'Password reset link sent! Please check your inbox.';
+        $_SESSION['message_type'] = 'success';  // For SweetAlert 'success' icon
     } catch (Exception $e) {
-
-        echo "Message could not be sent. Mailer error: {$mail->ErrorInfo}";
-
+        // Store an error message in the session
+        $_SESSION['message'] = "Message could not be sent. Mailer error: {$mail->ErrorInfo}";
+        $_SESSION['message_type'] = 'error';  // For SweetAlert 'error' icon
     }
-
+} else {
+    // Store an error message if the email is not found
+    $_SESSION['message'] = "Email not found.";
+    $_SESSION['message_type'] = 'error';
 }
 
-echo "Message sent, please check your inbox.";
+// Redirect to a page that will handle showing the message
+header("Location: reset_password_feedback.php");
+exit;
+?>
