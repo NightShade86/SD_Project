@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($stmt->execute()) {
             $_SESSION['success_message'] = "Staff added successfully!";
             // Redirect before any output
-            header("Location: view_staff.php");
+            header("Location: admin_dashboard.php?section=staff");
             exit();
         } else {
             $errorMessage = "There was an issue creating the staff. Error: " . $stmt->error;

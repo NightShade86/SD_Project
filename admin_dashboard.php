@@ -129,7 +129,6 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
                         </a>
                         <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="patientDropdown">
                             <a class="dropdown-item" href="?section=patients">View Patients</a>
-                            <a class="dropdown-item" href="?section=add-patient">Add Patient</a>
                             <a class="dropdown-item" href="?section=edit-patient">Edit Patient</a>
                             <a class="dropdown-item" href="?section=delete-patient">Delete Patient</a>
                         </div>

@@ -117,7 +117,6 @@ if (!in_array($section, ["patients", "staff", "add-staff", "edit-staff", "delete
                         </a>
                         <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="patientDropdown">
                             <a class="dropdown-item" href="?section=patients">View Patients</a>
-                            <a class="dropdown-item" href="?section=add-patient">Add Patient</a>
                             <a class="dropdown-item" href="?section=edit-patient">Edit Patient</a>
                             <a class="dropdown-item" href="?section=delete-patient">Delete Patient</a>
                         </div>

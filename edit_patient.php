@@ -21,9 +21,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // GET method: Show the data of the patient
 
     if (!isset($_GET["patient_id"])) {
-        header("location: /clinicdb/SD_Project/view_patient.php");
-        exit;
-    }
+    // Redirect based on the existing session variable for user role
+    if (isset($_SESSION['userRole'])) {
+        if ($_SESSION['userRole'] === 'admin') {
+            header("Location: admin_dashboard.php?section=patients");
+        } elseif ($_SESSION['userRole'] === 'staff') {
+            header("Location: staff_dashboard.php?section=patients");
+        }
+    } else 
+    exit;
+}
+
 
     $patient_id = $_GET["patient_id"];
 
@@ -33,9 +41,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $row = $result->fetch_assoc();
 
     if (!$row) {
-        header("location: view_patient.php");
-        exit;
-    }
+    if (isset($_SESSION['userRole'])) {
+        if ($_SESSION['userRole'] === 'admin') {
+            header("Location: admin_dashboard.php?section=patients");
+        } elseif ($_SESSION['userRole'] === 'staff') {
+            header("Location: staff_dashboard.php?section=patients");
+        }
+    } else 
+    exit;
+}
+
 
     $firstname = $row["FIRSTNAME"];
     $lastname = $row["LASTNAME"];
@@ -70,14 +85,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         // Execute the SQL query
         $result = $connection->query($sql);
 
-        if (!$result) {
-            $errorMessage = "Error: " . $sql . "<br>" . $connection->error;
-        } else {
-            $successMessage = "Patient information updated successfully!";
-            // Redirect to patient listing page
-            header("Location: view_patient.php");
-            exit;
-        }
+		if (!$result) {
+			$errorMessage = "Error: " . $sql . "<br>" . $connection->error;
+		} else {
+			$successMessage = "Patient information updated successfully!";
+			
+			// Redirect based on the existing session variable for user role
+			if (isset($_SESSION['userRole'])) {
+				if ($_SESSION['userRole'] === 'admin') {
+					header("Location: admin_dashboard.php?section=patients");
+				} elseif ($_SESSION['userRole'] === 'staff') {
+					header("Location: staff_dashboard.php?section=patients");
+				}
+			} 
+			exit;
+		}
     }
 }
 ?>
