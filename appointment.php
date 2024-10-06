@@ -75,53 +75,63 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['appointment_date'])) {
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appointment Form</title>
-    <script>
-        function updateTimes() {
-            const date = document.getElementById('appointment_date').value;
-            const timeSelect = document.getElementById('appointment_time');
+<div class="model">
+    <!-- Contact Form -->
+    <div class="contact-form-two">
+        <div class="title-box">
+            <h4>Make an Appointment</h4>
+            <div class="text">We provide the most full medical services, so every person could have the <br>oportunity to receive qualitative medical help.</div>
+        </div>
+        <form action="submit_appointment.php" method="POST">
+            <div class="row clearfix">
+                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                    <label for="appointment_date">Appointment Date:</label>
+                    <input type="date" id="appointment_date" name="appointment_date" required onchange="updateTimes()">
+                </div>
 
-            // Clear existing options
-            timeSelect.innerHTML = '';
-            timeSelect.disabled = true; // Disable the time select initially
+                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                    <label for="appointment_time">Appointment Time:</label>
+                    <select id="appointment_time" name="appointment_time" required disabled>
+                        <option value="">Select a time</option>
+                    </select>
+                </div>
 
-            if (date) {
-                fetch('get_available_times.php?date=' + date)
-                    .then(response => response.json())
-                    .then(data => {
-                        data.forEach(time => {
-                            const option = document.createElement('option');
-                            option.value = time;
-                            option.textContent = time;
-                            timeSelect.appendChild(option);
-                        });
-                        timeSelect.disabled = false; // Enable time select if times are available
-                    })
-                    .catch(error => console.error('Error fetching available times:', error));
+                <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                    <label for="reason_for_visit">Reason for Visit:</label>
+                    <textarea id="reason_for_visit" name="reason_for_visit" rows="4" cols="50" required></textarea>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                    <button class="theme-btn btn-style-three small" type="submit" name="submit-form"><span class="btn-title">Book Appointment</span></button>
+                </div>
+            </div>
+        </form>
+
+        <script>
+            function updateTimes() {
+                const date = document.getElementById('appointment_date').value;
+                const timeSelect = document.getElementById('appointment_time');
+
+                // Clear existing options
+                timeSelect.innerHTML = '';
+                timeSelect.disabled = true; // Disable the time select initially
+
+                if (date) {
+                    fetch('get_available_times.php?date=' + date)
+                        .then(response => response.json())
+                        .then(data => {
+                            data.forEach(time => {
+                                const option = document.createElement('option');
+                                option.value = time;
+                                option.textContent = time;
+                                timeSelect.appendChild(option);
+                            });
+                            timeSelect.disabled = false; // Enable time select if times are available
+                        })
+                        .catch(error => console.error('Error fetching available times:', error));
+                }
             }
-        }
-    </script>
-</head>
-<body>
-<h2>Appointment Booking Form</h2>
-<form action="submit_appointment.php" method="POST">
-    <label for="appointment_date">Appointment Date:</label>
-    <input type="date" id="appointment_date" name="appointment_date" required onchange="updateTimes()"><br><br>
+        </script>
+    </div>
+</div>
 
-    <label for="appointment_time">Appointment Time:</label>
-    <select id="appointment_time" name="appointment_time" required disabled>
-        <option value="">Select a time</option>
-    </select><br><br>
-
-    <label for="reason_for_visit">Reason for Visit:</label><br>
-    <textarea id="reason_for_visit" name="reason_for_visit" rows="4" cols="50" required></textarea><br><br>
-
-    <input type="submit" value="Book Appointment">
-</form>
-</body>
-</html>

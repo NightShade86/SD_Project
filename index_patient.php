@@ -52,6 +52,11 @@ ini_set('display_errors', 1);
                         <li><i class="flaticon-back-in-time"></i>Monday - Thursday 9.00am - 9.00pm , Friday 9.00am - 5.00pm. Sunday and Saturday CLOSED</li>
                     </ul>
                 </div>
+				<div class="top-right">
+                        <div class="btn-box">
+                            <a href="appointment.php" id="appointment-btn" class="theme-btn btn-style-three"><span class="btn-title">Appointment</span></a>
+                        </div>
+                </div>
             </div>
         </div>
     </div>
@@ -112,6 +117,7 @@ ini_set('display_errors', 1);
 												echo "<li><a href='login.php'>Log In</a></li>";
 											}
 										?>
+										<li><a href="view_existing_appointment_patient.php">View Appointment History</a></li>
 									</ul>
 								</li>
                                 <!-- <span>Blog</span>

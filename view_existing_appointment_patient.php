@@ -12,10 +12,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 }
 
 // Retrieve user information from session
-if ($_SESSION['loggedin']) {
-    $userid = $_SESSION['USER_ID'];
-    $role = $_SESSION['role'];
-}
+$userid = $_SESSION['USER_ID'];
+$role = $_SESSION['role'];
 
 // Database connection
 $servername = "localhost";
@@ -31,27 +29,51 @@ if ($connection->connect_error) {
 
 // Fetch all appointments made by the user
 $stmt = $connection->prepare("SELECT * FROM appointment_info WHERE userid = ?");
-$stmt->bind_param("s", $userid);
-$stmt->execute();
+if (!$stmt->bind_param("s", $userid)) {
+    die("Binding parameters failed: " . $stmt->error);
+}
+if (!$stmt->execute()) {
+    die("Execute failed: " . $stmt->error);
+}
 $result = $stmt->get_result();
 
 // Check if any appointments exist
 if ($result->num_rows > 0) {
-    echo "<h2>Your Appointments</h2>";
-    echo "<table border='1'>
-            <tr>
-                <th>Appointment ID</th>
-                <th>User ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Phone Number</th>
-                <th>Email</th>
-                <th>IC</th>
-                <th>Appointment Date</th>
-                <th>Appointment Time</th>
-                <th>Reason for Visit</th>
-                <th>Queue Number</th>
-            </tr>";
+    echo "
+    <html>
+    <head>
+        <title>Appointments</title>
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
+    </head>
+    <body>
+        <button type='button' class='btn btn-primary' data-toggle='modal' data-target='#appointmentModal'>View Appointments</button>
+
+        <!-- Modal -->
+        <div class='modal fade' id='appointmentModal' tabindex='-1' role='dialog' aria-labelledby='appointmentModalLabel' aria-hidden='true'>
+            <div class='modal-dialog' role='document'>
+                <div class='modal-content'>
+                    <div class='modal-header'>
+                        <h5 class='modal-title' id='appointmentModalLabel'>Your Appointments</h5>
+                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
+                        </button>
+                    </div>
+                    <div class='modal-body'>
+                        <div class='table-responsive'>
+                        <table class='table table-striped table-bordered'>
+                            <tr>
+                                <th>Appointment ID</th>
+                                <th>User ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Phone Number</th>
+                                <th>Email</th>
+                                <th>IC</th>
+                                <th>Appointment Date</th>
+                                <th>Appointment Time</th>
+                                <th>Reason for Visit</th>
+                                <th>Queue Number</th>
+                            </tr>";
 
     // Fetch and display each appointment
     while ($row = $result->fetch_assoc()) {
@@ -70,7 +92,22 @@ if ($result->num_rows > 0) {
               </tr>";
     }
 
-    echo "</table>";
+    echo "
+                        </table>
+                        </div>
+                    </div>
+                    <div class='modal-footer'>
+                        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src='https://code.jquery.com/jquery-3.2.1.slim.min.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'></script>
+        <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
+    </body>
+    </html>
+    ";
 } else {
     echo "<h2>No appointments found.</h2>";
 }
