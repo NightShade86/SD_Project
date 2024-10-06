@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 
 $allowed_sections = [
     "patients", "staff", "add-staff", "edit-staff", "delete-staff", 
-    "add-patient", "edit-patient", "delete-patient" , "profile"
+    "add-patient", "edit-patient", "delete-patient" , "profile" , "appointment" , "feedback"
 ];
 
 $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sections) ? $_GET["section"] : "staff";
@@ -127,7 +127,7 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 							<i class="fas fa-calendar-alt"></i> Manage Appointments
 						</a>
 						<div class="dropdown-menu dropdown-menu-dark" aria-labelledby="appointmentDropdown">
-							<a class="dropdown-item" href="#view-appointment">View Appointments</a>
+							<a class="dropdown-item" href="?section=appointment">View Appointments</a>
 							<a class="dropdown-item" href="#add-appointment">Add Appointment</a>
 						</div>
 					</div>
@@ -136,7 +136,7 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
                     <a class="nav-link text-white" href="#view-bills"><i class="fas fa-file-invoice-dollar"></i> View Bills</a>
                     <a class="nav-link text-white" href="#view-transaction"><i class="fas fa-exchange-alt"></i> View Transactions</a>
                     <a class="nav-link text-white" href="#generate-sales-report"><i class="fas fa-chart-line"></i> Generate Sales Report</a>
-                    <a class="nav-link text-white" href="#view-feedback"><i class="fas fa-comments"></i> View Feedback</a>
+                    <a class="nav-link text-white" href="?section=feedback"><i class="fas fa-comments"></i> View Feedback</a>
                 </nav>
             </div>
             
@@ -173,6 +173,8 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
                             "edit-patient" => "edit_patient.php",
                             "delete-patient" => "delete_patient.php",
 							"profile" => "profile_SA.php" ,
+							"appointment" => "view_appointments.php" ,
+							"feedback" => "view_feedback.php" ,
                         ];
 
                         if (array_key_exists($section, $section_map)) {

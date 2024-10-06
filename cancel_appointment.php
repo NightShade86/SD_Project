@@ -46,7 +46,15 @@ if (isset($_GET['appointment_id'])) {
 // Close the connection
 $connection->close();
 
-// Redirect back to the appointment view page
-header("Location: view_appointments.php");
+if (!isset($_GET["patient_id"])) {
+    // Redirect based on the existing session variable for user role
+    if (isset($_SESSION['userRole'])) {
+        if ($_SESSION['userRole'] === 'admin') {
+            header("Location: admin_dashboard.php?section=appointment");
+        } elseif ($_SESSION['userRole'] === 'staff') {
+            header("Location: staff_dashboard.php?section=appointment");
+        }
+    } 
+	
 exit();
 ?>
