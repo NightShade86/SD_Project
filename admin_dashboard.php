@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 // Initialize the section variable
 $allowed_sections = [
     "patients", "staff", "add-staff", "edit-staff", "delete-staff", 
-    "add-patient", "edit-patient", "delete-patient"
+    "add-patient", "edit-patient", "delete-patient" , "profile"
 ];
 
 $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sections) ? $_GET["section"] : "staff";
@@ -162,7 +162,7 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ml-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="profile.php"><i class="fas fa-user"></i> View Profile</a>
+                                    <a class="nav-link" href="?section=profile"><i class="fas fa-user"></i> View Profile</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i> Log Out</a>
@@ -184,6 +184,7 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
                             "add-patient" => "add_patient.php",
                             "edit-patient" => "edit_patient.php",
                             "delete-patient" => "delete_patient.php",
+							"profile" => "profile_SA.php" ,
                         ];
 
                         if (array_key_exists($section, $section_map)) {
