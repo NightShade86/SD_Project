@@ -4,14 +4,14 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Initialize the section variable
-$section = isset($_GET["section"]) ? $_GET["section"] : "staff";
+$allowed_sections = [
+    "patients", "staff", "add-staff", "edit-staff", "delete-staff", 
+    "add-patient", "edit-patient", "delete-patient"
+];
 
-// Set the default section if invalid
-if (!in_array($section, ["patients", "staff", "add-staff", "edit-staff", "delete-staff", "add-patient", "edit-patient", "delete-patient"])) {
-    $section = "staff";
-}
+$section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sections) ? $_GET["section"] : "staff";
+
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,7 +81,7 @@ if (!in_array($section, ["patients", "staff", "add-staff", "edit-staff", "delete
         #sidebar .nav-link:hover {
             background-color: #495057;
             color: #ffffff;
- }
+        }
 
         .navbar-brand {
             font-weight: bold;
@@ -176,22 +176,19 @@ if (!in_array($section, ["patients", "staff", "add-staff", "edit-staff", "delete
                     <div class='content bg-white p-4 shadow-sm rounded'>
                         <?php
                         // Include the corresponding section file based on the selected section
-                        if ($section == "staff") {
-                            include 'view_staff.php';
-                        } elseif ($section == "add-staff") {
-                            include 'add_staff.php';
-                        } elseif ($section == "edit-staff") {
-                            include 'edit_staff.php';
-                        } elseif ($section == "delete-staff") {
-                            include 'delete_staff.php';
-                        } elseif ($section == "patients") {
-                            include 'view_patient.php';
-                        } elseif ($section == "add-patient") {
-                            include 'add_patient.php';
-                        } elseif ($section == "edit-patient") {
-                            include 'edit_patient.php';
-                        } elseif ($section == "delete-patient") {
-                            include 'delete_patient.php';
+                        $section_map = [
+                            "staff" => "view_staff.php",
+                            "add-staff" => "add_staff.php",
+                            "edit-staff" => "edit_staff.php",
+                            "delete-staff" => "delete_staff.php",
+                            "patients" => "view_patient.php",
+                            "add-patient" => "add_patient.php",
+                            "edit-patient" => "edit_patient.php",
+                            "delete-patient" => "delete_patient.php",
+                        ];
+
+                        if (array_key_exists($section, $section_map)) {
+                            include $section_map[$section];
                         }
                         ?>
                     </div>
@@ -204,4 +201,3 @@ if (!in_array($section, ["patients", "staff", "add-staff", "edit-staff", "delete
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>
-
