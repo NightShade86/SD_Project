@@ -3,13 +3,13 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Initialize the section variable
-$section = isset($_GET["section"]) ? $_GET["section"] : "staff";
+$allowed_sections = [
+    "patients", "staff", "add-staff", "edit-staff", "delete-staff", 
+    "add-patient", "edit-patient", "delete-patient" , "profile" , "appointment" , "feedback"
+];
 
-// Set the default section if invalid
-if (!in_array($section, ["patients", "staff", "add-staff", "edit-staff", "delete-staff", "add-patient", "edit-patient", "delete-patient"])) {
-    $section = "staff";
-}
+$section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sections) ? $_GET["section"] : "staff";
+
 ?>
 
 <!DOCTYPE html>
@@ -117,7 +117,6 @@ if (!in_array($section, ["patients", "staff", "add-staff", "edit-staff", "delete
                         </a>
                         <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="patientDropdown">
                             <a class="dropdown-item" href="?section=patients">View Patients</a>
-                            <a class="dropdown-item" href="?section=add-patient">Add Patient</a>
                             <a class="dropdown-item" href="?section=edit-patient">Edit Patient</a>
                             <a class="dropdown-item" href="?section=delete-patient">Delete Patient</a>
                         </div>
@@ -128,7 +127,7 @@ if (!in_array($section, ["patients", "staff", "add-staff", "edit-staff", "delete
 							<i class="fas fa-calendar-alt"></i> Manage Appointments
 						</a>
 						<div class="dropdown-menu dropdown-menu-dark" aria-labelledby="appointmentDropdown">
-							<a class="dropdown-item" href="#view-appointment">View Appointments</a>
+							<a class="dropdown-item" href="?section=appointment">View Appointments</a>
 							<a class="dropdown-item" href="#add-appointment">Add Appointment</a>
 						</div>
 					</div>
@@ -137,7 +136,7 @@ if (!in_array($section, ["patients", "staff", "add-staff", "edit-staff", "delete
                     <a class="nav-link text-white" href="#view-bills"><i class="fas fa-file-invoice-dollar"></i> View Bills</a>
                     <a class="nav-link text-white" href="#view-transaction"><i class="fas fa-exchange-alt"></i> View Transactions</a>
                     <a class="nav-link text-white" href="#generate-sales-report"><i class="fas fa-chart-line"></i> Generate Sales Report</a>
-                    <a class="nav-link text-white" href="#view-feedback"><i class="fas fa-comments"></i> View Feedback</a>
+                    <a class="nav-link text-white" href="?section=feedback"><i class="fas fa-comments"></i> View Feedback</a>
                 </nav>
             </div>
             
@@ -151,7 +150,7 @@ if (!in_array($section, ["patients", "staff", "add-staff", "edit-staff", "delete
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ml-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="profile.php"><i class="fas fa-user"></i> View Profile</a>
+                                    <a class="nav-link" href="?section=profile"><i class="fas fa-user"></i> View Profile</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i> Log Out</a>
@@ -164,22 +163,22 @@ if (!in_array($section, ["patients", "staff", "add-staff", "edit-staff", "delete
                     <div class='content bg-white p-4 shadow-sm rounded'>
                         <?php
                         // Include the corresponding section file based on the selected section
-                        if ($section == "staff") {
-                            include 'view_staff.php';
-                        } elseif ($section == "add-staff") {
-                            include 'add_staff.php';
-                        } elseif ($section == "edit-staff") {
-                            include 'edit_staff.php';
-                        } elseif ($section == "delete-staff") {
-                            include 'delete_staff.php';
-                        } elseif ($section == "patients") {
-                            include 'view_patient.php';
-                        } elseif ($section == "add-patient") {
-                            include 'add_patient.php';
-                        } elseif ($section == "edit-patient") {
-                            include 'edit_patient.php';
-                        } elseif ($section == "delete-patient") {
-                            include 'delete_patient.php';
+                        $section_map = [
+                            "staff" => "view_staff.php",
+                            "add-staff" => "add_staff.php",
+                            "edit-staff" => "edit_staff.php",
+                            "delete-staff" => "delete_staff.php",
+                            "patients" => "view_patient.php",
+                            "add-patient" => "add_patient.php",
+                            "edit-patient" => "edit_patient.php",
+                            "delete-patient" => "delete_patient.php",
+							"profile" => "profile_SA.php" ,
+							"appointment" => "view_appointments.php" ,
+							"feedback" => "view_feedback.php" ,
+                        ];
+
+                        if (array_key_exists($section, $section_map)) {
+                            include $section_map[$section];
                         }
                         ?>
                     </div>

@@ -1,4 +1,7 @@
 <?php
+ob_start();
+?>
+<?php
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -6,13 +9,13 @@ ini_set('display_errors', 1);
 // Initialize the section variable
 $allowed_sections = [
     "patients", "staff", "add-staff", "edit-staff", "delete-staff", 
-    "add-patient", "edit-patient", "delete-patient"
+    "add-patient", "edit-patient", "delete-patient" , "profile" , "appointment" , "feedback"
 ];
 
 $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sections) ? $_GET["section"] : "staff";
 
 ?>
-<!DOCTYPE html>
+<!Doctype html> <!-- Line 15 -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -129,7 +132,6 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
                         </a>
                         <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="patientDropdown">
                             <a class="dropdown-item" href="?section=patients">View Patients</a>
-                            <a class="dropdown-item" href="?section=add-patient">Add Patient</a>
                             <a class="dropdown-item" href="?section=edit-patient">Edit Patient</a>
                             <a class="dropdown-item" href="?section=delete-patient">Delete Patient</a>
                         </div>
@@ -140,7 +142,7 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 							<i class="fas fa-calendar-alt"></i> Manage Appointments
 						</a>
 						<div class="dropdown-menu dropdown-menu-dark" aria-labelledby="appointmentDropdown">
-							<a class="dropdown-item" href="#view-appointment">View Appointments</a>
+							<a class="dropdown-item" href="?section=appointment">View Appointments</a>
 							<a class="dropdown-item" href="#add-appointment">Add Appointment</a>
 						</div>
 					</div>
@@ -149,7 +151,7 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
                     <a class="nav-link text-white" href="#view-bills"><i class="fas fa-file-invoice-dollar"></i> View Bills</a>
                     <a class="nav-link text-white" href="#view-transaction"><i class="fas fa-exchange-alt"></i> View Transactions</a>
                     <a class="nav-link text-white" href="#generate-sales-report"><i class="fas fa-chart-line"></i> Generate Sales Report</a>
-                    <a class="nav-link text-white" href="#view-feedback"><i class="fas fa-comments"></i> View Feedback</a>
+                    <a class="nav-link text-white" href="?section=feedback"><i class="fas fa-comments"></i> View Feedback</a>
                 </nav>
             </div>
             
@@ -163,7 +165,7 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ml-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="profile.php"><i class="fas fa-user"></i> View Profile</a>
+                                    <a class="nav-link" href="?section=profile"><i class="fas fa-user"></i> View Profile</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i> Log Out</a>
@@ -185,6 +187,9 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
                             "add-patient" => "add_patient.php",
                             "edit-patient" => "edit_patient.php",
                             "delete-patient" => "delete_patient.php",
+							"profile" => "profile_SA.php" ,
+							"appointment" => "view_appointments.php" ,
+							"feedback" => "view_feedback.php" ,
                         ];
 
                         if (array_key_exists($section, $section_map)) {
@@ -201,3 +206,6 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>
+<?php
+ob_end_flush();
+?>

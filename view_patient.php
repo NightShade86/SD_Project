@@ -10,12 +10,6 @@
 </head>
 <body>
     <div class="container my-5">
-        <!-- Logout button with icon -->
-        <div class="d-flex justify-content-end">
-            <a class="btn btn-danger" href="/clinic_management_system/logout.php" role="button">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
-        </div>
         
         <h2>List of Patients</h2>
         
