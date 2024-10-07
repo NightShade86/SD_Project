@@ -102,7 +102,16 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
             border: 1px solid #ddd;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
+			overflow-x: auto;
+			padding: 20px; /* Add some padding to the content container */
         }
+		
+		.content table {
+		width: 100%; /* Set the table width to 100% of its parent container */
+		overflow-x: auto; /* Add horizontal scrolling to the table */
+		display: block; /* Set the table display to block to enable horizontal scrolling */
+		}
+			
     </style>
 </head>
 <body>
