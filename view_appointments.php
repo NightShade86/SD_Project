@@ -42,7 +42,6 @@ if (!$result) {
 // Count total number of appointments
 $totalAppointments = $result->num_rows;
 echo "<p>Total Appointments: $totalAppointments</p>";
-Echo "$role";
 ?>
 
 <!DOCTYPE html>
