@@ -22,24 +22,26 @@ $lastname = $_POST['lastname'] ?? null;
 $username = $_POST['username'] ?? null;  // Check if 'username' is set
 $ic = $_POST['ic'] ?? null;
 $email = $_POST['email'] ?? null;
+$phone = $_POST['pnumber'] ?? null;
+$oguserid = $_POST['ogusername'];
 
 // Ensure the username is provided before proceeding
-if ($username) {
+if ($oguserid) {
     // Check if the user exists
     $sql_check = "SELECT * FROM user_info WHERE USER_ID = ?";
     $stmt_check = $connection->prepare($sql_check);
-    $stmt_check->bind_param("s", $username);
+    $stmt_check->bind_param("s", $oguserid);
     $stmt_check->execute();
     $result_check = $stmt_check->get_result();
 
     if ($result_check->num_rows > 0) {
         // User exists, update the record
         $sql_update = "UPDATE user_info 
-                       SET FIRSTNAME = ?, LASTNAME = ?, NO_TEL = ?, EMAIL = ?, IC = ? 
+                       SET FIRSTNAME = ?, LASTNAME = ?, NO_TEL = ?, EMAIL = ?, IC = ? , USER_ID = ?
                        WHERE USER_ID = ?";
 
         $stmt_update = $connection->prepare($sql_update);
-        $stmt_update->bind_param("ssssss", $firstname, $lastname, $phone, $email, $ic, $username);
+        $stmt_update->bind_param("sssssss", $firstname, $lastname, $phone, $email, $ic, $username, $oguserid);
 
         if ($stmt_update->execute()) {
             echo "Record updated successfully";
