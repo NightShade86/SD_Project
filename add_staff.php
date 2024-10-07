@@ -59,7 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $errorMessage = "Please enter a valid IC number containing only digits.";
     }
     
-
     // EMAIL VALIDATION
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errorMessage = "Please enter a valid email, e.g., example@email.com";
