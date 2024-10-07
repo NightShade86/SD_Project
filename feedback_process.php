@@ -49,13 +49,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssssssssssssssssssss", $userid, $role, $fname, $lname, $email, $overall_rating, $design_rating, $usability_rating, $performance_rating, $content_rating, $recommendation_rate, $positive_feedback, $improvements, $missing_info, $navigation_difficulty, $visit_reason, $website_discovery, $functionality_issue, $loading_speed, $additional_comments, $follow_up, $submission_date);
 
-    /*if ($stmt->execute() === TRUE) {
+    if ($stmt->execute() === TRUE) {
         $_SESSION['success_message'] = "Feedback Sent Successfully!";
-        header("Location: feedback.php");
+
+        if ($_SESSION['loggedin']) {
+            header("Location: index_patient.php");
+        }else{
+            header("Location: index_guess.php");
+        }
+
     } else {
         $_SESSION['error_message'] = "There was an issue with the sending feedback. Please try again.";
-        header("Location: feedback.php");
-    }*/
+
+        if ($_SESSION['loggedin']) {
+            header("Location: index_patient.php");
+        }else{
+            header("Location: index_guess.php");
+        }
+
+    }
     $stmt->close();
     $conn->close();
     echo $userid;
@@ -65,7 +77,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else {
     echo "No form data submitted.";
 }
-
 
 
 
