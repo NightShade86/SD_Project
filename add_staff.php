@@ -53,6 +53,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!preg_match('/^[0-9]+$/', $no_tel)) {
         $errorMessage = "Please enter a valid phone number containing only digits.";
     }
+    
+    // IC NUMBER VALIDATION (same logic as phone number)
+    if (!preg_match('/^[0-9]+$/', $ic)) {
+            $errorMessage = "Please enter a valid IC number containing only digits.";
+    }
+    
 
     // EMAIL VALIDATION
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -109,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $conn->close();
 }
 ?>
-<!DOCTYPE html>
+<!Doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
