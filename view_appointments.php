@@ -1,4 +1,6 @@
 <?php
+ob_start
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -114,4 +116,8 @@ Echo "$role";
 <?php
 // Close the connection
 $connection->close();
+
+// End the output buffer and send headers
+ob_end_flush();
 ?>
+

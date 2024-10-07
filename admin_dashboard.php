@@ -1,7 +1,4 @@
 <?php
-ob_start();
-?>
-<?php
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -206,6 +203,3 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>
-<?php
-ob_end_flush();
-?>
