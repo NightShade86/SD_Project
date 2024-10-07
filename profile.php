@@ -259,13 +259,12 @@ if ($_SESSION['loggedin']) {
                             <div class="card-body media align-items-center">
                                 <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt class="d-block ui-w-80">
                                 <div class="media-body ml-4">
-                                    <label class="btn btn-outline-primary">
-                                        Upload new photo
-                                        <input type="file" class="account-settings-fileinput">
-                                    </label>
-                                    &nbsp;
-                                    <button type="button" class="btn btn-default md-btn-flat">Reset</button>
-                                    <div class="text-light small mt-1">Allowed JPG, GIF or PNG. Max size of 800K</div>
+                                    <form action="upload.php" method="post" enctype="multipart/form-data">
+                                        <label for="profilePicture">Select Profile Picture (Max 5MB):</label>
+                                        <input type="file" name="profilePicture" id="profilePicture" required>
+                                        <input type="submit" value="Upload">
+                                    </form>
+                                    <div class="text-dark small mt-1">Allowed JPG, GIF or PNG. Max size of 800K</div>
                                 </div>
                             </div>
 
