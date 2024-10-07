@@ -20,7 +20,6 @@ $no_tel = "";
 $email = "";
 $ic = "";
 $password = ""; // Added password field
-
 $errorMessage = "";
 $successMessage = "";
 
@@ -165,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                         <!-- Submit and Cancel Buttons -->
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Submit</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <a class="btn btn-outline-primary" href="<?php echo htmlspecialchars($_SERVER['HTTP_REFERER']); ?>" role="button">Cancel</a>
                         </div>
                     </form>
                 </div>
