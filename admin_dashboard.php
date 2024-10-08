@@ -190,9 +190,22 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 								</span>
 								<ul>
 									<li><a href="?section=profile">Profile</a></li>
+									<li><a href="logout.php">Logout</a></li>
 									<!-- Add more menu items as needed -->
 								</ul>
 							</li>
+							<style>
+							.dropdown span {
+								display: flex;
+								align-items: center; /* Vertically center the icon and text */
+								font-size: 14px; /* Adjust font size as needed */
+							}
+
+							.dropdown span svg {
+								margin-right: 5px; /* Space between icon and text */
+								fill: #ffffff; /* Change the icon color if needed */
+							}
+							</style>
 						</ul>
 					</div>
 				</nav>
