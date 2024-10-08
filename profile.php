@@ -244,6 +244,9 @@ if (isset($_SESSION['error_message'])) : ?>
                         <div style="padding: 30px">
                             <form>
                                 <h2>Profile</h2>
+                                <?php if (!empty($image)) : ?>
+                                    <img src="uploaded_img/<?php echo $image; ?>" alt="Profile Image" style="width: 150px; margin-top: 10px;">
+                                <?php endif; ?>
                                 <div class="form-group">
                                     <label style="font-weight: bold; color: #333;">First Name</label>
                                     <input type="text" name="fname" value="<?php echo $fname; ?>" readonly required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
@@ -274,18 +277,6 @@ if (isset($_SESSION['error_message'])) : ?>
 
                     <!-- Edit Profile Tab -->
                     <div class="tab-pane fade" id="account-general">
-                        <div class="card-body media align-items-center">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt class="d-block ui-w-80">
-                            <div class="media-body ml-4">
-                                <label class="btn btn-outline-primary">
-                                    Upload new photo
-                                    <input type="file" class="account-settings-fileinput">
-                                </label> &nbsp;
-                                <button type="button" class="btn btn-default md-btn-flat">Reset</button>
-                                <div class="text-light small mt-1">Allowed JPG, GIF or PNG. Max size of 800K</div>
-                            </div>
-                        </div>
-                        <hr class="border-light m-0">
                         <div class="card-body">
                             <!-- Authentication Form -->
                             <div id="authenform" class="login-form register-form" style="display: <?php echo $authenticatedisplay; ?>; padding: 30px; border-radius: 10px;">
@@ -316,6 +307,9 @@ if (isset($_SESSION['error_message'])) : ?>
                             <div id="updateform" class="card-body" style="display: <?php echo $updatedisplay; ?>; padding: 30px; border-radius: 10px;">
                             <h2>Edit Profile</h2>
 
+                                <?php if (!empty($image)) : ?>
+                                    <img src="uploaded_img/<?php echo $image; ?>" alt="Profile Image" style="width: 150px; margin-top: 10px;">
+                                <?php endif; ?>
 							<form action="updateprofileprocess.php" method="post" enctype="multipart/form-data">
 								<div class="form-group">
 									<label for="firstname">First Name</label>
@@ -349,10 +343,9 @@ if (isset($_SESSION['error_message'])) : ?>
 
 								<div class="form-group">
 									<label for="update_image">Update Profile Picture</label>
-									<input type="file" id="update_image" name="update_image" class="form-control" accept="image/*">
-									<?php if (!empty($image)) : ?>
-										<img src="uploaded_img/<?php echo $image; ?>" alt="Profile Image" style="width: 150px; margin-top: 10px;">
-									<?php endif; ?>
+									<input type="file" id="update_image" name="update_image" class="form-control" accept="image/*" onchange="previewImage(event)">
+                                    <img id="image_preview" src="" alt="Image Preview" style="display: none; max-width: 200px; margin-top: 10px;">
+
 								</div>
 
 								<input type="hidden" name="ogusername" value="<?php echo $userid; ?>">
@@ -391,6 +384,21 @@ if (isset($_SESSION['error_message'])) : ?>
         </div>
     </div>
 </div>
+
+<script>
+    function previewImage(event) {
+        var file = event.target.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var imagePreview = document.getElementById('image_preview');
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block'; // Show the image element
+            };
+            reader.readAsDataURL(file); // Read the file as a data URL
+        }
+    }
+</script>
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
