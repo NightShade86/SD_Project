@@ -61,6 +61,7 @@ if ($_SESSION['loggedin']) {
     $email = $user['EMAIL'];
     $ic = $user['IC'];
     $usertype = $user['USERTYPE'];
+    $image = $user['IMAGE'] ?? 'default-avatar.png';
 }
 ?>
 
@@ -108,40 +109,26 @@ if (isset($_GET['verified'])) {
 </head>
 <body>
 <?php
-// Display error message
-if (isset($_SESSION['error_message'])) {
-    echo "<script>
-    Swal.fire({
-        title: 'Error!',
-        text: '" . $_SESSION['error_message'] . "',
-        icon: 'error'
-    });
-    </script>";
-    unset($_SESSION['error_message']);
-}?>
-
-    <!-- Display error message -->
-    <?php if (isset($_SESSION['error_message'])) : ?>
-<script>
-    Swal.fire({
-        title: 'Error!',
-        text: '<?php echo $_SESSION['error_message']; ?>',
-        icon: 'error'
-    });
-</script>
-<?php unset($_SESSION['error_message']); ?>
+if (isset($_SESSION['error_message'])) : ?>
+    <script>
+        Swal.fire({
+            title: 'Error!',
+            text: '<?php echo $_SESSION['error_message']; ?>',
+            icon: 'error'
+        });
+    </script>
+    <?php unset($_SESSION['error_message']); ?>
 <?php endif; ?>
 
-<!-- Display success message -->
 <?php if (isset($_SESSION['success_message'])) : ?>
-<script>
-    Swal.fire({
-        title: 'Success!',
-        text: '<?php echo $_SESSION['success_message']; ?>',
-        icon: 'success'
-    });
-</script>
-<?php unset($_SESSION['success_message']); ?>
+    <script>
+        Swal.fire({
+            title: 'Success!',
+            text: '<?php echo $_SESSION['success_message']; ?>',
+            icon: 'success'
+        });
+    </script>
+    <?php unset($_SESSION['success_message']); ?>
 <?php endif; ?>
 
 <div class="page-wrapper">
@@ -328,48 +315,53 @@ if (isset($_SESSION['error_message'])) {
 
                             <!-- Update Form -->
                             <div id="updateform" class="card-body" style="display: <?php echo $updatedisplay; ?>; padding: 30px; border-radius: 10px;">
-                                <form action="updateprofileprocess.php" method="post">
-                                    <div class="form-group">
-                                        <label for="firstname" style="font-weight: bold; color: #333;">First Name</label>
-                                        <input type="text" id="firstname" name="firstname" placeholder="Enter your first name" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-                                    </div>
+                            <h2>Edit Profile</h2>
 
-                                    <div class="form-group">
-                                        <label for="lastname" style="font-weight: bold; color: #333;">Last Name</label>
-                                        <input type="text" id="lastname" name="lastname" placeholder="Enter your last name" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-                                    </div>
+    <form action="updateprofileprocess.php" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="firstname">First Name</label>
+            <input type="text" id="firstname" name="firstname" class="form-control" value="<?php echo $fname; ?>" required>
+        </div>
 
-                                    <div class="form-group">
-                                        <label for="username" style="font-weight: bold; color: #333;">Username</label>
-                                        <input type="text" id="username" name="username" placeholder="Enter your username" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-                                    </div>
+        <div class="form-group">
+            <label for="lastname">Last Name</label>
+            <input type="text" id="lastname" name="lastname" class="form-control" value="<?php echo $lname; ?>" required>
+        </div>
 
-                                    <input type="hidden" id="ogusername" name="ogusername" value=<?php echo $userid?> > <!-- Example user ID -->
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" class="form-control" value="<?php echo $userid; ?>" required>
+        </div>
 
+        <div class="form-group">
+            <label for="ic">IC (Identity Card)</label>
+            <input type="text" id="ic" name="ic" class="form-control" value="<?php echo $ic; ?>" required>
+        </div>
 
-                                    <div class="form-group">
-                                        <label for="ic" style="font-weight: bold; color: #333;">IC (Identity Card)</label>
-                                        <input type="text" id="ic" name="ic" placeholder="Enter your IC" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-                                    </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control" value="<?php echo $email; ?>" required>
+        </div>
 
-                                    <div class="form-group">
-                                        <label for="email" style="font-weight: bold; color: #333;">Email</label>
-                                        <input type="email" id="email" name="email" placeholder="Enter your email" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-                                    </div>
+        <div class="form-group">
+            <label for="pnumber">Phone Number</label>
+            <input type="text" id="pnumber" name="pnumber" class="form-control" value="<?php echo $pnum; ?>" required>
+        </div>
 
-                                    <div class="form-group">
-                                        <label for="pnumber" style="font-weight: bold; color: #333;">Phone Number</label>
-                                        <input type="number" id="pnumber" name="pnumber" placeholder="Enter your phone number" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: none; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-                                    </div>
+        <div class="form-group">
+            <label for="update_image">Update Profile Picture</label>
+            <input type="file" id="update_image" name="update_image" class="form-control" accept="image/*">
+            <?php if (!empty($image)) : ?>
+                <img src="uploaded_img/<?php echo $image; ?>" alt="Profile Image" style="width: 150px; margin-top: 10px;">
+            <?php endif; ?>
+        </div>
 
-                                    <div class="form-group">
-                                        <button class="theme-btn btn-style-one" type="submit" style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer;">
-                                            <span class="btn-title">Save Changes</span>
-                                        </button>
-                                    </div>
+        <input type="hidden" name="ogusername" value="<?php echo $userid; ?>">
 
-                                </form>
-                            </div>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+</div>
+
                         </div>
                     </div>
 
