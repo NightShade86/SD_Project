@@ -55,5 +55,6 @@ if (!isset($_GET["patient_id"])) {
             header("Location: staff_dashboard.php?section=appointment");
         }
     } 
-}
+}	
+exit();
 ?>
