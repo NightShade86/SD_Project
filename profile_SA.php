@@ -222,55 +222,54 @@ if (isset($_SESSION['error_message'])) : ?>
 
                             <hr class="border-light m-0">
 
-
                             <!-- Update Form -->
                             <div id="updateform" class="card-body" style="display: <?php echo $updatedisplay; ?>; padding: 30px; border-radius: 10px;">
                             <h2>Edit Profile</h2>
 
-    <form action="updateprofileprocess.php" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="firstname">First Name</label>
-            <input type="text" id="firstname" name="firstname" class="form-control" value="<?php echo $fname; ?>" required>
-        </div>
+							<form action="updateprofileprocess.php" method="post" enctype="multipart/form-data">
+								<div class="form-group">
+									<label for="firstname">First Name</label>
+									<input type="text" id="firstname" name="firstname" class="form-control" value="<?php echo $fname; ?>" required>
+								</div>
 
-        <div class="form-group">
-            <label for="lastname">Last Name</label>
-            <input type="text" id="lastname" name="lastname" class="form-control" value="<?php echo $lname; ?>" required>
-        </div>
+								<div class="form-group">
+									<label for="lastname">Last Name</label>
+									<input type="text" id="lastname" name="lastname" class="form-control" value="<?php echo $lname; ?>" required>
+								</div>
 
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" class="form-control" value="<?php echo $userid; ?>" required>
-        </div>
+								<div class="form-group">
+									<label for="username">Username</label>
+									<input type="text" id="username" name="username" class="form-control" value="<?php echo $userid; ?>" required>
+								</div>
 
-        <div class="form-group">
-            <label for="ic">IC (Identity Card)</label>
-            <input type="text" id="ic" name="ic" class="form-control" value="<?php echo $ic; ?>" required>
-        </div>
+								<div class="form-group">
+									<label for="ic">IC (Identity Card)</label>
+									<input type="text" id="ic" name="ic" class="form-control" value="<?php echo $ic; ?>" required>
+								</div>
 
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" class="form-control" value="<?php echo $email; ?>" required>
-        </div>
+								<div class="form-group">
+									<label for="email">Email</label>
+									<input type="email" id="email" name="email" class="form-control" value="<?php echo $email; ?>" required>
+								</div>
 
-        <div class="form-group">
-            <label for="pnumber">Phone Number</label>
-            <input type="text" id="pnumber" name="pnumber" class="form-control" value="<?php echo $pnum; ?>" required>
-        </div>
+								<div class="form-group">
+									<label for="pnumber">Phone Number</label>
+									<input type="text" id="pnumber" name="pnumber" class="form-control" value="<?php echo $pnum; ?>" required>
+								</div>
 
-        <div class="form-group">
-            <label for="update_image">Update Profile Picture</label>
-            <input type="file" id="update_image" name="update_image" class="form-control" accept="image/*">
-            <?php if (!empty($image)) : ?>
-                <img src="uploaded_img/<?php echo $image; ?>" alt="Profile Image" style="width: 150px; margin-top: 10px;">
-            <?php endif; ?>
-        </div>
+								<div class="form-group">
+									<label for="update_image">Update Profile Picture</label>
+									<input type="file" id="update_image" name="update_image" class="form-control" accept="image/*">
+									<?php if (!empty($image)) : ?>
+										<img src="uploaded_img/<?php echo $image; ?>" alt="Profile Image" style="width: 150px; margin-top: 10px;">
+									<?php endif; ?>
+								</div>
 
-        <input type="hidden" name="ogusername" value="<?php echo $userid; ?>">
+								<input type="hidden" name="ogusername" value="<?php echo $userid; ?>">
 
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-    </form>
-</div>
+								<button type="submit" class="btn btn-primary">Save Changes</button>
+							</form>
+						</div>
 
                         </div>
                     </div>
@@ -293,12 +292,10 @@ if (isset($_SESSION['error_message'])) : ?>
                                     <label class="form-label">Repeat new password</label>
                                     <input type="password" class="form-control" name="confirm-password" required>
                                 </div>
-
                                 <button type="submit" class="btn btn-primary">Change Password</button>
                             </form>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
