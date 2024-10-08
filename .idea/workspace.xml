@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8a47ca12-971e-4c18-ba53-bf60bdc5d1d4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/profile.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/updateprofileprocess.php" beforeDir="false" afterPath="$PROJECT_DIR$/updateprofileprocess.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cancel_appointment.php" beforeDir="false" afterPath="$PROJECT_DIR$/cancel_appointment.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +42,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "profile.php",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "C:/xampp/htdocs/sdprojGIT",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
