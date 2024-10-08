@@ -6,7 +6,15 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 if (!isset($_GET["token"])) {
-    echo "<script>Swal.fire('Error', 'No token provided', 'error');</script>";
+    echo "<script>
+        Swal.fire({
+            title: 'Error',
+            text: 'No token provided',
+            icon: 'error'
+        }).then(function() {
+            window.location.href = 'forgot_password.php'; // Redirect after error
+        });
+    </script>";
     exit();
 }
 
@@ -25,13 +33,29 @@ $user = $result->fetch_assoc();
 
 if ($user === null) {
     // Show error message using SweetAlert
-    echo "<script>Swal.fire('Error', 'Token not found', 'error');</script>";
+    echo "<script>
+        Swal.fire({
+            title: 'Error',
+            text: 'Token not found',
+            icon: 'error'
+        }).then(function() {
+            window.location.href = 'forgot_password.php'; // Redirect after error
+        });
+    </script>";
     exit();
 }
 
 if (strtotime($user["reset_token_expires_at"]) <= time()) {
     // Show error message using SweetAlert
-    echo "<script>Swal.fire('Error', 'Token has expired', 'error');</script>";
+    echo "<script>
+        Swal.fire({
+            title: 'Error',
+            text: 'Token has expired',
+            icon: 'error'
+        }).then(function() {
+            window.location.href = 'forgot_password.php'; // Redirect after error
+        });
+    </script>";
     exit();
 }
 ?>
