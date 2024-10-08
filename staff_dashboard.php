@@ -1,8 +1,12 @@
 <?php
+ob_start();
+?>
+<?php
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// Initialize the section variable
 $allowed_sections = [
     "patients", "staff", "add-staff", "edit-staff", "delete-staff", 
     "add-patient", "edit-patient", "delete-patient" , "profile" , "appointment" , "feedback"
@@ -11,8 +15,7 @@ $allowed_sections = [
 $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sections) ? $_GET["section"] : "staff";
 
 ?>
-
-<!DOCTYPE html>
+<!Doctype html> <!-- Line 15 -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -81,7 +84,7 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
         #sidebar .nav-link:hover {
             background-color: #495057;
             color: #ffffff;
- }
+        }
 
         .navbar-brand {
             font-weight: bold;
@@ -111,6 +114,77 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 		overflow-x: auto; /* Add horizontal scrolling to the table */
 		display: block; /* Set the table display to block to enable horizontal scrolling */
 		}
+		
+				/* Profile Dropdown Styles */
+		.navbar-nav .dropdown {
+			position: relative;
+		}
+
+		.navbar-nav .dropdown span {
+			display: flex;
+			align-items: center;
+			font-size: 16px; /* Adjust the font size */
+			color: #343a40;
+			cursor: pointer;
+		}
+
+		.navbar-nav .dropdown span svg {
+			margin-right: 8px; /* Add some space between the icon and the text */
+			fill: #343a40; /* Color of the SVG icon */
+		}
+
+		.navbar-nav .dropdown ul {
+			position: absolute;
+			top: 100%; /* Position dropdown below the trigger */
+			right: 0;
+			background-color: #ffffff;
+			list-style: none;
+			padding: 10px 0;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			display: none; /* Hidden by default */
+			min-width: 180px;
+			border-radius: 5px;
+			z-index: 1000;
+		}
+
+		.navbar-nav .dropdown:hover ul {
+			display: block; /* Show dropdown on hover */
+		}
+
+		.navbar-nav .dropdown ul li {
+			padding: 10px 20px;
+		}
+
+		.navbar-nav .dropdown ul li a {
+			text-decoration: none;
+			color: #343a40;
+			font-size: 14px;
+			display: block;
+			width: 100%;
+		}
+
+		.navbar-nav .dropdown ul li a:hover {
+			background-color: #f4f6f9;
+			color: #007bff;
+		}
+
+		.navbar-nav .dropdown ul li:last-child a {
+			color: #dc3545; /* Highlight the logout link */
+		}
+
+		.navbar-nav .dropdown ul li:last-child a:hover {
+			background-color: #f8d7da;
+			color: #dc3545;
+		}
+
+		/* Optional: For small screens, ensure dropdown is responsive */
+		@media (max-width: 768px) {
+			.navbar-nav .dropdown ul {
+				left: auto;
+				right: 0;
+			}
+		}
+
     </style>
 </head>
 <body>
@@ -118,6 +192,7 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
         <div class="row">
             <div class="col-md-2 p-0" id="sidebar">
                 <nav class="nav flex-column">
+                    <!-- Staff Dropdown -->
                     <!-- Patients Dropdown -->
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white py-3" href="#" id="patientDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -149,14 +224,15 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
             </div>
             
             <div class="col-md-10 offset-md-2">
-                <header>
-                    <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
-                        <a class="navbar-brand" href="#">Staff Dashboard</a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <li class="dropdown">
+			<header>
+				<nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
+					<a class="navbar-brand" href="#">Staff Dashboard</a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav ml-auto">
+							<li class="dropdown">
 								<span>
 									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
 										<path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1z"/>
@@ -190,10 +266,23 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 								fill: #ffffff; /* Change the icon color if needed */
 							}
 							</style>
-                            </ul>
-                        </div>
-                    </nav>
-                </header>
+						</ul>
+					</div>
+				</nav>
+			</header>
+
+			<style>
+			.dropdown span {
+				display: flex;
+				align-items: center; /* Vertically center the icon and text */
+				font-size: 14px; /* Adjust font size as needed */
+			}
+
+			.dropdown span svg {
+				margin-right: 5px; /* Space between icon and text */
+				fill: #ffffff; /* Change the icon color if needed */
+			}
+			</style>
                 <main class="mt-4">
                     <div class='content bg-white p-4 shadow-sm rounded'>
                         <?php
@@ -226,4 +315,6 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>
-
+<?php
+ob_end_flush();
+?>	

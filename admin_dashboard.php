@@ -114,6 +114,77 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 		overflow-x: auto; /* Add horizontal scrolling to the table */
 		display: block; /* Set the table display to block to enable horizontal scrolling */
 		}
+		
+				/* Profile Dropdown Styles */
+		.navbar-nav .dropdown {
+			position: relative;
+		}
+
+		.navbar-nav .dropdown span {
+			display: flex;
+			align-items: center;
+			font-size: 16px; /* Adjust the font size */
+			color: #343a40;
+			cursor: pointer;
+		}
+
+		.navbar-nav .dropdown span svg {
+			margin-right: 8px; /* Add some space between the icon and the text */
+			fill: #343a40; /* Color of the SVG icon */
+		}
+
+		.navbar-nav .dropdown ul {
+			position: absolute;
+			top: 100%; /* Position dropdown below the trigger */
+			right: 0;
+			background-color: #ffffff;
+			list-style: none;
+			padding: 10px 0;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			display: none; /* Hidden by default */
+			min-width: 180px;
+			border-radius: 5px;
+			z-index: 1000;
+		}
+
+		.navbar-nav .dropdown:hover ul {
+			display: block; /* Show dropdown on hover */
+		}
+
+		.navbar-nav .dropdown ul li {
+			padding: 10px 20px;
+		}
+
+		.navbar-nav .dropdown ul li a {
+			text-decoration: none;
+			color: #343a40;
+			font-size: 14px;
+			display: block;
+			width: 100%;
+		}
+
+		.navbar-nav .dropdown ul li a:hover {
+			background-color: #f4f6f9;
+			color: #007bff;
+		}
+
+		.navbar-nav .dropdown ul li:last-child a {
+			color: #dc3545; /* Highlight the logout link */
+		}
+
+		.navbar-nav .dropdown ul li:last-child a:hover {
+			background-color: #f8d7da;
+			color: #dc3545;
+		}
+
+		/* Optional: For small screens, ensure dropdown is responsive */
+		@media (max-width: 768px) {
+			.navbar-nav .dropdown ul {
+				left: auto;
+				right: 0;
+			}
+		}
+
     </style>
 </head>
 <body>
