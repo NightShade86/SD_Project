@@ -32,7 +32,7 @@ if (isset($_POST['login'])) {
             if (password_verify($pwd, $user['PASSWORD'])) {
                 $_SESSION['loggedin'] = true;
                 $_SESSION['role'] = 'patient';  // Assuming patients and guests are treated similarly
-                $_SESSION['success'] = "Success!";
+                $_SESSION['success'] = "Welcome back!";
                 header("Location: profile.php?verified=true");
                 exit;
             }

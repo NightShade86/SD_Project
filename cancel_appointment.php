@@ -54,7 +54,7 @@ if (!isset($_GET["patient_id"])) {
         } elseif ($_SESSION['userRole'] === 'staff') {
             header("Location: staff_dashboard.php?section=appointment");
         }
-    } 
-}	
+    }
+}
 exit();
 ?>

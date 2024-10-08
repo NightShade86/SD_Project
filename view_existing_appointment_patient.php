@@ -46,9 +46,7 @@ if ($result->num_rows > 0) {
         <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
     </head>
     <body>
-        <button type='button' class='btn btn-primary' data-toggle='modal' data-target='#appointmentModal'>View Appointments</button>
-
-        <!-- Modal -->
+        <!-- Modal (automatically displayed on page load) -->
         <div class='modal fade' id='appointmentModal' tabindex='-1' role='dialog' aria-labelledby='appointmentModalLabel' aria-hidden='true'>
             <div class='modal-dialog' role='document'>
                 <div class='modal-content'>
@@ -59,21 +57,29 @@ if ($result->num_rows > 0) {
                         </button>
                     </div>
                     <div class='modal-body'>
-                        <div class='table-responsive'>
-                        <table class='table table-striped table-bordered'>
-                            <tr>
-                                <th>Appointment ID</th>
-                                <th>User ID</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Phone Number</th>
-                                <th>Email</th>
-                                <th>IC</th>
-                                <th>Appointment Date</th>
-                                <th>Appointment Time</th>
-                                <th>Reason for Visit</th>
-                                <th>Queue Number</th>
-                            </tr>";
+                        <!-- Title and Description Section -->
+                        <div class='contact-form-two'>
+                            <div class='title-box'>
+                                <h4>Your Appointments</h4>
+                                <div class='text'>Here is the history of all your scheduled appointments.</div>
+                            </div>
+
+                            <!-- Appointment Table -->
+                            <div class='table-responsive'>
+                                <table class='table table-striped table-bordered'>
+                                    <tr>
+                                        <th>Appointment ID</th>
+                                        <th>User ID</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Phone Number</th>
+                                        <th>Email</th>
+                                        <th>IC</th>
+                                        <th>Appointment Date</th>
+                                        <th>Appointment Time</th>
+                                        <th>Reason for Visit</th>
+                                        <th>Queue Number</th>
+                                    </tr>";
 
     // Fetch and display each appointment
     while ($row = $result->fetch_assoc()) {
@@ -93,7 +99,8 @@ if ($result->num_rows > 0) {
     }
 
     echo "
-                        </table>
+                                </table>
+                            </div>
                         </div>
                     </div>
                     <div class='modal-footer'>
@@ -102,9 +109,16 @@ if ($result->num_rows > 0) {
                 </div>
             </div>
         </div>
+
+        <!-- Automatically show the modal when the page loads -->
         <script src='https://code.jquery.com/jquery-3.2.1.slim.min.js'></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'></script>
         <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
+        <script>
+            $(document).ready(function() {
+                $('#appointmentModal').modal('show');
+            });
+        </script>
     </body>
     </html>
     ";
