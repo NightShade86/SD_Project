@@ -749,7 +749,7 @@ if ($_SESSION['loggedin']) {
 
         <div class="row">
             <div class="feedback-block col-lg-8 col-md-10 col-sm-12 mx-auto wow fadeInUp">
-                <div class="inner-box">
+                <div  class="inner-box">
                     <form action="feedback_process.php" method="post">
                         <div class="form-group">
                             <label for="fname">First Name:</label>
