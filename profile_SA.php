@@ -133,7 +133,17 @@ if (isset($_SESSION['error_message'])) : ?>
 
 <!-- Main Content Section -->
 <div class="container light-style flex-grow-1 container-p-y">
-    <a href="javascript:history.back()" class="btn btn-secondary">Back</a>
+    <?php
+    $back_url = '';
+    if (isset($_SESSION['role'])) {
+        if ($_SESSION['role'] == 'admin') {
+            $back_url = 'admin_dashboard.php';
+        } elseif ($_SESSION['role'] == 'staff') {
+            $back_url = 'staff_dashboard.php';
+        }
+    }
+    ?>
+    <a href="<?= $back_url ?>" class="btn btn-secondary">Back</a>
     <h4 class="font-weight-bold py-3 mb-4">
         Account settings
     </h4>
