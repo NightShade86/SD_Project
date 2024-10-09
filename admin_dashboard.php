@@ -53,7 +53,7 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
             left: 0;
             height: 100vh;
             width: 250px;
-            background-color: #343a40;
+            background-color: #003D63;
             padding-top: 60px;
             overflow-y: auto;
         }
