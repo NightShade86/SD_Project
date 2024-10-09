@@ -12,7 +12,7 @@ $allowed_sections = [
     "add-patient", "edit-patient", "delete-patient" , "profile" , "appointment" , "feedback"
 ];
 
-$section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sections) ? $_GET["section"] : "staff";
+$section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sections) ? $_GET["section"] : "patients";
 
 ?>
 <!Doctype html> <!-- Line 15 -->
@@ -53,7 +53,7 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
             left: 0;
             height: 100vh;
             width: 250px;
-            background-color: #343a40;
+            background-color: #003D63;
             padding-top: 60px;
             overflow-y: auto;
         }
