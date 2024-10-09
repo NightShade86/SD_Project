@@ -822,7 +822,7 @@ if ($_SESSION['loggedin']) {
                             <textarea id="additional_comments" name="additional_comments" class="form-control" rows="5"></textarea>
                         </div>
 
-                        <h3>8. Consent for Follow-up</h3>
+                        <h3>7. Consent for Follow-up</h3>
 
                         <div class="form-group">
                             <label for="follow_up">Would you like to be contacted about your feedback?</label>

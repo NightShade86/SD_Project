@@ -10,11 +10,12 @@ if (isset($_SESSION['message'])) {
     // Unset the session message after it's displayed
     unset($_SESSION['message']);
     unset($_SESSION['message_type']);
+    session_regenerate_id(true); // Regenerate session ID to prevent message from reappearing
 } else {
     $message = null;
     $message_type = null;
     $token = null;
-}   
+}
 ?>
 
 <!DOCTYPE html>
