@@ -35,9 +35,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($role == '1') {
             header("Location: patient_dashboard.php");
         } elseif ($role == '2') {
-            header("Location: staff_dashboard.php");
+            header("Location: staff_dashboard.php?section=patients");
         } elseif ($role == '3') {
-            header("Location: admin_dashboard.php");
+            header("Location: admin_dashboard.php?section=staff");
         }
     } else {
         echo "Invalid username or password";

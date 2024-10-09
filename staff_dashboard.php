@@ -12,7 +12,7 @@ $allowed_sections = [
     "add-patient", "edit-patient", "delete-patient" , "profile" , "appointment" , "feedback"
 ];
 
-$section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sections) ? $_GET["section"] : "staff";
+$section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sections) ? $_GET["section"] : "patients";
 
 ?>
 <!Doctype html> <!-- Line 15 -->
