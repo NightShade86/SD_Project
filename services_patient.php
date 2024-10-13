@@ -115,7 +115,7 @@ ini_set('display_errors', 1);
 												echo "<li><a href='login.php'>Log In</a></li>";
 											}
 										?>
-										<li><a href="view_existing_appointment_patient.php">View Appointment History</a></li>
+										<li><a href="view_existing_appointment_patient.php">Appointment History</a></li>
 									</ul>
 								</li>
                               <!-- <li class="dropdown">

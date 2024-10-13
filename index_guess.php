@@ -695,6 +695,39 @@ if ($_SESSION['loggedin']) {
 
 <!-- Sent Feedback Section -->
 <section class="feedback-section">
+
+<style>
+        .form-control {
+            font-size: 1rem; /* Adjust input font size */
+            padding: 10px; /* Add padding for better spacing */
+        }
+
+        label {
+            font-size: 1.1rem; /* Make labels slightly larger */
+        }
+
+        input[type="range"] {
+            width: 100%; /* Ensure sliders are responsive */
+        }
+
+        span {
+            font-size: 1rem; /* Font size for value indicators */
+        }
+
+        textarea {
+            resize: vertical; /* Allow vertical resize only */
+            font-size: 1rem;
+        }
+
+        .btn {
+            font-size: 1.2rem; /* Adjust button font size */
+            padding: 10px 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px; /* Add space between form elements */
+        }
+    </style>
     <div class="auto-container">
         
         <div class="sec-title text-center">

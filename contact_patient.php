@@ -116,7 +116,7 @@ ini_set('display_errors', 1);
 											}
 										?>
 									</ul>
-									<li><a href="view_existing_appointment_patient.php">View Appointment History</a></li>
+									<li><a href="view_existing_appointment_patient.php"> Appointment History</a></li>
 								</li>
                              <!--       <span>Blog</span>
                                     <ul>

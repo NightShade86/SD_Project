@@ -184,6 +184,9 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 				right: 0;
 			}
 		}
+		.navbar-brand img {
+			border-radius: 5px; /* Optional: Make the logo slightly rounded */
+		}
 
     </style>
 </head>
@@ -226,7 +229,10 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
             <div class="col-md-10 offset-md-2">
 			<header>
 				<nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
-					<a class="navbar-brand" href="#">Staff Dashboard</a>
+					<a class="navbar-brand d-flex align-items-center" href="#">
+						<img src="file.png" alt="Logo" width="40" height="40" class="mr-2">
+						Staff Dashboard
+					</a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
