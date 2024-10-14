@@ -684,9 +684,52 @@ if (session_status() == PHP_SESSION_NONE) {
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-if ($_SESSION['loggedin']) {
-    $userid = $_SESSION['USER_ID'];
-    $role = $_SESSION['role'];
+    if ($_SESSION['loggedin']) {
+        $userid = $_SESSION['USER_ID'];
+        $role = $_SESSION['role'];
+
+        // Determine user table and ID column based on role
+        switch ($role) {
+            case 'admin':
+                $table = 'admin_info';
+                $id_column = 'USER_ID';
+                $userR = "Admin";
+                break;
+            case 'staff':
+                $table = 'staff_info';
+                $id_column = 'STAFF_ID';
+                $userR = "Staff";
+                break;
+            default:
+                $table = 'user_info';
+                $id_column = 'USER_ID';
+                $userR = "Patient";
+                break;
+        }
+
+        // Database connection
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "dtcmsdb";
+
+        $connection = new mysqli($servername, $username, $password, $dbname);
+
+        // Prepare and execute query to retrieve user data
+        $user_info = $connection->prepare("SELECT * FROM $table WHERE $id_column=?");
+        $user_info->bind_param("s", $userid);
+        $user_info->execute();
+        $user_result = $user_info->get_result();
+        $user = $user_result->fetch_assoc();
+
+        // Extract user data
+        $fnameDB = $user['FIRSTNAME'];
+        $lnameDB = $user['LASTNAME'];
+        $pnumDB = $user['NO_TEL'];
+        $emailDB = $user['EMAIL'];
+        $icDB = $user['IC'];
+        $usertypeDB = $user['USERTYPE'];
+        $imageDB = $user['IMAGE'] ?? 'default-avatar.png';
 } else {
     $userid = 'Guest';
     $role = 'Guest';
@@ -695,7 +738,6 @@ if ($_SESSION['loggedin']) {
 
 <!-- Sent Feedback Section -->
 <section class="feedback-section">
-
 <style>
         .form-control {
             font-size: 1rem; /* Adjust input font size */
@@ -738,44 +780,75 @@ if ($_SESSION['loggedin']) {
 
         <div class="row">
             <div class="feedback-block col-lg-8 col-md-10 col-sm-12 mx-auto wow fadeInUp">
-                <div class="inner-box">
+                <div  class="inner-box">
                     <form action="feedback_process.php" method="post">
-                        <div class="form-group">
-                            <label for="fname">First Name:</label>
-                            <input type="text" id="fname" name="fname" class="form-control" placeholder="Please enter your first name" required>
-                        </div>
+						<!-- Rating System -->
+						<h3>1. Rating System</h3>
 
-                        <div class="form-group">
-                            <label for="lname">Last Name:</label>
-                            <input type="text" id="lname" name="lname" class="form-control" placeholder="Please enter your last name" required>
-                        </div>
+						<div class="form-group slider-group">
+							<label for="overall_rating">Overall Satisfaction (1-10):</label>
+							<div class="slider-container">
+								<input type="range" name="overall_rating" id="overall_rating" min="1" max="10" value="5" 
+									   oninput="updateValue('overall_rating_value', this.value)">
+								<span id="overall_rating_value">5</span>
+							</div>
+						</div>
 
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="email" id="email" name="email" class="form-control" placeholder="Please enter your email" required>
-                        </div>
+						<div class="form-group slider-group">
+							<label for="design_rating">Design (1-10):</label>
+							<div class="slider-container">
+								<input type="range" name="design_rating" id="design_rating" min="1" max="10" value="5" 
+									   oninput="updateValue('design_rating_value', this.value)">
+								<span id="design_rating_value">5</span>
+							</div>
+						</div>
 
-                        <h3>1. Rating System</h3>
+						<div class="form-group slider-group">
+							<label for="usability_rating">Usability (1-10):</label>
+							<div class="slider-container">
+								<input type="range" name="usability_rating" id="usability_rating" min="1" max="10" value="5" 
+									   oninput="updateValue('usability_rating_value', this.value)">
+								<span id="usability_rating_value">5</span>
+							</div>
+						</div>
 
-                        <label for="overall_rating">Overall Satisfaction (1-10):</label><br>
-                        <input type="range" name="overall_rating" id="overall_rating" min="1" max="10" value="5" oninput="updateValue('overall_rating_value', this.value)">
-                        <span id="overall_rating_value">5</span><br><br>
+						<div class="form-group slider-group">
+							<label for="performance_rating">Performance (1-10):</label>
+							<div class="slider-container">
+								<input type="range" name="performance_rating" id="performance_rating" min="1" max="10" value="5" 
+									   oninput="updateValue('performance_rating_value', this.value)">
+								<span id="performance_rating_value">5</span>
+							</div>
+						</div>
 
-                        <label for="design_rating">Design (1-10):</label><br>
-                        <input type="range" name="design_rating" id="design_rating" min="1" max="10" value="5" oninput="updateValue('design_rating_value', this.value)">
-                        <span id="design_rating_value">5</span><br><br>
+						<div class="form-group slider-group">
+							<label for="content_rating">Content Relevance (1-10):</label>
+							<div class="slider-container">
+								<input type="range" name="content_rating" id="content_rating" min="1" max="10" value="5" 
+									   oninput="updateValue('content_rating_value', this.value)">
+								<span id="content_rating_value">5</span>
+							</div>
+						</div>
 
-                        <label for="usability_rating">Usability (1-10):</label><br>
-                        <input type="range" name="usability_rating" id="usability_rating" min="1" max="10" value="5" oninput="updateValue('usability_rating_value', this.value)">
-                        <span id="usability_rating_value">5</span><br><br>
+						<!-- CSS Styles -->
+						<style>
+							.slider-container {
+								display: flex;
+								align-items: center;
+								gap: 10px;
+							}
 
-                        <label for="performance_rating">Performance (1-10):</label><br>
-                        <input type="range" name="performance_rating" id="performance_rating" min="1" max="10" value="5" oninput="updateValue('performance_rating_value', this.value)">
-                        <span id="performance_rating_value">5</span><br><br>
+							input[type="range"] {
+								flex: 1;
+							}
 
-                        <label for="content_rating">Content Relevance (1-10):</label><br>
-                        <input type="range" name="content_rating" id="content_rating" min="1" max="10" value="5" oninput="updateValue('content_rating_value', this.value)">
-                        <span id="content_rating_value">5</span><br><br>
+							span {
+								min-width: 30px; /* Ensures consistent width for numbers */
+								text-align: center;
+								font-weight: bold;
+							}
+						</style>
+
 
                         <h3>2. Open-ended Questions</h3>
 
@@ -798,7 +871,7 @@ if ($_SESSION['loggedin']) {
 
                         <div class="form-group">
                             <label for="navigation_difficulty">How easy was it to navigate the website?</label>
-                            <select name="navigation_difficulty" id="navigation_difficulty" class="form-control">
+                            <select style="height: 45px;" name="navigation_difficulty" id="navigation_difficulty" class="form-control">
                                 <option value="Very Easy">Very Easy</option>
                                 <option value="Easy">Easy</option>
                                 <option value="Neutral">Neutral</option>
@@ -809,7 +882,7 @@ if ($_SESSION['loggedin']) {
 
                         <div class="form-group">
                             <label for="visit_reason">What best describes your reason for visiting?</label>
-                            <select name="visit_reason" id="visit_reason" class="form-control">
+                            <select style="height: 45px;" name="visit_reason" id="visit_reason" class="form-control">
                                 <option value="Browsing">Browsing</option>
                                 <option value="Looking for Information">Looking for Information</option>
                                 <option value="Customer Support">Customer Support</option>
@@ -820,7 +893,7 @@ if ($_SESSION['loggedin']) {
 
                         <div class="form-group">
                             <label for="website_discovery">How did you find our website?</label>
-                            <select name="website_discovery" id="website_discovery" class="form-control">
+                            <select style="height: 45px;" name="website_discovery" id="website_discovery" class="form-control">
                                 <option value="Search Engine">Search Engine</option>
                                 <option value="Social Media">Social Media</option>
                                 <option value="Referral">Referral</option>
@@ -836,7 +909,7 @@ if ($_SESSION['loggedin']) {
 
                         <div class="form-group">
                             <label for="loading_speed">Did the website load quickly?</label>
-                            <select name="loading_speed" id="loading_speed" class="form-control">
+                            <select style="height: 45px;" name="loading_speed" id="loading_speed" class="form-control">
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
                             </select>
@@ -859,12 +932,15 @@ if ($_SESSION['loggedin']) {
 
                         <div class="form-group">
                             <label for="follow_up">Would you like to be contacted about your feedback?</label>
-                            <select name="follow_up" id="follow_up" class="form-control">
+                            <select style="height: 45px;" name="follow_up" id="follow_up" class="form-control">
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
                             </select>
                         </div>
 
+                        <input type="hidden" name="fname" id="fname" value="<?php echo $fnameDB; ?>">
+                        <input type="hidden" name="lname" id="lname" value="<?php echo $lnameDB; ?>">
+                        <input type="hidden" name="email" id="email" value="<?php echo $emailDB; ?>">
                         <input type="hidden" name="userid" id="userid" value="<?php echo $userid; ?>">
                         <input type="hidden" name="role" id="role" value="<?php echo $role; ?>">
 

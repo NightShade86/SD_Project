@@ -826,27 +826,73 @@ ini_set('display_errors', 1);
             <div class="feedback-block col-lg-8 col-md-10 col-sm-12 mx-auto wow fadeInUp">
                 <div  class="inner-box">
                     <form action="feedback_process.php" method="post">
-                        <h3>1. Rating System</h3>
+						 <!-- Rating System -->
+						<h3>1. Rating System</h3>
 
-                        <label for="overall_rating">Overall Satisfaction (1-10):</label><br>
-                        <input type="range" name="overall_rating" id="overall_rating" min="1" max="10" value="5" oninput="updateValue('overall_rating_value', this.value)">
-                        <span id="overall_rating_value">5</span><br><br>
+						<div class="form-group slider-group">
+							<label for="overall_rating">Overall Satisfaction (1-10):</label>
+							<div class="slider-container">
+								<input type="range" name="overall_rating" id="overall_rating" min="1" max="10" value="5" 
+									   oninput="updateValue('overall_rating_value', this.value)">
+								<span id="overall_rating_value">5</span>
+							</div>
+						</div>
 
-                        <label for="design_rating">Design (1-10):</label><br>
-                        <input type="range" name="design_rating" id="design_rating" min="1" max="10" value="5" oninput="updateValue('design_rating_value', this.value)">
-                        <span id="design_rating_value">5</span><br><br>
+						<div class="form-group slider-group">
+							<label for="design_rating">Design (1-10):</label>
+							<div class="slider-container">
+								<input type="range" name="design_rating" id="design_rating" min="1" max="10" value="5" 
+									   oninput="updateValue('design_rating_value', this.value)">
+								<span id="design_rating_value">5</span>
+							</div>
+						</div>
 
-                        <label for="usability_rating">Usability (1-10):</label><br>
-                        <input type="range" name="usability_rating" id="usability_rating" min="1" max="10" value="5" oninput="updateValue('usability_rating_value', this.value)">
-                        <span id="usability_rating_value">5</span><br><br>
+						<div class="form-group slider-group">
+							<label for="usability_rating">Usability (1-10):</label>
+							<div class="slider-container">
+								<input type="range" name="usability_rating" id="usability_rating" min="1" max="10" value="5" 
+									   oninput="updateValue('usability_rating_value', this.value)">
+								<span id="usability_rating_value">5</span>
+							</div>
+						</div>
 
-                        <label for="performance_rating">Performance (1-10):</label><br>
-                        <input type="range" name="performance_rating" id="performance_rating" min="1" max="10" value="5" oninput="updateValue('performance_rating_value', this.value)">
-                        <span id="performance_rating_value">5</span><br><br>
+						<div class="form-group slider-group">
+							<label for="performance_rating">Performance (1-10):</label>
+							<div class="slider-container">
+								<input type="range" name="performance_rating" id="performance_rating" min="1" max="10" value="5" 
+									   oninput="updateValue('performance_rating_value', this.value)">
+								<span id="performance_rating_value">5</span>
+							</div>
+						</div>
 
-                        <label for="content_rating">Content Relevance (1-10):</label><br>
-                        <input type="range" name="content_rating" id="content_rating" min="1" max="10" value="5" oninput="updateValue('content_rating_value', this.value)">
-                        <span id="content_rating_value">5</span><br><br>
+						<div class="form-group slider-group">
+							<label for="content_rating">Content Relevance (1-10):</label>
+							<div class="slider-container">
+								<input type="range" name="content_rating" id="content_rating" min="1" max="10" value="5" 
+									   oninput="updateValue('content_rating_value', this.value)">
+								<span id="content_rating_value">5</span>
+							</div>
+						</div>
+
+						<!-- CSS Styles -->
+						<style>
+							.slider-container {
+								display: flex;
+								align-items: center;
+								gap: 10px;
+							}
+
+							input[type="range"] {
+								flex: 1;
+							}
+
+							span {
+								min-width: 30px; /* Ensures consistent width for numbers */
+								text-align: center;
+								font-weight: bold;
+							}
+						</style>
+
 
                         <h3>2. Open-ended Questions</h3>
 
