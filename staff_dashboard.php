@@ -48,15 +48,17 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
         }
 
         #sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;
-            width: 250px;
-            background-color: #003D63;
-            padding-top: 60px;
-            overflow-y: auto;
-        }
+			position: fixed;
+			top: 60px; /* Adjust based on your header height */
+			left: 0;
+			height: calc(100vh - 60px); /* Full height minus the header */
+			width: 250px;
+			background-color: #003D63;
+			padding-top: 20px; /* Extra padding for spacing */
+			overflow-y: auto;
+			z-index: 1040; /* Lower than header */
+		}
+
 
         #sidebar .nav-item {
             border-bottom: 1px solid #495057;
@@ -94,20 +96,20 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
             padding-left: 20px;
         }
 
-        main {
-            padding: 20px;
-        }
+         main {
+			margin-top: 60px; /* Adjust based on header height */
+			padding: 60px;    /* Optional: Add padding for spacing */
+		}
 
-        .content {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid #ddd;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+		.content {
+			background-color: #ffffff;
+			padding: 20px;
+			border-radius: 10px;
+			border: 1px solid #ddd;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+			margin-bottom: 20px;
 			overflow-x: auto;
-			padding: 20px; /* Add some padding to the content container */
-        }
+		}
 		
 		.content table {
 		width: 100%; /* Set the table width to 100% of its parent container */
@@ -184,6 +186,7 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 				right: 0;
 			}
 		}
+		
 		.navbar-brand img {
 			border-radius: 5px; /* Optional: Make the logo slightly rounded */
 		}
@@ -260,34 +263,62 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 									<!-- Add more menu items as needed -->
 								</ul>
 							</li>
-							<style>
-							.dropdown span {
-								display: flex;
-								align-items: center; /* Vertically center the icon and text */
-								font-size: 14px; /* Adjust font size as needed */
-							}
-
-							.dropdown span svg {
-								margin-right: 5px; /* Space between icon and text */
-								fill: #ffffff; /* Change the icon color if needed */
-							}
-							</style>
 						</ul>
 					</div>
 				</nav>
 			</header>
 
 			<style>
-			.dropdown span {
+				/* Ensure the header fills the top of the page */
+				header {
+					width: 100%;
+					position: fixed;
+					top: 0;
+					left: 0;
+					height: 60px; /* Adjust as needed */
+					z-index: 1050; /* Ensure it stays on top */
+					background-color: #ffffff;
+					box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+				}
+
+				/* Add margin to the main content to avoid overlap */
+				main {
+					margin-top: 80px; /* Adjust based on header height */
+				}
+
+				/* Navbar styles */
+				.navbar {
+					background-color: #ffffff;
+					box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+				}
+
+				.navbar-nav .dropdown ul {
+					position: absolute;
+					right: 0;
+					background-color: #ffffff;
+					list-style: none;
+					padding: 10px 0;
+					box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+					display: none;
+					min-width: 180px;
+					border-radius: 5px;
+					z-index: 1000;
+				}
+
+				.navbar-nav .dropdown:hover ul {
+					display: block;
+				}
+				
+				.dropdown span {
 				display: flex;
 				align-items: center; /* Vertically center the icon and text */
 				font-size: 14px; /* Adjust font size as needed */
-			}
+				}
 
-			.dropdown span svg {
-				margin-right: 5px; /* Space between icon and text */
-				fill: #ffffff; /* Change the icon color if needed */
-			}
+				.dropdown span svg {
+					margin-right: 5px; /* Space between icon and text */
+					fill: #ffffff; /* Change the icon color if needed */
+				}
 			</style>
                 <main class="mt-4">
                     <div class='content bg-white p-4 shadow-sm rounded'>

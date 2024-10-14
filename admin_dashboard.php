@@ -48,15 +48,17 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
         }
 
         #sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;
-            width: 250px;
-            background-color: #003D63;
-            padding-top: 60px;
-            overflow-y: auto;
-        }
+			position: fixed;
+			top: 60px; /* Adjust based on your header height */
+			left: 0;
+			height: calc(100vh - 60px); /* Full height minus the header */
+			width: 250px;
+			background-color: #003D63;
+			padding-top: 20px; /* Extra padding for spacing */
+			overflow-y: auto;
+			z-index: 1040; /* Lower than header */
+		}
+
 
         #sidebar .nav-item {
             border-bottom: 1px solid #495057;
@@ -94,20 +96,20 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
             padding-left: 20px;
         }
 
-        main {
-            padding: 20px;
-        }
+         main {
+			margin-top: 60px; /* Adjust based on header height */
+			padding: 60px;    /* Optional: Add padding for spacing */
+		}
 
-        .content {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid #ddd;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+		.content {
+			background-color: #ffffff;
+			padding: 20px;
+			border-radius: 10px;
+			border: 1px solid #ddd;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+			margin-bottom: 20px;
 			overflow-x: auto;
-			padding: 20px; /* Add some padding to the content container */
-        }
+		}
 		
 		.content table {
 		width: 100%; /* Set the table width to 100% of its parent container */
@@ -240,66 +242,98 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
             
             <div class="col-md-10 offset-md-2">
 			<header>
-				<nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
+				<nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm fixed-top w-100">
 					<a class="navbar-brand d-flex align-items-center" href="#">
 						<img src="file.png" alt="Logo" width="40" height="40" class="mr-2">
 						Admin Dashboard
 					</a>
-					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<button class="navbar-toggler" type="button" data-toggle="collapse" 
+							data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+							aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav ml-auto">
 							<li class="dropdown">
 								<span>
-									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" 
+										fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
 										<path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1z"/>
-										<path d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 10a5 5 0 0 0-4.546 3 1 1 0 0 0 .657 1.07c.068.016.134.03.2.04A5.992 5.992 0 0 0 8 12a5.992 5.992 0 0 0 4.689 2.11c.066-.01.132-.024.2-.04a1 1 0 0 0 .657-1.07A5 5 0 0 0 8 10z"/>
+										<path d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 10a5 5 0 0 0-4.546 3 
+											1 1 0 0 0 .657 1.07c.068.016.134.03.2.04A5.992 5.992 0 0 0 8 12a5.992 
+											5.992 0 0 0 4.689 2.11c.066-.01.132-.024.2-.04a1 1 0 0 0 .657-1.07A5 5 
+											0 0 0 8 10z"/>
 									</svg>
 									<?php 
 										$userid = $_SESSION['USER_ID'];
-										
 										if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 											echo " Welcome, " . htmlspecialchars($userid);
 										} else {
-											echo " Profile"; // Default text when user is not logged in
+											echo " Profile"; 
 										}
 									?>
 								</span>
 								<ul>
 									<li><a href="?section=profile">Profile</a></li>
 									<li><a href="logout.php">Logout</a></li>
-									<!-- Add more menu items as needed -->
 								</ul>
 							</li>
-							<style>
-							.dropdown span {
-								display: flex;
-								align-items: center; /* Vertically center the icon and text */
-								font-size: 14px; /* Adjust font size as needed */
-							}
-
-							.dropdown span svg {
-								margin-right: 5px; /* Space between icon and text */
-								fill: #ffffff; /* Change the icon color if needed */
-							}
-							</style>
 						</ul>
 					</div>
 				</nav>
 			</header>
 
 			<style>
-			.dropdown span {
+				/* Ensure the header fills the top of the page */
+				header {
+					width: 100%;
+					position: fixed;
+					top: 0;
+					left: 0;
+					height: 60px; /* Adjust as needed */
+					z-index: 1050; /* Ensure it stays on top */
+					background-color: #ffffff;
+					box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+				}
+
+				/* Add margin to the main content to avoid overlap */
+				main {
+					margin-top: 80px; /* Adjust based on header height */
+				}
+
+				/* Navbar styles */
+				.navbar {
+					background-color: #ffffff;
+					box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+				}
+
+				.navbar-nav .dropdown ul {
+					position: absolute;
+					right: 0;
+					background-color: #ffffff;
+					list-style: none;
+					padding: 10px 0;
+					box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+					display: none;
+					min-width: 180px;
+					border-radius: 5px;
+					z-index: 1000;
+				}
+
+				.navbar-nav .dropdown:hover ul {
+					display: block;
+				}
+				
+				.dropdown span {
 				display: flex;
 				align-items: center; /* Vertically center the icon and text */
 				font-size: 14px; /* Adjust font size as needed */
-			}
+				}
 
-			.dropdown span svg {
-				margin-right: 5px; /* Space between icon and text */
-				fill: #ffffff; /* Change the icon color if needed */
-			}
+				.dropdown span svg {
+					margin-right: 5px; /* Space between icon and text */
+					fill: #ffffff; /* Change the icon color if needed */
+				}
 			</style>
                 <main class="mt-4">
                     <div class='content bg-white p-4 shadow-sm rounded'>
