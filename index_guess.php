@@ -915,11 +915,36 @@ ini_set('display_errors', 1);
                             </select>
                         </div>
 
-                        <h3>5. NPS (Net Promoter Score)</h3>
+						<h3>5. NPS (Net Promoter Score)</h3>
 
-                        <label for="recommendation_rate">How likely are you to recommend our website to a friend? (0-10)</label><br>
-                        <input type="range" name="recommendation_rate" id="recommendation_rate" min="1" max="10" value="5" oninput="updateValue('recommendation_rate_value', this.value)">
-                        <span id="recommendation_rate_value">5</span><br><br>
+						<div class="form-group slider-group">
+							<label for="recommendation_rate">How likely are you to recommend our website to a friend? (0-10)</label>
+							<div class="slider-container">
+								<input type="range" name="recommendation_rate" id="recommendation_rate" min="1" max="10" value="5" 
+									   oninput="updateValue('recommendation_rate_value', this.value)">
+								<span id="recommendation_rate_value">5</span>
+							</div>
+						</div>
+
+						<!-- CSS Styles -->
+						<style>
+							.slider-container {
+								display: flex;
+								align-items: center;
+								gap: 10px;
+							}
+
+							input[type="range"] {
+								flex: 1;
+							}
+
+							span {
+								min-width: 30px; /* Ensures consistent width for numbers */
+								text-align: center;
+								font-weight: bold;
+							}
+						</style>
+
 
                         <h3>6. Additional Comments</h3>
 
