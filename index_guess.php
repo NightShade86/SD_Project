@@ -733,8 +733,8 @@ ini_set('display_errors', 1);
         $imageDB = $user['IMAGE'] ?? 'default-avatar.png';
 
     } else {
-        $userid = 'Guest';
-        $role = 'Guest';
+        $userid = 'guest';
+        $role = 'guest';
     }
     ?>
 
