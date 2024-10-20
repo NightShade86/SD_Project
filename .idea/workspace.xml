@@ -5,13 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8a47ca12-971e-4c18-ba53-bf60bdc5d1d4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/test/bill.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/create_bill.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/delete_bill.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/edit_bill.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/submit_bill.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/view_bill.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index_guess.php" beforeDir="false" afterPath="$PROJECT_DIR$/index_guess.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -84,7 +77,7 @@
       <workItem from="1725442185391" duration="40000" />
       <workItem from="1727709887868" duration="1412000" />
       <workItem from="1728309221720" duration="801000" />
-      <workItem from="1729417785371" duration="12460000" />
+      <workItem from="1729417785371" duration="13147000" />
     </task>
     <servers />
   </component>
