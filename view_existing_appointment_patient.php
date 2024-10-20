@@ -1,5 +1,5 @@
 <?php
-/*if (session_status() == PHP_SESSION_NONE) {
+if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 error_reporting(E_ALL);
@@ -36,7 +36,7 @@ if (!$stmt->execute()) {
     die("Execute failed: " . $stmt->error);
 }
 $result = $stmt->get_result();
-*/
+
 // Check if any appointments exist
 if ($result->num_rows > 0) {
     echo "
