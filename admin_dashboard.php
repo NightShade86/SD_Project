@@ -366,7 +366,7 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 							"view-bills" => "bill.php" , 
 							"add-bills" => "create_bill.php" ,
 							"edit-bills" => "edit_bill.php" ,
-							"delete-bills" => "delete_bill.php' , 
+							"delete-bills" => "delete_bill.php" , 
                         ];
 
                         if (array_key_exists($section, $section_map)) {
