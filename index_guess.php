@@ -785,20 +785,6 @@ ini_set('display_errors', 1);
                 <div class="feedback-block col-lg-8 col-md-10 col-sm-12 mx-auto wow fadeInUp">
                     <div  class="inner-box">
                         <form action="feedback_process.php" method="post">
-                            <div class="form-group">
-                                <label for="fname">First Name:</label>
-                                <input type="text" id="fname" name="fname" class="form-control" placeholder="Please enter your first name" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="lname">Last Name:</label>
-                                <input type="text" id="lname" name="lname" class="form-control" placeholder="Please enter your last name" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="email">Email:</label>
-                                <input type="email" id="email" name="email" class="form-control" placeholder="Please enter your email" required>
-                            </div>
                             <!-- Rating System -->
                             <h3>1. Rating System</h3>
 
@@ -921,7 +907,7 @@ ini_set('display_errors', 1);
 
                             <div class="form-group">
                                 <label for="functionality_issue">Did any part of the site not work as expected?</label>
-                                <textarea id="functionality_issue" name="functionality_issue" class="form-control" rows="5" placeholder="Describe any issue"></textarea>
+                                <textarea id="functionality_issue" name="functionality_issue" class="form-control" rows="5" placeholder="Describe any issue" required></textarea>
                             </div>
 
                             <div class="form-group">
@@ -967,7 +953,7 @@ ini_set('display_errors', 1);
 
                             <div class="form-group">
                                 <label for="additional_comments">Any additional comments or suggestions?</label>
-                                <textarea id="additional_comments" name="additional_comments" class="form-control" rows="5"></textarea>
+                                <textarea id="additional_comments" name="additional_comments" class="form-control" rows="5" required></textarea>
                             </div>
 
                             <h3>7. Consent for Follow-up</h3>
@@ -979,9 +965,11 @@ ini_set('display_errors', 1);
                                     <option value="No">No</option>
                                 </select>
                             </div>
-
-                            <input type="hidden" name="userid" id="userid" value="<?php echo $userid; ?>">
-                            <input type="hidden" name="role" id="role" value="<?php echo $role; ?>">
+                            <input type="hidden" name="fname" id="fname" value="guest">
+                            <input type="hidden" name="lname" id="lname" value="guest">
+                            <input type="hidden" name="email" id="email" value="guest">
+                            <input type="hidden" name="userid" id="userid" value="guest">
+                            <input type="hidden" name="role" id="role" value="guest">
 
                             <div class="form-group text-center">
                                 <button type="submit" class="btn btn-primary">Submit Feedback</button>

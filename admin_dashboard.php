@@ -9,7 +9,8 @@ ini_set('display_errors', 1);
 // Initialize the section variable
 $allowed_sections = [
     "patients", "staff", "add-staff", "edit-staff", "delete-staff", 
-    "add-patient", "edit-patient", "delete-patient" , "profile" , "appointment" , "feedback"
+    "add-patient", "edit-patient", "delete-patient" , "profile" , "appointment" , "feedback" , "add-bills" ,
+	"edit-bills" , "delete-bills" , "view-bills"
 ];
 
 $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sections) ? $_GET["section"] : "staff";
@@ -228,9 +229,20 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 						</a>
 						<div class="dropdown-menu dropdown-menu-dark" aria-labelledby="appointmentDropdown">
 							<a class="dropdown-item" href="?section=appointment">View Appointments</a>
-							<a class="dropdown-item" href="#add-appointment">Add Appointment</a>
 						</div>
 					</div>
+					
+					<div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white py-3" href="#" id="staffDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-file-invoice-dollar"></i> Manage Bills
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="staffDropdown">
+                            <a class="dropdown-item" href="?section=view-bills">View Bills</a>
+                            <a class="dropdown-item" href="?section=add-bills">Add Bills</a>
+                            <a class="dropdown-item" href="?section=edit-bills">Edit Bills</a>
+                            <a class="dropdown-item" href="?section=delete-bills">Delete Bills</a>
+                        </div>
+                    </div>
 					
                     <!-- Static Links -->
                     <a class="nav-link text-white" href="#view-bills"><i class="fas fa-file-invoice-dollar"></i> View Bills</a>
@@ -244,7 +256,7 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 			<header>
 				<nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm fixed-top w-100">
 					<a class="navbar-brand d-flex align-items-center" href="#">
-						<img src="file.png" alt="Logo" width="40" height="40" class="mr-2">
+						<img src="images/file.png" alt="Logo" width="40" height="40" class="mr-2">
 						Admin Dashboard
 					</a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" 
@@ -351,6 +363,10 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 							"profile" => "profile_SA.php" ,
 							"appointment" => "view_appointments.php" ,
 							"feedback" => "view_feedback.php" ,
+							"view-bills" => "bill.php" , 
+							"add-bills" => "create_bill.php" ,
+							"edit-bills" => "edit_bill.php" ,
+							"delete-bills" => "delete_bill.php" , 
                         ];
 
                         if (array_key_exists($section, $section_map)) {
