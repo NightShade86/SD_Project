@@ -118,24 +118,9 @@ ini_set('display_errors', 1);
 												echo "<li><a href='login.php'>Log In</a></li>";
 											}
 										?>
-										<li><a href="#" onclick="showAppointmentsModal()">Appointment History</a></li>
+										<li><a href="javascript:void(0)" id="load-appointment-history">Appointment History</a></li>
 									</ul>
 								</li>
-								<script>
-									function showAppointmentsModal() {
-										$.ajax({
-											url: 'view_existing_appointment_history.php',
-											method: 'GET',
-											success: function(data) {
-												$('#appointmentModal .modal-body').html(data);
-												$('#appointmentModal').modal('show');
-											},
-											error: function() {
-												alert('Error fetching appointments.');
-											}
-										});
-									}
-								</script>
                                 <!-- <span>Blog</span>
                                     <ul>
                                         <li><a href="blog-checkboard.html">Checkerboard</a></li>
@@ -1095,6 +1080,39 @@ ini_set('display_errors', 1);
 			background-color: #2980b9;
 		}
 	</style>
+	
+	<div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="appointmentModalLabel">Your Appointments</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body-content">
+                <!-- Appointment content will be loaded here via AJAX -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // When "Appointment History" is clicked, load the modal with the page content
+    $('#load-appointment-history').on('click', function() {
+        // Load the content from view_existing_appointment_patient.php into the modal
+        $('#modal-body-content').load('view_existing_appointment_patient.php', function() {
+            // Show the modal once the content is loaded
+            $('#appointmentModal').modal('show');
+        });
+    });
+</script>
 
 
        <!-- Main Footer -->
