@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a47ca12-971e-4c18-ba53-bf60bdc5d1d4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/index_guess.php" beforeDir="false" afterPath="$PROJECT_DIR$/index_guess.php" afterDir="false" />
-    </list>
+    <list default="true" id="8a47ca12-971e-4c18-ba53-bf60bdc5d1d4" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -77,7 +75,7 @@
       <workItem from="1725442185391" duration="40000" />
       <workItem from="1727709887868" duration="1412000" />
       <workItem from="1728309221720" duration="801000" />
-      <workItem from="1729417785371" duration="13147000" />
+      <workItem from="1729417785371" duration="13807000" />
     </task>
     <servers />
   </component>
