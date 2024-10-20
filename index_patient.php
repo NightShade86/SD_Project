@@ -1082,7 +1082,7 @@ ini_set('display_errors', 1);
 	</style>
 	
 <div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="appointmentModalLabel">Your Appointments</h5>
@@ -1100,6 +1100,42 @@ ini_set('display_errors', 1);
     </div>
 </div>
 
+<style>
+    .modal-dialog {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
+
+    .modal-content {
+        width: 95%; /* Increased width */
+        max-width: 900px; /* New maximum width */
+        margin: auto;
+    }
+
+    .modal-header {
+        padding: 20px; /* Adjusted padding */
+    }
+
+    .modal-body {
+        font-size: 1rem; /* Ensure font size is readable */
+        padding: 20px; /* Adjusted padding */
+    }
+
+    .close {
+        font-size: 1.5rem; /* Close button size */
+        margin-left: auto; /* Push close button to the right */
+    }
+
+    .modal {
+		margin: auto;
+        display: block !important; /* Forces the modal to display */
+        opacity: 1 !important; /* Makes sure it's not hidden */
+    }
+</style>
+
+
 <!-- Include jQuery and Bootstrap's JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -1107,16 +1143,20 @@ ini_set('display_errors', 1);
 <script>
     // When "Appointment History" is clicked, load the modal with the page content
     $('#load-appointment-history').on('click', function() {
-        // Show loading text or spinner before loading content
-        $('#modal-body-content').html('<p>Loading...</p>');
+        console.log('Appointment History clicked');  // Log when the link is clicked
 
+        // Show loading text or spinner before loading content
+        $('#modal-body-content').html('<p>Loading appointments...</p>');
+        
         // Load the content from view_existing_appointment_patient.php into the modal body
         $('#modal-body-content').load('view_existing_appointment_patient.php', function(response, status, xhr) {
+            console.log('AJAX status: ', status);  // Log the status of the AJAX call
             if (status == "error") {
+                console.log('Error: ', xhr.status, xhr.statusText);  // Log the error details
                 $('#modal-body-content').html('<p>Error loading appointment history. Please try again later.</p>');
             } else {
-                // Show the modal after content is loaded
-                $('#appointmentModal').modal('show');
+                console.log('Content loaded successfully');  // Log when content is loaded
+                $('#appointmentModal').modal('show');  // Show modal after content loads
             }
         });
     });
