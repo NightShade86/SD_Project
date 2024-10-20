@@ -34,7 +34,7 @@ if (!$stmt->bind_param("s", $userid)) {
 }
 if (!$stmt->execute()) {
     die("Execute failed: " . $stmt->error);
-}
+} 
 $result = $stmt->get_result();
 
 // Check if any appointments exist
@@ -46,9 +46,9 @@ if ($result->num_rows > 0) {
         <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
     </head>
     <body>
-        <!-- Modal -->
+        <!-- Modal (automatically displayed on page load) -->
         <div class='modal fade' id='appointmentModal' tabindex='-1' role='dialog' aria-labelledby='appointmentModalLabel' aria-hidden='true'>
-            <div class='modal-dialog modal-lg' role='document'>
+            <div class='modal-dialog' role='document'>
                 <div class='modal-content'>
                     <div class='modal-header'>
                         <h5 class='modal-title' id='appointmentModalLabel'>Your Appointments</h5>
@@ -99,13 +99,12 @@ if ($result->num_rows > 0) {
     }
 
     echo "
-                                    </table>
-                                </div>
+                                </table>
                             </div>
                         </div>
-                        <div class='modal-footer'>
-                            <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
-                        </div>
+                    </div>
+                    <div class='modal-footer'>
+                        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
                     </div>
                 </div>
             </div>
@@ -123,11 +122,11 @@ if ($result->num_rows > 0) {
     </body>
     </html>
     ";
-} else {
+}  else {
     echo "<h2>No appointments found.</h2>";
 }
 
 // Close the statement and connection
 $stmt->close();
 $connection->close();
-?>
+?> 
