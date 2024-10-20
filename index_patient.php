@@ -118,9 +118,24 @@ ini_set('display_errors', 1);
 												echo "<li><a href='login.php'>Log In</a></li>";
 											}
 										?>
-										<li><a href="view_existing_appointment_patient.php">Appointment History</a></li>
+										<li><a href="#" onclick="showAppointmentsModal()">Appointment History</a></li>
 									</ul>
 								</li>
+								<script>
+									function showAppointmentsModal() {
+										$.ajax({
+											url: 'view_existing_appointment_history.php',
+											method: 'GET',
+											success: function(data) {
+												$('#appointmentModal .modal-body').html(data);
+												$('#appointmentModal').modal('show');
+											},
+											error: function() {
+												alert('Error fetching appointments.');
+											}
+										});
+									}
+								</script>
                                 <!-- <span>Blog</span>
                                     <ul>
                                         <li><a href="blog-checkboard.html">Checkerboard</a></li>

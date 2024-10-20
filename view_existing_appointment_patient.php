@@ -40,46 +40,20 @@ $result = $stmt->get_result();
 // Check if any appointments exist
 if ($result->num_rows > 0) {
     echo "
-    <html>
-    <head>
-        <title>Appointments</title>
-        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
-    </head>
-    <body>
-        <!-- Modal (automatically displayed on page load) -->
-        <div class='modal fade' id='appointmentModal' tabindex='-1' role='dialog' aria-labelledby='appointmentModalLabel' aria-hidden='true'>
-            <div class='modal-dialog' role='document'>
-                <div class='modal-content'>
-                    <div class='modal-header'>
-                        <h5 class='modal-title' id='appointmentModalLabel'>Your Appointments</h5>
-                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                            <span aria-hidden='true'>&times;</span>
-                        </button>
-                    </div>
-                    <div class='modal-body'>
-                        <!-- Title and Description Section -->
-                        <div class='contact-form-two'>
-                            <div class='title-box'>
-                                <h4>Your Appointments</h4>
-                                <div class='text'>Here is the history of all your scheduled appointments.</div>
-                            </div>
-
-                            <!-- Appointment Table -->
-                            <div class='table-responsive'>
-                                <table class='table table-striped table-bordered'>
-                                    <tr>
-                                        <th>Appointment ID</th>
-                                        <th>User ID</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Phone Number</th>
-                                        <th>Email</th>
-                                        <th>IC</th>
-                                        <th>Appointment Date</th>
-                                        <th>Appointment Time</th>
-                                        <th>Reason for Visit</th>
-                                        <th>Queue Number</th>
-                                    </tr>";
+    <table class='table table-striped table-bordered'>
+        <tr>
+            <th>Appointment ID</th>
+            <th>User ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+            <th>IC</th>
+            <th>Appointment Date</th>
+            <th>Appointment Time</th>
+            <th>Reason for Visit</th>
+            <th>Queue Number</th>
+        </tr>";
 
     // Fetch and display each appointment
     while ($row = $result->fetch_assoc()) {
@@ -98,35 +72,12 @@ if ($result->num_rows > 0) {
               </tr>";
     }
 
-    echo "
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class='modal-footer'>
-                        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Automatically show the modal when the page loads -->
-        <script src='https://code.jquery.com/jquery-3.2.1.slim.min.js'></script>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'></script>
-        <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
-        <script>
-            $(document).ready(function() {
-                $('#appointmentModal').modal('show');
-            });
-        </script>
-    </body>
-    </html>
-    ";
-}  else {
-    echo "<h2>No appointments found.</h2>";
+    echo "</table>";
+} else {
+    echo "<tr><td colspan='11'>No appointments found.</td></tr>";
 }
 
 // Close the statement and connection
 $stmt->close();
 $connection->close();
-?> 
+?>
