@@ -684,7 +684,8 @@ if (session_status() == PHP_SESSION_NONE) {
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-    if ($_SESSION['loggedin']) {
+    // Check if 'loggedin' is set and true before proceeding
+    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {
         $userid = $_SESSION['USER_ID'];
         $role = $_SESSION['role'];
 
@@ -730,11 +731,12 @@ ini_set('display_errors', 1);
         $icDB = $user['IC'];
         $usertypeDB = $user['USERTYPE'];
         $imageDB = $user['IMAGE'] ?? 'default-avatar.png';
-} else {
-    $userid = 'Guest';
-    $role = 'Guest';
-}
-?>
+
+    } else {
+        $userid = 'Guest';
+        $role = 'Guest';
+    }
+    ?>
 
 <!-- Sent Feedback Section -->
 <section class="feedback-section">
