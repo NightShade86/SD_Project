@@ -40,90 +40,65 @@ $result = $stmt->get_result();
 // Check if any appointments exist
 if ($result->num_rows > 0) {
     echo "
-    <html>
-    <head>
-        <title>Appointments</title>
-        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
-    </head>
-    <body>
-        <!-- Modal (automatically displayed on page load) -->
-        <div class='modal fade' id='appointmentModal' tabindex='-1' role='dialog' aria-labelledby='appointmentModalLabel' aria-hidden='true'>
-            <div class='modal-dialog modal-lg' role='document'>
-                <div class='modal-content'>
-                    <div class='modal-header'>
+    <div class='modal fade' id='appointmentModal' tabindex='-1' role='dialog' aria-labelledby='appointmentModalLabel' aria-hidden='true'>
+        <div class='modal-dialog modal-lg' role='document'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <div class='title-box'>
                         <h5 class='modal-title' id='appointmentModalLabel'>Your Appointments</h5>
-                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                            <span aria-hidden='true'>&times;</span>
-                        </button>
+                        <div class='close' data-dismiss='modal' aria-label='Close'>
+                            <div aria-hidden='true'>&times;</div>
+                        </div>
                     </div>
-                    <div class='modal-body'>
-                        <!-- Title and Description Section -->
-                        <div class='contact-form-two'>
-                            <div class='title-box'>
-                                <h4>Your Appointments</h4>
-                                <div class='text'>Here is the history of all your scheduled appointments.</div>
-                            </div>
+                </div>
+                <div class='modal-body'>
+                    <div class='contact-form-two'>
+                        <div class='title-box'>
+                            <h4>Your Appointments</h4>
+                            <div class='text'>Here is the history of all your scheduled appointments.</div>
+                        </div>
+                        <div class='table-responsive'>
+                            <div class='appointment-list'>";
 
-                            <!-- Appointment Table -->
-                            <div class='table-responsive'>
-                                <table class='table table-striped table-bordered'>
-                                    <tr>
-                                        <th>Appointment ID</th>
-                                        <th>User ID</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Phone Number</th>
-                                        <th>Email</th>
-                                        <th>IC</th>
-                                        <th>Appointment Date</th>
-                                        <th>Appointment Time</th>
-                                        <th>Reason for Visit</th>
-                                        <th>Queue Number</th>
-                                    </tr>";
-
-    // Fetch and display each appointment
+    // Fetch and display each appointment using divs
     while ($row = $result->fetch_assoc()) {
-        echo "<tr>
-                <td>{$row['appointment_id']}</td>
-                <td>{$row['userid']}</td>
-                <td>{$row['fname']}</td>
-                <td>{$row['lname']}</td>
-                <td>{$row['number']}</td>
-                <td>{$row['email']}</td>
-                <td>{$row['ic']}</td>
-                <td>{$row['appointment_date']}</td>
-                <td>{$row['appointment_time']}</td>
-                <td>{$row['reason_for_visit']}</td>
-                <td>{$row['queue_number']}</td>
-              </tr>";
+        echo "
+        <div class='appointment-item'>
+            <div><strong>Appointment ID:</strong> {$row['appointment_id']}</div>
+            <div><strong>User ID:</strong> {$row['userid']}</div>
+            <div><strong>First Name:</strong> {$row['fname']}</div>
+            <div><strong>Last Name:</strong> {$row['lname']}</div>
+            <div><strong>Phone Number:</strong> {$row['number']}</div>
+            <div><strong>Email:</strong> {$row['email']}</div>
+            <div><strong>IC:</strong> {$row['ic']}</div>
+            <div><strong>Appointment Date:</strong> {$row['appointment_date']}</div>
+            <div><strong>Appointment Time:</strong> {$row['appointment_time']}</div>
+            <div><strong>Reason for Visit:</strong> {$row['reason_for_visit']}</div>
+            <div><strong>Queue Number:</strong> {$row['queue_number']}</div>
+            <hr>
+        </div>";
     }
 
     echo "
-                                </table>
                             </div>
                         </div>
                     </div>
-                    <div class='modal-footer'>
-                        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
-                    </div>
+                </div>
+                <div class='modal-footer'>
+                    <div class='btn btn-secondary' data-dismiss='modal'>Close</div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Automatically show the modal when the page loads -->
-        <script src='https://code.jquery.com/jquery-3.2.1.slim.min.js'></script>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'></script>
-        <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
-        <script>
-            $(document).ready(function() {
-                $('#appointmentModal').modal('show');
-            });
-        </script>
-    </body>
-    </html>
+    <script>
+        $(document).ready(function() {
+            $('#appointmentModal').modal('show');
+        });
+    </script>
     ";
 } else {
-    echo "<h2>No appointments found.</h2>";
+    echo "<div>No appointments found.</div>";
 }
 
 // Close the statement and connection
