@@ -1,21 +1,20 @@
 <?php
-// Start session if not already started
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Enable error reporting for debugging
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Redirect to login page if the user is not logged in
+
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     $_SESSION['error_message'] = "You need to log in";
     header("Location: login_guess.php");
     exit();
 }
 
-// Retrieve user information from the session
+
 $userid = $_SESSION['USER_ID'];
 $role = $_SESSION['role'];
 
