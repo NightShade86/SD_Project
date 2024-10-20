@@ -23,15 +23,15 @@ if (isset($_GET["patient_id"])) {
 
     // Check if any rows were affected (i.e., if deletion was successful)
     if ($stmtDelete->affected_rows > 0) {
-        echo "Record with Patient ID $deletePatientID deleted successfully.";
+        echo "<script>alert('Record with Patient ID $deletePatientID deleted successfully.'); window.location.href = 'admin_dashboard.php?section=patients';</script>";
     } else {
-        echo "No records deleted. Perhaps the record with Patient ID $deletePatientID does not exist.";
+        echo "<script>alert('No records deleted. Perhaps the record with Patient ID $deletePatientID does not exist.');window.location.href = 'admin_dashboard.php?section=patients';</script>";
     }
 
     // Close statement and connection
     $stmtDelete->close();
     $connection->close();
 } else {
-    echo "No patient ID specified for deletion.";
+    echo "<script>alert('No patient ID specified for deletion.'); window.location.href = 'admin_dashboard.php?section=patients';</script>";
 }
 ?>
