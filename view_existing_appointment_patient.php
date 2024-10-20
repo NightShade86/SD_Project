@@ -40,25 +40,14 @@ $result = $stmt->get_result();
 // Check if any appointments exist
 if ($result->num_rows > 0) {
     echo "
-    <div class='modal fade' id='appointmentModal' tabindex='-1' role='dialog' aria-labelledby='appointmentModalLabel' aria-hidden='true'>
-        <div class='modal-dialog modal-lg' role='document'>
-            <div class='modal-content'>
-                <div class='modal-header'>
-                    <div class='title-box'>
-                        <h5 class='modal-title' id='appointmentModalLabel'>Your Appointments</h5>
-                        <div class='close' data-dismiss='modal' aria-label='Close'>
-                            <div aria-hidden='true'>&times;</div>
-                        </div>
-                    </div>
-                </div>
-                <div class='modal-body'>
-                    <div class='contact-form-two'>
-                        <div class='title-box'>
-                            <h4>Your Appointments</h4>
-                            <div class='text'>Here is the history of all your scheduled appointments.</div>
-                        </div>
-                        <div class='table-responsive'>
-                            <div class='appointment-list'>";
+    <div class='model' id='appointmentModal'>
+        <div class='contact-form-two'>
+            <div class='title-box'>
+                <h4>Your Appointments</h4>
+                <div class='text'>Here is the history of all your scheduled appointments.</div>
+            </div>
+            <div class='table-responsive'>
+                <div class='appointment-list'>";
 
     // Fetch and display each appointment using divs
     while ($row = $result->fetch_assoc()) {
@@ -80,25 +69,21 @@ if ($result->num_rows > 0) {
     }
 
     echo "
-                            </div>
-                        </div>
-                    </div>
                 </div>
-                <div class='modal-footer'>
-                    <div class='btn btn-secondary' data-dismiss='modal'>Close</div>
-                </div>
+            </div>
+            <div class='model-footer'>
+                <div class='btn btn-secondary' onclick='document.getElementById(\"appointmentModal\").style.display=\"none\"'>Close</div>
             </div>
         </div>
     </div>
 
     <script>
-        $(document).ready(function() {
-            $('#appointmentModal').modal('show');
-        });
+        // Automatically show the modal when the page loads
+        document.getElementById('appointmentModal').style.display='block';
     </script>
     ";
 } else {
-    echo "<div>No appointments found.</div>";
+    echo "<div class='model'>No appointments found.</div>";
 }
 
 // Close the statement and connection
