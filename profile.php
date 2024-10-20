@@ -312,6 +312,12 @@ if (isset($_SESSION['error_message'])) : ?>
                                 <?php endif; ?>
 							<form action="updateprofileprocess.php" method="post" enctype="multipart/form-data">
 								<div class="form-group">
+									<label for="update_image">Update Profile Picture</label>
+									<input type="file" id="update_image" name="update_image" class="form-control" accept="image/*" onchange="previewImage(event)">
+                                    <img id="image_preview" src="" alt="Image Preview" style="display: none; max-width: 200px; margin-top: 10px;">
+								</div>
+								
+								<div class="form-group">
 									<label for="firstname">First Name</label>
 									<input type="text" id="firstname" name="firstname" class="form-control" value="<?php echo $fname; ?>" required>
 								</div>
@@ -339,13 +345,6 @@ if (isset($_SESSION['error_message'])) : ?>
 								<div class="form-group">
 									<label for="pnumber">Phone Number</label>
 									<input type="text" id="pnumber" name="pnumber" class="form-control" value="<?php echo $pnum; ?>" required>
-								</div>
-
-								<div class="form-group">
-									<label for="update_image">Update Profile Picture</label>
-									<input type="file" id="update_image" name="update_image" class="form-control" accept="image/*" onchange="previewImage(event)">
-                                    <img id="image_preview" src="" alt="Image Preview" style="display: none; max-width: 200px; margin-top: 10px;">
-
 								</div>
 
 								<input type="hidden" name="ogusername" value="<?php echo $userid; ?>">
