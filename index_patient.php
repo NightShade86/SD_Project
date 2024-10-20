@@ -1081,7 +1081,7 @@ ini_set('display_errors', 1);
 		}
 	</style>
 	
-	<div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+<div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -1100,16 +1100,24 @@ ini_set('display_errors', 1);
     </div>
 </div>
 
+<!-- Include jQuery and Bootstrap's JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
     // When "Appointment History" is clicked, load the modal with the page content
     $('#load-appointment-history').on('click', function() {
-        // Load the content from view_existing_appointment_patient.php into the modal
-        $('#modal-body-content').load('view_existing_appointment_patient.php', function() {
-            // Show the modal once the content is loaded
-            $('#appointmentModal').modal('show');
+        // Show loading text or spinner before loading content
+        $('#modal-body-content').html('<p>Loading...</p>');
+
+        // Load the content from view_existing_appointment_patient.php into the modal body
+        $('#modal-body-content').load('view_existing_appointment_patient.php', function(response, status, xhr) {
+            if (status == "error") {
+                $('#modal-body-content').html('<p>Error loading appointment history. Please try again later.</p>');
+            } else {
+                // Show the modal after content is loaded
+                $('#appointmentModal').modal('show');
+            }
         });
     });
 </script>
