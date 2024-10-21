@@ -16,7 +16,7 @@ $allowed_sections = [
 $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sections) ? $_GET["section"] : "staff";
 
 ?>
-<!Doctype html> <!-- Line 15 -->
+<!Doctype html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
