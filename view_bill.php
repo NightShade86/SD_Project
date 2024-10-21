@@ -73,7 +73,7 @@ if ($bill_id) {
     <?php endforeach; ?>
 </table>
 
-<a href="bill.php">Back to Bills</a>
+<a href="admin_dashboard.php?section=view-bills">Back to Bills</a>
 
 </body>
 </html>

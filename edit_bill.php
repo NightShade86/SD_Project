@@ -206,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <button type="submit" class="btn">Update Bill</button>
 </form>
 
-<a href="bill.php">Back to Bills</a>
+<a href="admin_dashboard.php?section=view-bills">Back to Bills</a>
 
 </body>
 </html>

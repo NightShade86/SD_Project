@@ -76,13 +76,13 @@ $bills = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <td>$<?= number_format($bill['outstanding_payment'], 2) ?></td>
             <td>
                 <!-- View Button -->
-                <a href="view_bill.php?bill_id=<?= $bill['id'] ?>" class="action-btn">View</a>
+				<a href="admin_dashboard.php?section=view-bills&bill_id=<?= $bill['id'] ?>" class="action-btn">View</a>
 
                 <!-- Edit Button -->
-                <a href="edit_bill.php?bill_id=<?= $bill['id'] ?>" class="action-btn">Edit</a>
+                <a href="admin_dashboard.php?section=edit-bills&bill_id=<?= $bill['id'] ?>" class="action-btn">Edit</a>
 
                 <!-- Delete Button -->
-                <a href="delete_bill.php?bill_id=<?= $bill['id'] ?>" class="action-btn delete-btn"
+                <a href="admin_dashboard.php?section=delete-bills&bill_id=<?= $bill['id'] ?>" class="action-btn delete-btn"
                    onclick="return confirm('Are you sure you want to delete this bill?')">Delete</a>
             </td>
         </tr>
