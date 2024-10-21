@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8a47ca12-971e-4c18-ba53-bf60bdc5d1d4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/index_guess.php" beforeDir="false" afterPath="$PROJECT_DIR$/index_guess.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/get_bill_details.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view_bills_patient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,8 +43,9 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "code-narres",
-    "last_opened_file_path": "C:/xampp/htdocs/clinicdb/SD_Project/test",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/xampp/htdocs/clinicdb/SD_Project",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -53,6 +56,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\clinicdb\SD_Project" />
       <recent name="C:\xampp\htdocs\clinicdb\SD_Project\test" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -78,6 +82,8 @@
       <workItem from="1727709887868" duration="1412000" />
       <workItem from="1728309221720" duration="801000" />
       <workItem from="1729417785371" duration="13147000" />
+      <workItem from="1729446711874" duration="2839000" />
+      <workItem from="1729457231806" duration="1464000" />
     </task>
     <servers />
   </component>

@@ -949,7 +949,7 @@ ini_set('display_errors', 1);
 
                         <div class="form-group">
                             <label for="functionality_issue">Did any part of the site not work as expected?</label>
-                            <textarea id="functionality_issue" name="functionality_issue" class="form-control" rows="5" placeholder="Describe any issue"></textarea>
+                            <textarea id="functionality_issue" name="functionality_issue" class="form-control" rows="5" placeholder="Describe any issue" required></textarea>
                         </div>
 
                         <div class="form-group">
@@ -995,7 +995,7 @@ ini_set('display_errors', 1);
 
                         <div class="form-group">
                             <label for="additional_comments">Any additional comments or suggestions?</label>
-                            <textarea id="additional_comments" name="additional_comments" class="form-control" rows="5"></textarea>
+                            <textarea id="additional_comments" name="additional_comments" class="form-control" rows="5" required></textarea>
                         </div>
 
                         <h3>7. Consent for Follow-up</h3>
