@@ -385,17 +385,37 @@ ini_set('display_errors', 1);
     </div>
 </div>
 
+<div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="appointmentModalLabel">Your Appointments</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body-content">
+                <!-- Appointment content will be loaded here via AJAX -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <style>
     .modal-dialog {
         display: flex;
         align-items: center;
         justify-content: center;
         min-height: 100vh;
+        max-width: 95%; /* Ensure dialog takes up most of the viewport */
     }
 
     .modal-content {
-        width: 95%; /* Increased width */
-        max-width: 900px; /* New maximum width */
+        width: 100% !important; /* Force full width */
+        max-width: 1200px !important; /* Ensure maximum width is larger */
         margin: auto;
     }
 
@@ -414,11 +434,12 @@ ini_set('display_errors', 1);
     }
 
     .modal {
-		margin: auto;
-        display: block !important; /* Forces the modal to display */
+        margin: auto;
+        display: inline-block !important; /* Forces the modal to display */
         opacity: 1 !important; /* Makes sure it's not hidden */
     }
 </style>
+
 
 
 <!-- Include jQuery and Bootstrap's JS -->
@@ -445,6 +466,7 @@ ini_set('display_errors', 1);
             }
         });
     });
+</script>
 </script>
 
         <!--Footer Bottom-->

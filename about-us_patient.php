@@ -511,7 +511,7 @@ ini_set('display_errors', 1);
 	</style>
 	 <!--End Team Section CSS -->
 	 
-	 <div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+<div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -536,11 +536,12 @@ ini_set('display_errors', 1);
         align-items: center;
         justify-content: center;
         min-height: 100vh;
+        max-width: 95%; /* Ensure dialog takes up most of the viewport */
     }
 
     .modal-content {
-        width: 95%; /* Increased width */
-        max-width: 900px; /* New maximum width */
+        width: 100% !important; /* Force full width */
+        max-width: 1200px !important; /* Ensure maximum width is larger */
         margin: auto;
     }
 
@@ -559,11 +560,12 @@ ini_set('display_errors', 1);
     }
 
     .modal {
-		margin: auto;
-        display: block !important; /* Forces the modal to display */
+        margin: auto;
+        display: inline-block !important; /* Forces the modal to display */
         opacity: 1 !important; /* Makes sure it's not hidden */
     }
 </style>
+
 
 
 <!-- Include jQuery and Bootstrap's JS -->
