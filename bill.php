@@ -2,6 +2,7 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
 // Database connection parameters
 $host = "localhost";
 $username = "root";
@@ -20,6 +21,16 @@ try {
 $stmt = $pdo->prepare("SELECT * FROM clinic_bills ORDER BY created_at DESC");
 $stmt->execute();
 $bills = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Determine the dashboard link based on user role
+$dashboardLink = "index.php";
+if (isset($_SESSION['role'])) {
+    if ($_SESSION['role'] === 'admin') {
+        $dashboardLink = "admin_dashboard.php";
+    } elseif ($_SESSION['role'] === 'staff') {
+        $dashboardLink = "staff_dashboard.php";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -76,13 +87,13 @@ $bills = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <td>$<?= number_format($bill['outstanding_payment'], 2) ?></td>
             <td>
                 <!-- View Button -->
-				<a href="admin_dashboard.php?section=view-bills&bill_id=<?= $bill['id'] ?>" class="action-btn">View</a>
+                <a href="<?= $dashboardLink ?>?section=view-bills&bill_id=<?= $bill['id'] ?>" class="action-btn">View</a>
 
                 <!-- Edit Button -->
-                <a href="admin_dashboard.php?section=edit-bills&bill_id=<?= $bill['id'] ?>" class="action-btn">Edit</a>
+                <a href="<?= $dashboardLink ?>?section=edit-bills&bill_id=<?= $bill['id'] ?>" class="action-btn">Edit</a>
 
                 <!-- Delete Button -->
-                <a href="admin_dashboard.php?section=delete-bills&bill_id=<?= $bill['id'] ?>" class="action-btn delete-btn"
+                <a href="<?= $dashboardLink ?>?section=delete-bills&bill_id=<?= $bill['id'] ?>" class="action-btn delete-btn"
                    onclick="return confirm('Are you sure you want to delete this bill?')">Delete</a>
             </td>
         </tr>

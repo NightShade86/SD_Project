@@ -2,6 +2,7 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
 // Database connection parameters
 $host = "localhost";
 $username = "root";
@@ -38,6 +39,16 @@ if (!$bill) {
 $stmt = $pdo->prepare("SELECT * FROM bill_items WHERE bill_id = ?");
 $stmt->execute([$bill_id]);
 $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Determine the dashboard link based on user role
+$dashboardLink = "index.php";
+if (isset($_SESSION['role'])) {
+    if ($_SESSION['role'] === 'admin') {
+        $dashboardLink = "admin_dashboard.php";
+    } elseif ($_SESSION['role'] === 'staff') {
+        $dashboardLink = "staff_dashboard.php";
+    }
+}
 
 // Process form submission for editing the bill
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -87,8 +98,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt = $pdo->prepare("UPDATE clinic_bills SET payment_status = ?, payment_method = ?, insurance_company = ?, insurance_policy_number = ?, total_amount = ?, outstanding_payment = ? WHERE id = ?");
     $stmt->execute([$payment_status, $payment_method, $insurance_company, $insurance_policy_number, $total_amount, $total_amount, $bill_id]);
 
-    // Redirect to the bills page with success message
-    header("Location: bill.php?success=Bill updated successfully!");
+    // Redirect to the bills page with success message based on user role
+    header("Location: {$dashboardLink}?section=view-bills&success=Bill updated successfully!");
     exit();
 }
 ?>
@@ -206,8 +217,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <button type="submit" class="btn">Update Bill</button>
 </form>
 
-<a href="admin_dashboard.php?section=view-bills">Back to Bills</a>
+<!-- Back to Bills link based on user role -->
+<a href="<?= $dashboardLink ?>?section=view-bills">Back to Bills</a>
 
 </body>
 </html>
-
