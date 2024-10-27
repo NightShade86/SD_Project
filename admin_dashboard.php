@@ -255,9 +255,15 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 			<header>
 				<nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm fixed-top w-100">
 					<a class="navbar-brand d-flex align-items-center" href="#">
-						<img src="images/file.png" alt="Logo" width="40" height="40" class="mr-2">
+						<img src="images/file.png" alt="Logo" class="mr-2 logo">
 						Admin Dashboard
 					</a>
+					<style>
+						.logo {
+							width: 60px;
+							height: 60px;
+						}
+					</style>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" 
 							data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
 							aria-expanded="false" aria-label="Toggle navigation">
