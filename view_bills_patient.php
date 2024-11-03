@@ -117,7 +117,7 @@ foreach ($bills as $bill) {
     </div>
 </div>
 <div class="container mt-4">
-    <a href="index_patient.php">Back to Home</a>
+    <button class="btn btn-primary view-bill-btn" onclick="window.location.href='index_patient.php';">Back to Home</button>
 </div>
 
 
