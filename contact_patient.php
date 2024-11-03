@@ -119,6 +119,7 @@ ini_set('display_errors', 1);
 										?>
 									</ul>
 									<li><a href="javascript:void(0)" id="load-appointment-history">Appointment History</a></li>
+									<li><a href="">View Bills</a></li>
 								</li>
                              <!--       <span>Blog</span>
                                     <ul>
