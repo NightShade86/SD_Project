@@ -87,7 +87,7 @@ if (isset($_SESSION['role'])) {
             <td>$<?= number_format($bill['outstanding_payment'], 2) ?></td>
             <td>
                 <!-- View Button -->
-                <a href="<?= $dashboardLink ?>?section=view-bills&bill_id=<?= $bill['id'] ?>" class="action-btn">View</a>
+                <a href="<?= $dashboardLink ?>?section=show-bills&bill_id=<?= $bill['id'] ?>" class="action-btn">View</a>
 
                 <!-- Edit Button -->
                 <a href="<?= $dashboardLink ?>?section=edit-bills&bill_id=<?= $bill['id'] ?>" class="action-btn">Edit</a>

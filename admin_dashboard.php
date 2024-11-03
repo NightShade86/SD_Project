@@ -10,7 +10,7 @@ ini_set('display_errors', 1);
 $allowed_sections = [
     "patients", "staff", "add-staff", "edit-staff", "delete-staff", 
     "add-patient", "edit-patient", "delete-patient" , "profile" , "appointment" , "feedback" , "add-bills" ,
-	"edit-bills" , "delete-bills" , "view-bills"
+	"edit-bills" , "delete-bills" , "view-bills" , "show-bills"
 ];
 
 $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sections) ? $_GET["section"] : "staff";
@@ -369,7 +369,8 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 							"profile" => "profile_SA.php" ,
 							"appointment" => "view_appointments.php" ,
 							"feedback" => "view_feedback.php" ,
-							"view-bills" => "bill.php" , 
+							"view-bills" => "bill.php" ,
+                            "show-bills" => "view_bill.php",
 							"add-bills" => "create_bill.php" ,
 							"edit-bills" => "edit_bill.php" ,
 							"delete-bills" => "delete_bill.php" , 
