@@ -3,17 +3,14 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     $_SESSION['error_message'] = "You need to log in";
     header("Location: login_guess.php");
     exit();
 }
-
 
 $userid = $_SESSION['USER_ID'];
 $role = $_SESSION['role'];
@@ -72,6 +69,7 @@ if ($result->num_rows > 0) {
                         <th>Appointment Time</th>
                         <th>Reason for Visit</th>
                         <th>Queue Number</th>
+                        <th>Action</th>
                     </tr>";
                     
     // Loop through the result set and output each row in the table
@@ -88,6 +86,10 @@ if ($result->num_rows > 0) {
                 <td>{$row['appointment_time']}</td>
                 <td>{$row['reason_for_visit']}</td>
                 <td>{$row['queue_number']}</td>
+                <td>
+                    <button type='button' class='btn btn-primary btn-sm'>View</button>
+                    <button type='button' class='btn btn-success btn-sm'>Pay</button>
+                </td>
               </tr>";
     }
 
