@@ -50,7 +50,7 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 
         #sidebar {
 			position: fixed;
-			top: 60px; /* Adjust based on your header height */
+			top: 100px; /* Adjust based on your header height */
 			left: 0;
 			height: calc(100vh - 60px); /* Full height minus the header */
 			width: 250px;
@@ -108,7 +108,8 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 			border-radius: 10px;
 			border: 1px solid #ddd;
 			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-			margin-bottom: 20px;
+			margin-bottom: 40px;
+			margin-top: 40px;
 			overflow-x: auto;
 		}
 		
@@ -248,8 +249,8 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 					</a>
 					<style>
 					.logo {
-						width: 60px;
-						height: 60px;
+						width: 75px;
+						height: 75px;
 					}
 					</style>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" 
@@ -295,7 +296,7 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 					position: fixed;
 					top: 0;
 					left: 0;
-					height: 60px; /* Adjust as needed */
+					height: 100px; /* Adjust as needed */
 					z-index: 1050; /* Ensure it stays on top */
 					background-color: #ffffff;
 					box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
