@@ -1,6 +1,7 @@
 <?php
-session_start();
-
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 // Database connection parameters
 $host = "localhost";
 $username = "root";
@@ -83,8 +84,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['cart'] = [];
 
         // Redirect or show a success message
-        header("Location: index.php?success=Bill created successfully!");
-        exit();
+       if (isset($_SESSION['role'])) {
+			if ($_SESSION['role'] === 'admin') {
+				header("Location: admin_dashboard.php?section=view-bills&success=Bill created successfully!");
+			} elseif ($_SESSION['role'] === 'staff') {
+				header("Location: staff_dashboard.php?section=view-bills&success=Bill created successfully!");
+			} else {
+				header("Location: index.php?success=Bill created successfully!");
+			}
+		} else {
+			// Default redirection if role is not set
+			header("Location: index.php?success=Bill created successfully!");
+		}
+
+		exit();
     }
 }
 

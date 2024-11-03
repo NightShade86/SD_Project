@@ -2,8 +2,11 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     $_SESSION['error_message'] = "You need to log in";
@@ -11,77 +14,67 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit();
 }
 
-// Retrieve user information from session
+
 $userid = $_SESSION['USER_ID'];
 $role = $_SESSION['role'];
 
-// Database connection
+// Database connection details
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "dtcmsdb";
+
+// Create a new database connection
 $connection = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
+// Check for connection errors
 if ($connection->connect_error) {
     die("Connection failed: " . $connection->connect_error);
 }
 
-// Fetch all appointments made by the user
+// Prepare a statement to fetch appointments for the current user
 $stmt = $connection->prepare("SELECT * FROM appointment_info WHERE userid = ?");
 if (!$stmt->bind_param("s", $userid)) {
     die("Binding parameters failed: " . $stmt->error);
 }
+
+// Execute the statement
 if (!$stmt->execute()) {
     die("Execute failed: " . $stmt->error);
 } 
+
+// Get the result set from the executed statement
 $result = $stmt->get_result();
 
-// Check if any appointments exist
+// Check if any appointments exist for the user
 if ($result->num_rows > 0) {
+    // Start outputting the appointment table
     echo "
-    <html>
-    <head>
-        <title>Appointments</title>
-        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
-    </head>
-    <body>
-        <!-- Modal (automatically displayed on page load) -->
-        <div class='modal fade' id='appointmentModal' tabindex='-1' role='dialog' aria-labelledby='appointmentModalLabel' aria-hidden='true'>
-            <div class='modal-dialog' role='document'>
-                <div class='modal-content'>
-                    <div class='modal-header'>
-                        <h5 class='modal-title' id='appointmentModalLabel'>Your Appointments</h5>
-                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                            <span aria-hidden='true'>&times;</span>
-                        </button>
-                    </div>
-                    <div class='modal-body'>
-                        <!-- Title and Description Section -->
-                        <div class='contact-form-two'>
-                            <div class='title-box'>
-                                <h4>Your Appointments</h4>
-                                <div class='text'>Here is the history of all your scheduled appointments.</div>
-                            </div>
+        <!-- Title and Description Section -->
+        <div class='contact-form-two'>
+            <div class='title-box'>
+                <h4>Your Appointments</h4>
+                <div class='text'>Here is the history of all your scheduled appointments.</div>
+            </div>
 
-                            <!-- Appointment Table -->
-                            <div class='table-responsive'>
-                                <table class='table table-striped table-bordered'>
-                                    <tr>
-                                        <th>Appointment ID</th>
-                                        <th>User ID</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Phone Number</th>
-                                        <th>Email</th>
-                                        <th>IC</th>
-                                        <th>Appointment Date</th>
-                                        <th>Appointment Time</th>
-                                        <th>Reason for Visit</th>
-                                        <th>Queue Number</th>
-                                    </tr>";
-
-    // Fetch and display each appointment
+            <!-- Appointment Table -->
+            <div class='table-responsive'>
+                <table class='table table-striped table-bordered'>
+                    <tr>
+                        <th>Appointment ID</th>
+                        <th>User ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Phone Number</th>
+                        <th>Email</th>
+                        <th>IC</th>
+                        <th>Appointment Date</th>
+                        <th>Appointment Time</th>
+                        <th>Reason for Visit</th>
+                        <th>Queue Number</th>
+                    </tr>";
+                    
+    // Loop through the result set and output each row in the table
     while ($row = $result->fetch_assoc()) {
         echo "<tr>
                 <td>{$row['appointment_id']}</td>
@@ -98,35 +91,18 @@ if ($result->num_rows > 0) {
               </tr>";
     }
 
+    // Close the table
     echo "
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class='modal-footer'>
-                        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
-                    </div>
-                </div>
+                </table>
             </div>
         </div>
-
-        <!-- Automatically show the modal when the page loads -->
-        <script src='https://code.jquery.com/jquery-3.2.1.slim.min.js'></script>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js'></script>
-        <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
-        <script>
-            $(document).ready(function() {
-                $('#appointmentModal').modal('show');
-            });
-        </script>
-    </body>
-    </html>
     ";
-}  else {
+} else {
+    // If no appointments are found, show a message
     echo "<h2>No appointments found.</h2>";
 }
 
-// Close the statement and connection
+// Close the statement and the connection
 $stmt->close();
 $connection->close();
-?> 
+?>

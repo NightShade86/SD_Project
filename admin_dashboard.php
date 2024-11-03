@@ -16,7 +16,7 @@ $allowed_sections = [
 $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sections) ? $_GET["section"] : "staff";
 
 ?>
-<!Doctype html> <!-- Line 15 -->
+<!Doctype html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -245,7 +245,6 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
                     </div>
 					
                     <!-- Static Links -->
-                    <a class="nav-link text-white" href="#view-bills"><i class="fas fa-file-invoice-dollar"></i> View Bills</a>
                     <a class="nav-link text-white" href="#view-transaction"><i class="fas fa-exchange-alt"></i> View Transactions</a>
                     <a class="nav-link text-white" href="#generate-sales-report"><i class="fas fa-chart-line"></i> Generate Sales Report</a>
                     <a class="nav-link text-white" href="?section=feedback"><i class="fas fa-comments"></i> View Feedback</a>
@@ -256,9 +255,15 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 			<header>
 				<nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm fixed-top w-100">
 					<a class="navbar-brand d-flex align-items-center" href="#">
-						<img src="images/file.png" alt="Logo" width="40" height="40" class="mr-2">
+						<img src="images/file.png" alt="Logo" class="mr-2 logo">
 						Admin Dashboard
 					</a>
+					<style>
+						.logo {
+							width: 60px;
+							height: 60px;
+						}
+					</style>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" 
 							data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
 							aria-expanded="false" aria-label="Toggle navigation">

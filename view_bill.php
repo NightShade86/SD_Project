@@ -1,6 +1,7 @@
 <?php
-session_start();
-
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 // Database connection parameters
 $host = "localhost";
 $username = "root";
@@ -37,6 +38,16 @@ if ($bill_id) {
     echo "No bill ID provided.";
     exit();
 }
+
+// Determine the redirection link based on the role
+$backLink = "index.php";
+if (isset($_SESSION['role'])) {
+    if ($_SESSION['role'] === 'admin') {
+        $backLink = "admin_dashboard.php?section=view-bills";
+    } elseif ($_SESSION['role'] === 'staff') {
+        $backLink = "staff_dashboard.php?section=view-bills";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -72,7 +83,8 @@ if ($bill_id) {
     <?php endforeach; ?>
 </table>
 
-<a href="bill.php">Back to Bills</a>
+<!-- Back to Bills link based on role -->
+<a href="<?= $backLink ?>">Back to Bills</a>
 
 </body>
 </html>

@@ -339,7 +339,7 @@ if (isset($_SESSION['error_message'])) : ?>
 
 								<div class="form-group">
 									<label for="email">Email</label>
-									<input type="email" id="email" name="email" class="form-control" value="<?php echo $email; ?>" required>
+									<input type="email" id="email" name="email" class="form-control" value="<?php echo $email; ?>" readonly required>
 								</div>
 
 								<div class="form-group">

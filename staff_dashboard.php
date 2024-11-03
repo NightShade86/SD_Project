@@ -9,13 +9,14 @@ ini_set('display_errors', 1);
 // Initialize the section variable
 $allowed_sections = [
     "patients", "staff", "add-staff", "edit-staff", "delete-staff", 
-    "add-patient", "edit-patient", "delete-patient" , "profile" , "appointment" , "feedback"
+    "add-patient", "edit-patient", "delete-patient" , "profile" , "appointment" , "feedback" , "add-bills" ,
+	"edit-bills" , "delete-bills" , "view-bills"
 ];
 
-$section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sections) ? $_GET["section"] : "patients";
+$section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sections) ? $_GET["section"] : "staff";
 
 ?>
-<!Doctype html> <!-- Line 15 -->
+<!Doctype html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -112,9 +113,9 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 		}
 		
 		.content table {
-		width: 100%; /* Set the table width to 100% of its parent container */
-		overflow-x: auto; /* Add horizontal scrolling to the table */
-		display: block; /* Set the table display to block to enable horizontal scrolling */
+			width: 100%; /* Set the table width to 100% of its parent container */
+			overflow-x: auto; /* Add horizontal scrolling to the table */
+			display: block; /* Set the table display to block to enable horizontal scrolling */
 		}
 		
 				/* Profile Dropdown Styles */
@@ -198,7 +199,6 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
         <div class="row">
             <div class="col-md-2 p-0" id="sidebar">
                 <nav class="nav flex-column">
-                    <!-- Staff Dropdown -->
                     <!-- Patients Dropdown -->
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white py-3" href="#" id="patientDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -217,12 +217,22 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 						</a>
 						<div class="dropdown-menu dropdown-menu-dark" aria-labelledby="appointmentDropdown">
 							<a class="dropdown-item" href="?section=appointment">View Appointments</a>
-							<a class="dropdown-item" href="#add-appointment">Add Appointment</a>
 						</div>
 					</div>
 					
+					<div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white py-3" href="#" id="staffDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-file-invoice-dollar"></i> Manage Bills
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="staffDropdown">
+                            <a class="dropdown-item" href="?section=view-bills">View Bills</a>
+                            <a class="dropdown-item" href="?section=add-bills">Add Bills</a>
+                            <a class="dropdown-item" href="?section=edit-bills">Edit Bills</a>
+                            <a class="dropdown-item" href="?section=delete-bills">Delete Bills</a>
+                        </div>
+                    </div>
+					
                     <!-- Static Links -->
-                    <a class="nav-link text-white" href="#view-bills"><i class="fas fa-file-invoice-dollar"></i> View Bills</a>
                     <a class="nav-link text-white" href="#view-transaction"><i class="fas fa-exchange-alt"></i> View Transactions</a>
                     <a class="nav-link text-white" href="#generate-sales-report"><i class="fas fa-chart-line"></i> Generate Sales Report</a>
                     <a class="nav-link text-white" href="?section=feedback"><i class="fas fa-comments"></i> View Feedback</a>
@@ -231,36 +241,46 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
             
             <div class="col-md-10 offset-md-2">
 			<header>
-				<nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm">
+				<nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm fixed-top w-100">
 					<a class="navbar-brand d-flex align-items-center" href="#">
-						<img src="file.png" alt="Logo" width="40" height="40" class="mr-2">
+						<img src="images/file.png" alt="Logo" class="mr-2 logo">
 						Staff Dashboard
 					</a>
-					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<style>
+					.logo {
+						width: 60px;
+						height: 60px;
+					}
+					</style>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" 
+							data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+							aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav ml-auto">
 							<li class="dropdown">
 								<span>
-									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" 
+										fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
 										<path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1z"/>
-										<path d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 10a5 5 0 0 0-4.546 3 1 1 0 0 0 .657 1.07c.068.016.134.03.2.04A5.992 5.992 0 0 0 8 12a5.992 5.992 0 0 0 4.689 2.11c.066-.01.132-.024.2-.04a1 1 0 0 0 .657-1.07A5 5 0 0 0 8 10z"/>
+										<path d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 10a5 5 0 0 0-4.546 3 
+											1 1 0 0 0 .657 1.07c.068.016.134.03.2.04A5.992 5.992 0 0 0 8 12a5.992 
+											5.992 0 0 0 4.689 2.11c.066-.01.132-.024.2-.04a1 1 0 0 0 .657-1.07A5 5 
+											0 0 0 8 10z"/>
 									</svg>
 									<?php 
 										$userid = $_SESSION['USER_ID'];
-										
 										if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 											echo " Welcome, " . htmlspecialchars($userid);
 										} else {
-											echo " Profile"; // Default text when user is not logged in
+											echo " Profile"; 
 										}
 									?>
 								</span>
 								<ul>
 									<li><a href="?section=profile">Profile</a></li>
 									<li><a href="logout.php">Logout</a></li>
-									<!-- Add more menu items as needed -->
 								</ul>
 							</li>
 						</ul>
@@ -336,6 +356,10 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 							"profile" => "profile_SA.php" ,
 							"appointment" => "view_appointments.php" ,
 							"feedback" => "view_feedback.php" ,
+							"view-bills" => "bill.php" , 
+							"add-bills" => "create_bill.php" ,
+							"edit-bills" => "edit_bill.php" ,
+							"delete-bills" => "delete_bill.php" , 
                         ];
 
                         if (array_key_exists($section, $section_map)) {
@@ -354,4 +378,4 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 </html>
 <?php
 ob_end_flush();
-?>	
+?>

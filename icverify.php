@@ -1,7 +1,8 @@
 <?php
 // Start the session
-session_start();
-
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 // Database connection parameters
 $servername = "localhost";
 $username = "root";
