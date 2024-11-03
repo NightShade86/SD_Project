@@ -64,6 +64,8 @@ if (isset($_SESSION['role'])) {
 <p>Transaction ID: <?= htmlspecialchars($bill['transaction_id']) ?></p>
 <p>Total Amount: $<?= number_format($bill['total_amount'], 2) ?></p>
 <p>Outstanding Payment: $<?= number_format($bill['outstanding_payment'], 2) ?></p>
+<p>Patient IC: <?= htmlspecialchars($bill['patient_ic']) ?></p>
+<p>Payment Status: <?= htmlspecialchars($bill['payment_status']) ?></p>
 
 <h2>Items</h2>
 <table>
