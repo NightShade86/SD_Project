@@ -16,6 +16,15 @@ try {
     die("Database connection failed: " . $e->getMessage());
 }
 
+// Determine the dashboard link based on user role
+$dashboardLink = "index.php";
+if (isset($_SESSION['role'])) {
+    if ($_SESSION['role'] === 'admin') {
+        $dashboardLink = "admin_dashboard.php";
+    } elseif ($_SESSION['role'] === 'staff') {
+        $dashboardLink = "staff_dashboard.php";
+    }
+}
 // Get the bill ID from the URL
 $bill_id = $_GET['bill_id'] ?? null;
 
@@ -29,7 +38,7 @@ if ($bill_id) {
     $stmt->execute([$bill_id]);
 
     // Redirect back to the bills list
-    header("Location: bill.php?success=Bill deleted successfully");
+    header("Location: {$dashboardLink}?section=view-bills");
     exit();
 } else {
     echo "No bill ID provided.";

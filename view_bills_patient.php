@@ -116,6 +116,10 @@ foreach ($bills as $bill) {
         </div>
     </div>
 </div>
+<div class="container mt-4">
+    <a href="index_patient.php">Back to Home</a>
+</div>
+
 
 <script>
     // JavaScript to handle "View" button click and display the modal with bill details

@@ -17,6 +17,16 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Determine the dashboard link based on user role
+$dashboardLink = "index.php";
+if (isset($_SESSION['role'])) {
+    if ($_SESSION['role'] === 'admin') {
+        $dashboardLink = "admin_dashboard.php";
+    } elseif ($_SESSION['role'] === 'staff') {
+        $dashboardLink = "staff_dashboard.php";
+    }
+}
+
 // Check if form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Get the IC number from the POST request
@@ -39,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Store user info in session or return it
         $_SESSION['user_data'] = $user_data;
-        header("Location: create_bill.php");
+        header("Location: {$dashboardLink}?section=add-bills");
         // You can also return the user info in JSON format for API usage
 
     } else {
