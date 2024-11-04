@@ -1,71 +1,158 @@
 <?php
+// Start session and enable error reporting
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: login_guess.php");
+// Check if the user is logged in as admin or staff
+if (!isset($_SESSION['usertype']) || !in_array($_SESSION['usertype'], ['admin', 'staff'])) {
+    echo "Access denied. Only admin and staff can view this page.";
     exit();
 }
 
-// Database connection
+// Database connection setup
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "dtcmsdb";
-$connection = new mysqli($servername, $username, $password, $dbname);
 
-if ($connection->connect_error) {
-    die("Connection failed: " . $connection->connect_error);
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check the connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch all bills for sales report
-$sql = "SELECT * FROM clinic_bills";
-$result = $connection->query($sql);
+// Initialize variables for date range
+$startDate = '';
+$endDate = '';
+$totalAmount = 0;
+$totalPaid = 0;
+$totalOutstanding = 0;
+$transactionCount = 0;
+
+// Check if form is submitted with a date range
+if (isset($_POST['generate_report'])) {
+    $startDate = $_POST['start_date'];
+    $endDate = $_POST['end_date'];
+    
+    // Prepare SQL query with date filtering
+    $stmt = $conn->prepare("SELECT SUM(total_amount) AS totalAmount, SUM(total_paid) AS totalPaid, 
+                            SUM(outstanding_payment) AS totalOutstanding, COUNT(*) AS transactionCount 
+                            FROM clinic_bills 
+                            WHERE payment_date BETWEEN ? AND ?");
+    $stmt->bind_param("ss", $startDate, $endDate);
+    $stmt->execute();
+    $stmt->bind_result($totalAmount, $totalPaid, $totalOutstanding, $transactionCount);
+    $stmt->fetch();
+    $stmt->close();
+}
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sales Report</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        /* Simple styling for the form and report */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            padding: 20px;
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-group {
+            margin: 15px 0;
+        }
+        label, input {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-print {
+            background-color: #2196F3;
+        }
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .report-table th, .report-table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        .report-table th {
+            background-color: #f2f2f2;
+        }
+        .summary {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-<div class="container my-5">
+
+<div class="container">
     <h2>Sales Report</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Bill ID</th>
-                <th>Patient IC</th>
-                <th>Payment Status</th>
-                <th>Total Amount</th>
-                <th>Total Paid</th>
-                <th>Outstanding Payment</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php while ($row = $result->fetch_assoc()) { ?>
-            <tr>
-                <td><?php echo $row['id']; ?></td>
-                <td><?php echo $row['patient_ic']; ?></td>
-                <td><?php echo $row['payment_status']; ?></td>
-                <td><?php echo $row['total_amount']; ?></td>
-                <td><?php echo $row['total_paid']; ?></td>
-                <td><?php echo $row['outstanding_payment']; ?></td>
-                <td>
-                    <a href="generate_report.php?bill_id=<?php echo $row['id']; ?>" class="btn btn-secondary">Generate Report</a>
-                </td>
-            </tr>
-        <?php } ?>
-        </tbody>
-    </table>
+
+    <!-- Date range selection form -->
+    <form method="POST">
+        <div class="form-group">
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" value="<?php echo htmlspecialchars($startDate); ?>" required>
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date" value="<?php echo htmlspecialchars($endDate); ?>" required>
+            <button type="submit" name="generate_report" class="btn">Generate Report</button>
+        </div>
+    </form>
+
+    <!-- Sales Report Summary -->
+    <?php if ($transactionCount > 0): ?>
+        <div class="summary">
+            <table class="report-table">
+                <thead>
+                    <tr>
+                        <th>Total Amount (RM)</th>
+                        <th>Total Paid (RM)</th>
+                        <th>Total Outstanding (RM)</th>
+                        <th>Transaction Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><?php echo number_format($totalAmount, 2); ?></td>
+                        <td><?php echo number_format($totalPaid, 2); ?></td>
+                        <td><?php echo number_format($totalOutstanding, 2); ?></td>
+                        <td><?php echo $transactionCount; ?></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button onclick="window.print()" class="btn btn-print">Print Report</button>
+    <?php elseif (isset($_POST['generate_report'])): ?>
+        <p>No transactions found for the selected date range.</p>
+    <?php endif; ?>
+
 </div>
-</body>
-</html>
 
 <?php
-$connection->close();
+// Close the database connection
+$conn->close();
 ?>
+
+</body>
+</html>
