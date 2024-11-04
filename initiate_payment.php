@@ -1,73 +1,49 @@
 <?php
-// Start session and ensure the user is logged in
 session_start();
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    $_SESSION['error_message'] = "You need to log in";
-    header("Location: login_guess.php");
-    exit();
-}
+require_once 'db_conn.php'; // Ensure db_conn.php connects to the database
 
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "dtcmsdb";
-$connection = new mysqli($servername, $username, $password, $dbname);
-if ($connection->connect_error) {
-    die("Connection failed: " . $connection->connect_error);
-}
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $billID = $_POST['bill_id'];
 
-// Fetch appointment details using appointment_id
-$appointment_id = $_GET['appointment_id'];
-$sql = "SELECT * FROM appointment_info WHERE appointment_id = '$appointment_id'";
-$result = $connection->query($sql);
-
-if ($result->num_rows == 1) {
-    $appointment = $result->fetch_assoc();
-    $amount = 5000; // Set amount in cents, e.g., RM50.00 (ToyyibPay accepts amounts in cents)
-    $billName = "Clinic Appointment Payment"; 
-    $billDescription = "Payment for Appointment on " . $appointment['appointment_date'];
+    // Retrieve bill information for payment details
+    $sql = "SELECT c.*, u.EMAIL, u.NO_TEL, CONCAT(u.FIRSTNAME, ' ', u.LASTNAME) AS full_name 
+            FROM clinic_bills AS c 
+            JOIN user_info AS u ON c.patient_ic = u.IC 
+            WHERE c.id = '$billID'";
+    $result = $conn->query($sql);
     
-    // ToyyibPay API parameters
-    $params = [
-        'userSecretKey' => 'YOUR_TOYYIBPAY_SECRET_KEY', // ToyyibPay secret key
-        'categoryCode' => 'YOUR_CATEGORY_CODE', // ToyyibPay category code
-        'billName' => $billName,
-        'billDescription' => $billDescription,
-        'billAmount' => $amount,
-        'billTo' => $appointment['fname'] . " " . $appointment['lname'],
-        'billEmail' => $appointment['email'],
-        'billPhone' => $appointment['number'],
-        'billReturnUrl' => 'https://yourwebsite.com/payment_success.php', // Set your success URL
-        'billCallbackUrl' => 'https://yourwebsite.com/payment_callback.php', // Set your callback URL
-    ];
+    if ($result->num_rows > 0) {
+        $bill = $result->fetch_assoc();
+        $totalAmount = $bill['total_amount'];
+        
+        // ToyyibPay API settings
+        $apiURL = "https://dev.toyyibpay.com/api";
+        $apiKey = "2871juf5-0xxo-yzee-8ucv-h2lx1x4luz40"; 
+        $categoryCode = "4hba40gp"; 
 
-    // Convert data to URL-encoded query string format
-    $postData = http_build_query($params);
+        // Setup payment parameters
+        $params = [
+            'userSecretKey' => $apiKey,
+            'categoryCode' => $categoryCode,
+            'billName' => 'Clinic Bill Payment',
+            'billDescription' => 'Payment for medical services',
+            'billPriceSetting' => 1,
+            'billPayorInfo' => 1,
+            'billAmount' => number_format($totalAmount * 100, 0, '', ''), // Convert to cents
+            'billReturnUrl' => 'http://localhost/clinicdb/SD_Project/callback.php',
+            'billCallbackUrl' => 'http://localhost/clinicdb/SD_Project/callback.php',
+            'billExternalReferenceNo' => $billID,
+            'billTo' => $bill['full_name'],
+            'billEmail' => $bill['EMAIL'],
+            'billPhone' => $bill['NO_TEL'],
+        ];
 
-    // cURL setup for ToyyibPay request
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "https://toyyibpay.com/index.php/api/createBill");
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($ch);
-    curl_close($ch);
-
-    // Decode ToyyibPay JSON response to extract bill code
-    $responseObj = json_decode($response, true);
-    if (isset($responseObj[0]['BillCode'])) {
-        $billCode = $responseObj[0]['BillCode'];
-        // Redirect user to ToyyibPay payment page
-        header("Location: https://toyyibpay.com/$billCode");
-        exit();
+        // Redirect to ToyyibPay
+        header("Location: " . $apiURL . "/createBill?" . http_build_query($params));
+        exit;
     } else {
-        echo "Error initiating payment. Please try again later.";
+        echo "Bill not found or no pending amount.";
+        exit;
     }
-} else {
-    echo "Appointment not found.";
 }
-
-// Close the database connection
-$connection->close();
 ?>
