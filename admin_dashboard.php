@@ -10,7 +10,7 @@ ini_set('display_errors', 1);
 $allowed_sections = [
     "patients", "staff", "add-staff", "edit-staff", "delete-staff", 
     "add-patient", "edit-patient", "delete-patient" , "profile" , "appointment" , "feedback" , "add-bills" ,
-	"edit-bills" , "delete-bills" , "view-bills" , "show-bills"
+	"edit-bills" , "delete-bills" , "view-bills" , "show-bills" , "view-transaction" , "sales-report"
 ];
 
 $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sections) ? $_GET["section"] : "staff";
@@ -246,8 +246,8 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
                     </div>
 					
                     <!-- Static Links -->
-                    <a class="nav-link text-white" href="#view-transaction"><i class="fas fa-exchange-alt"></i> View Transactions</a>
-                    <a class="nav-link text-white" href="#generate-sales-report"><i class="fas fa-chart-line"></i> Generate Sales Report</a>
+                    <a class="nav-link text-white" href="?section=view-transaction"><i class="fas fa-exchange-alt"></i> View Transactions</a>
+                    <a class="nav-link text-white" href="?section=sales-report"><i class="fas fa-chart-line"></i> Generate Sales Report</a>
                     <a class="nav-link text-white" href="?section=feedback"><i class="fas fa-comments"></i> View Feedback</a>
                 </nav>
             </div>
@@ -374,6 +374,8 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 							"add-bills" => "create_bill.php" ,
 							"edit-bills" => "edit_bill.php" ,
 							"delete-bills" => "delete_bill.php" , 
+							"view-transaction" => "view_transaction.php",
+							"sales-report" => "sales_report.php",
                         ];
 
                         if (array_key_exists($section, $section_map)) {

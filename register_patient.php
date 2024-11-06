@@ -77,7 +77,7 @@ ini_set('display_errors', 1);
 								<li><a href="doctor-detail_patient.php">Doctor Detail</a></li>
 								<li><a href="about-us_patient.php">About Us</a></li>
 								<li><a href="contact_patient.php">Contact</a></li>
-								<li class=""><a href="checkout.html">Checkout</a></li>
+								<li class=""><a href="checkout.php">Checkout</a></li>
 								<li class="dropdown">
 									<span>
 										<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -117,7 +117,7 @@ ini_set('display_errors', 1);
 											}
 										?>
 										<li><a href="javascript:void(0)" id="load-appointment-history">Appointment History</a></li>
-										<li><a href="">View Bills</a></li>
+										<li><a href="view_bills_patient.php">View Bills</a></li>
 									</ul>
 								</li>
                                   <!-- <span>Blog</span>

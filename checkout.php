@@ -68,7 +68,7 @@
                                 <li><a href="doctor-detail_patient.php">Doctor Detail</a></li>
                                 <li><a href="about-us_patient.php">About Us</a></li>
                                 <li><a href="contact_patient.php">Contact</a></li>
-                                <li class="current"><a href="checkout.html">Checkout</a></li>
+                                <li class="current"><a href="checkout.php">Checkout</a></li>
                                 <li class="dropdown">
                                     <span>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
@@ -95,7 +95,7 @@
                                             }
                                         ?>
                                         <li><a href="javascript:void(0)" id="load-appointment-history">Appointment History</a></li>
-                                        <li><a href="">View Bills</a></li>
+										<li><a href="view_bills_patient.php">View Bills</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -131,48 +131,36 @@
 
             <!--Checkout Details-->
             <div class="checkout-form">
-                <form method="post" action="checkout.html">
+                <form method="post" action="checkout.php">
                     <div class="row clearfix">
                         <!--Column-->
                         <div class="column col-lg-6 col-md-12 col-sm-12">
-                            <div class="inner-column">
-                                <div class="sec-title">
-                                    <h3>Appointment Details</h3>
-                                </div>
+							<div class="inner-column styled-form">
+								<div class="sec-title">
+									<h3>Appointment Details</h3>
+								</div>
+								<div class="row clearfix">
+									<!-- Appointment Date Field -->
+									<div class="form-group col-md-6 col-sm-12">
+										<label for="appointment_date" class="field-label">Appointment Date <sup>*</sup></label>
+										<input type="date" id="appointment_date" name="appointment_date" required onchange="updateTimes()">
+									</div>
 
-                                <div class="row clearfix">
-                                    <!--Form Group-->
-                                    <div class="form-group col-md-6 col-sm-12">
-                                        <div class="field-label">First Name <sup>*</sup></div>
-                                        <input type="text" name="first-name" value="" placeholder="Enter your first name">
-                                    </div>
+									<!-- Appointment Time Field -->
+									<div class="form-group col-md-6 col-sm-12">
+										<label for="appointment_time" class="field-label">Appointment Time <sup>*</sup></label>
+										<select id="appointment_time" name="appointment_time" required disabled>
+											<option value="">Select a time</option>
+										</select>
+									</div>
 
-                                    <div class="form-group col-md-6 col-sm-12">
-                                        <div class="field-label">Last Name</div>
-                                        <input type="text" name="last-name" value="" placeholder="Enter your last name">
-                                    </div>
-
-                                    <div class="form-group col-md-12 col-sm-12">
-                                        <div class="field-label">Email Address</div>
-                                        <input type="email" name="email" value="" placeholder="Enter your email address">
-                                    </div>
-
-                                    <div class="form-group col-md-6 col-sm-12">
-                                        <div class="field-label">Phone</div>
-                                        <input type="text" name="phone" value="" placeholder="Enter your phone number">
-                                    </div>
-
-                                    <div class="form-group col-md-12 col-sm-12">
-                                        <div class="field-label">Appointment Date</div>
-                                        <input type="date" name="appointment-date" value="">
-                                    </div>
-
-                                    <div class="form-group col-md-12 col-sm-12">
-                                        <div class="field-label">Additional Notes</div>
-                                        <textarea name="notes" placeholder="Any additional notes for the appointment"></textarea>
-                                    </div>
-                                </div>
-                            </div>
+									<!-- Reason for Visit Field -->
+									<div class="form-group col-md-12 col-sm-12">
+										<label for="reason_for_visit" class="field-label">Reason for Visit <sup>*</sup></label>
+										<textarea id="reason_for_visit" name="reason_for_visit" rows="4" placeholder="Describe the reason for your visit" required></textarea>
+									</div>
+								</div>
+							</div>
                         </div>
 
 						<!-- Order Summary and Payment -->
@@ -281,6 +269,75 @@
 				</div>
 			</div>
 			<style>
+				/* Styling for Form Container */
+				.styled-form {
+					background: #fdfdfd;
+					padding: 25px;
+					border-radius: 10px;
+					box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+					font-family: Arial, sans-serif;
+				}
+
+				.sec-title h3 {
+					font-size: 1.8em;
+					color: #333;
+					border-bottom: 2px solid #5a67d8;
+					padding-bottom: 8px;
+					margin-bottom: 20px;
+				}
+
+				/* Styling for Form Fields */
+				.form-group {
+					margin-bottom: 20px;
+				}
+
+				.field-label {
+					display: block;
+					font-weight: 600;
+					color: #5a67d8;
+					font-size: 1em;
+					margin-bottom: 6px;
+				}
+
+				input[type="date"],
+				select,
+				textarea {
+					width: 100%;
+					padding: 10px 12px;
+					font-size: 1em;
+					border: 1px solid #ddd;
+					border-radius: 6px;
+					background: #f7f9fc;
+					transition: border-color 0.3s ease;
+				}
+
+				input[type="date"]:focus,
+				select:focus,
+				textarea:focus {
+					border-color: #5a67d8;
+					outline: none;
+				}
+
+				/* Styling for Required Asterisk */
+				.field-label sup {
+					color: red;
+					font-size: 0.9em;
+				}
+
+				/* Textarea Styling */
+				textarea {
+					resize: vertical;
+					min-height: 100px;
+				}
+
+				/* Responsive Design */
+				@media (max-width: 768px) {
+					.form-group {
+						margin-bottom: 15px;
+					}
+				}
+
+
 			/* Styling for the Order Summary Section */
 				.styled-summary {
 					background: #f9f9f9;
