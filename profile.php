@@ -359,7 +359,7 @@ if (isset($_SESSION['error_message'])) : ?>
                     <!-- Change Password Tab -->
                     <div class="tab-pane fade" id="account-change-password">
                         <div class="card-body pb-2">
-                            <form action="updatepasswordprocess.php" method="post">
+                            <form action="change_password.php" method="post">
                                 <div class="form-group">
                                     <label class="form-label">Current password</label>
                                     <input type="password" class="form-control" name="current-password" required>

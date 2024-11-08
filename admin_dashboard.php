@@ -15,6 +15,48 @@ $allowed_sections = [
 
 $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sections) ? $_GET["section"] : "staff";
 
+// Get user data
+if ($_SESSION['loggedin']) {
+    $userid = $_SESSION['USER_ID'];
+    $role = $_SESSION['role'];
+
+    // Determine user table and ID column based on role
+    switch ($role) {
+        case 'admin':
+            $table = 'admin_info';
+            $id_column = 'USER_ID';
+            $userR = "Admin";
+            break;
+        case 'staff':
+            $table = 'staff_info';
+            $id_column = 'STAFF_ID';
+            $userR = "Staff";
+            break;
+        default:
+            $table = 'user_info';
+            $id_column = 'USER_ID';
+            $userR = "Patient";
+            break;
+    }
+
+    // Database connection
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "dtcmsdb";
+
+    $connection = new mysqli($servername, $username, $password, $dbname);
+
+    // Prepare and execute query to retrieve user data
+    $user_info = $connection->prepare("SELECT * FROM $table WHERE $id_column=?");
+    $user_info->bind_param("s", $userid);
+    $user_info->execute();
+    $user_result = $user_info->get_result();
+    $user = $user_result->fetch_assoc();
+
+    $ASimage = $user['IMAGE'] ?? 'default-avatar.png';
+}
+
 ?>
 <!Doctype html> 
 <html lang="en">
@@ -192,8 +234,22 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 		.navbar-brand img {
 			border-radius: 5px; /* Optional: Make the logo slightly rounded */
 		}
+        .user-avatar-admin {
+            width: 27px; /* Smaller size */
+            height: 27px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
 
-    </style>
+        .user-avatar-admin img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+
+
+   </style>
 </head>
 <body>
     <div class="container-fluid">
@@ -274,20 +330,16 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 						<ul class="navbar-nav ml-auto">
 							<li class="dropdown">
 								<span>
-									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" 
-										fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-										<path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1z"/>
-										<path d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 10a5 5 0 0 0-4.546 3 
-											1 1 0 0 0 .657 1.07c.068.016.134.03.2.04A5.992 5.992 0 0 0 8 12a5.992 
-											5.992 0 0 0 4.689 2.11c.066-.01.132-.024.2-.04a1 1 0 0 0 .657-1.07A5 5 
-											0 0 0 8 10z"/>
-									</svg>
+									<div class="user-avatar-admin" >
+                                        <img src="uploaded_img/<?php echo $ASimage; ?>" alt="User Avatar" class="user-avatar">
+                                    </div>
+
 									<?php 
 										$userid = $_SESSION['USER_ID'];
 										if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-											echo " Welcome, " . htmlspecialchars($userid);
+											echo "&nbsp Welcome, " . htmlspecialchars($userid);
 										} else {
-											echo " Profile"; 
+											echo " Profile &nbsp";
 										}
 									?>
 								</span>

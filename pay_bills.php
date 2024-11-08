@@ -13,15 +13,14 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Ensure 'patient_ic' exists in the session
-if (!isset($_SESSION['patient_ic'])) {
-    echo "Error: Patient IC not found. Please log in again.";
-    exit;
-}
 
-$patientIC = $_SESSION['patient_ic'];
-$sql = "SELECT * FROM clinic_bills WHERE patient_ic = '$patientIC' AND payment_status = 'Pending'";
-$result = $conn->query($sql);
+
+$patientIC = "030807011163";
+$stmt = $conn->prepare("SELECT * FROM clinic_bills WHERE patient_ic = ? AND payment_status = 'Pending'");
+$stmt->bind_param("s", $patientIC);
+$stmt->execute();
+$result = $stmt->get_result();
+
 
 if ($result->num_rows > 0) {
     $bill = $result->fetch_assoc();
