@@ -73,18 +73,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // Check for existing email or username in the database
-    $check_sql = "SELECT * FROM user_info WHERE EMAIL = ? OR USER_ID = ?";
+// Check if email exists with a verification token (not yet registered)
+    $check_sql = "SELECT * FROM user_info WHERE EMAIL = ? AND verify_token_hash IS NOT NULL";
     $stmt = $conn->prepare($check_sql);
-    $stmt->bind_param("ss", $email, $user_id);
+    $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-        $_SESSION['error_message'] = "Email or Username already exists.";
-        header("Location: register_guess.php");
-        exit();
-    }
 
     // Hash the password
     $hashed_password = password_hash($pass, PASSWORD_DEFAULT);
@@ -92,13 +87,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Set user type to 'patient'
     $usertype = '2'; // assume 2 as patient
 
-    // Insert user data into the database
-    $sql = "INSERT INTO user_info (FIRSTNAME, LASTNAME, NO_TEL, EMAIL, IC, USER_ID, PASSWORD, USERTYPE) 
+    if ($result->num_rows > 0) {
+        // Update the existing record with user data
+        $sql = "UPDATE user_info SET FIRSTNAME = ?, LASTNAME = ?, NO_TEL = ?, IC = ?, USER_ID = ?, PASSWORD = ?, USERTYPE = ?, verify_token_hash = NULL, verify_token_expires_at = NULL WHERE EMAIL = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssssssis", $firstname, $lastname, $no_tel, $ic, $user_id, $hashed_password, $usertype, $email);
+    } else {
+        // Insert a new record if the email does not exist
+        $sql = "INSERT INTO user_info (FIRSTNAME, LASTNAME, NO_TEL, EMAIL, IC, USER_ID, PASSWORD, USERTYPE) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssssi", $firstname, $lastname, $no_tel, $email, $ic, $user_id, $hashed_password, $usertype);
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssssssi", $firstname, $lastname, $no_tel, $email, $ic, $user_id, $hashed_password, $usertype);
+    }
 
-
+// Execute the query
     if ($stmt->execute() === TRUE) {
         $_SESSION['success_message'] = "Registration successful!";
         header("Location: login_patient.php");

@@ -290,6 +290,8 @@ if ($_SESSION['loggedin']) {
 					<a class="nav-link text-white" href="?section=view-transaction"><i class="fas fa-exchange-alt"></i> View Transactions</a>
                     <a class="nav-link text-white" href="?section=sales-report"><i class="fas fa-chart-line"></i> Generate Sales Report</a>
                     <a class="nav-link text-white" href="?section=feedback"><i class="fas fa-comments"></i> View Feedback</a>
+                    <a class="nav-link text-white" href="?section=feedback"><i class="fas fa-comments"></i> <?php echo $userid ?></a>
+
                 </nav>
             </div>
             
@@ -318,14 +320,15 @@ if ($_SESSION['loggedin']) {
 									<div class="user-avatar-admin" >
                                         <img src="uploaded_img/<?php echo $ASimage; ?>" alt="User Avatar" class="user-avatar">
                                     </div>
-									<?php 
-										$userid = $_SESSION['USER_ID'];
-										if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-											echo " Welcome, " . htmlspecialchars($userid);
-										} else {
-											echo " Profile"; 
-										}
-									?>
+
+									<?php
+                                    $userid = $_SESSION['USER_ID'];
+                                    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+                                        echo "&nbsp Welcome, " . htmlspecialchars($userid);
+                                    } else {
+                                        echo " Profile &nbsp";
+                                    }
+                                    ?>
 								</span>
 								<ul>
 									<li><a href="?section=profile">Profile</a></li>
@@ -388,6 +391,7 @@ if ($_SESSION['loggedin']) {
 					margin-right: 5px; /* Space between icon and text */
 					fill: #ffffff; /* Change the icon color if needed */
 				}
+
 			</style>
                 <main class="mt-4">
                     <div class='content bg-white p-4 shadow-sm rounded'>
@@ -426,6 +430,7 @@ if ($_SESSION['loggedin']) {
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 </body>
 </html>
 <?php
