@@ -530,63 +530,53 @@ ini_set('display_errors', 1);
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			min-height: 100vh;
-			max-width: 95%; /* Ensure dialog takes up most of the viewport */
+			min-height: 100vh; /* Centers the modal vertically */
 		}
 
 		.modal-content {
-			width: 100% !important; /* Force full width */
-			max-width: 1200px !important; /* Ensure maximum width is larger */
-			margin: auto;
-		}
-
-		.modal-header {
-			padding: 20px; /* Adjusted padding */
+			width: 100%;
+			max-width: 800px; /* Adjust max width as needed */
 		}
 
 		.modal-body {
-			font-size: 1rem; /* Ensure font size is readable */
-			padding: 20px; /* Adjusted padding */
-		}
-
-		.close {
-			font-size: 1.5rem; /* Close button size */
-			margin-left: auto; /* Push close button to the right */
+			padding: 20px;
 		}
 
 		.modal {
-			margin: auto;
-			display: inline-block !important; /* Forces the modal to display */
-			opacity: 1 !important; /* Makes sure it's not hidden */
+			opacity: 1 !important;
 		}
 	</style>
-
-
 
 	<!-- Include jQuery and Bootstrap's JS -->
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
-	<script>
-		// When "Appointment History" is clicked, load the modal with the page content
-		$('#load-appointment-history').on('click', function() {
-			console.log('Appointment History clicked');  // Log when the link is clicked
+		<script>
+			// Remove any existing event listeners to prevent duplicates
+			$(document).off('click', '#load-appointment-history').on('click', '#load-appointment-history', function() {
+				console.log('Appointment History clicked');  // Log when the link is clicked
 
-			// Show loading text or spinner before loading content
-			$('#modal-body-content').html('<p>Loading appointments...</p>');
-			
-			// Load the content from view_existing_appointment_patient.php into the modal body
-			$('#modal-body-content').load('view_existing_appointment_patient.php', function(response, status, xhr) {
-				console.log('AJAX status: ', status);  // Log the status of the AJAX call
-				if (status == "error") {
-					console.log('Error: ', xhr.status, xhr.statusText);  // Log the error details
-					$('#modal-body-content').html('<p>Error loading appointment history. Please try again later.</p>');
-				} else {
-					console.log('Content loaded successfully');  // Log when content is loaded
-					$('#appointmentModal').modal('show');  // Show modal after content loads
-				}
+				// Show loading text before content loads
+				$('#modal-body-content').html('<p>Loading appointments...</p>');
+
+				// Load content via AJAX
+				$('#modal-body-content').load('view_existing_appointment_patient.php', function(response, status, xhr) {
+					if (status === "error") {
+						console.error('Error loading appointments:', xhr.status, xhr.statusText);
+						$('#modal-body-content').html('<p>Error loading appointment history. Please try again later.</p>');
+					} else {
+						console.log('Content loaded successfully');
+					}
+					// Show the modal after content loads
+					$('#appointmentModal').modal('show');
+				});
 			});
-		});
+
+			// Clear content on modal close to prevent issues on reopening
+			$('#appointmentModal').on('hidden.bs.modal', function () {
+				$('#modal-body-content').empty();
+				console.log('Modal content cleared');
+			});
 	</script>
 	 
         <!-- Main Footer -->

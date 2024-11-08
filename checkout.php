@@ -205,6 +205,73 @@ ini_set('display_errors', 1);
     </section>
     <!--End Checkout Page-->
 	
+			<div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="appointmentModalLabel">Your Appointments</h5>
+				</div>
+				<div class="modal-body" id="modal-body-content">
+					<!-- Appointment content will be loaded here via AJAX -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<style>
+		.modal-dialog {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			min-height: 100vh; /* Centers the modal vertically */
+		}
+
+		.modal-content {
+			width: 100%;
+			max-width: 800px; /* Adjust max width as needed */
+		}
+
+		.modal-body {
+			padding: 20px;
+		}
+
+		.modal {
+			opacity: 1 !important;
+		}
+	</style>
+
+	<!-- Include jQuery and Bootstrap's JS -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+		<script>
+			// Remove any existing event listeners to prevent duplicates
+			$(document).off('click', '#load-appointment-history').on('click', '#load-appointment-history', function() {
+				console.log('Appointment History clicked');  // Log when the link is clicked
+
+				// Show loading text before content loads
+				$('#modal-body-content').html('<p>Loading appointments...</p>');
+
+				// Load content via AJAX
+				$('#modal-body-content').load('view_existing_appointment_patient.php', function(response, status, xhr) {
+					if (status === "error") {
+						console.error('Error loading appointments:', xhr.status, xhr.statusText);
+						$('#modal-body-content').html('<p>Error loading appointment history. Please try again later.</p>');
+					} else {
+						console.log('Content loaded successfully');
+					}
+					// Show the modal after content loads
+					$('#appointmentModal').modal('show');
+				});
+			});
+
+			// Clear content on modal close to prevent issues on reopening
+			$('#appointmentModal').on('hidden.bs.modal', function () {
+				$('#modal-body-content').empty();
+				console.log('Modal content cleared');
+			});
+	</script>
+	
 	 <!-- Main Footer -->
 	<footer class="main-footer">
 			<!--Widgets Section-->
@@ -478,6 +545,8 @@ ini_set('display_errors', 1);
 				color: #5a5a5a;
 			}
 			</style>
+			
+			
 
 			<!--Footer Bottom-->
 			<div class="footer-bottom">
