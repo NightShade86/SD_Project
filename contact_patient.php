@@ -156,19 +156,6 @@ ini_set('display_errors', 1);
             </div>
         </div>
 
-        <!-- Sticky Header  -->
-        <div class="sticky-header">
-            <div class="auto-container">            
-                <div class="main-box">
-                    <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img src="images/logo.png" alt="" title=""></a></div>
-                    </div>
-
-                    <!--Keep This Empty / Menu will come through Javascript-->
-                </div>
-            </div>
-        </div><!-- End Sticky Menu -->
-
         <!-- Mobile Header -->
         <div class="mobile-header">
             <div class="logo"><a href="index.html"><img src="images/logo.png" alt="" title=""></a></div>

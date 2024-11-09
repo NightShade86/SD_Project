@@ -110,19 +110,6 @@ ini_set('display_errors', 1);
                 </div>
             </div>
         </div>
-        <!-- Sticky Header  -->
-        <div class="sticky-header">
-            <div class="auto-container">
-
-                <div class="main-box">
-                    <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img src="images/logo.png" alt="" title=""></a></div>
-                    </div>
-
-                    <!--Keep This Empty / Menu will come through Javascript-->
-                </div>
-            </div>
-        </div><!-- End Sticky Menu -->
 
         <!-- Mobile Header -->
         <div class="mobile-header">
@@ -372,10 +359,6 @@ ini_set('display_errors', 1);
                             <span class="divider"></span>
                             <p>We provide the most full medical services, so every person could have the pportunity o receive qualitative medical help.</p>
                             <p> Our Clinic has grown to provide a world class facility for the treatment of tooth loss, dental cosmetics and bore advanced restorative dentistry. We are among the most qualified implant providers in the AUS with over 30 years of uality training and experience.</p>
-                        </div>
-                        <div class="link-box">
-                            <figure class="signature"><img src="images/resource/signature.png" alt=""></figure>
-                            <a href="#" class="theme-btn btn-style-one"><span class="btn-title">More About</span></a>
                         </div>
                     </div>
                 </div>
