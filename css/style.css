@@ -2895,6 +2895,7 @@ hr {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #FFFFFF;
 }
 
 .header-style-two .logo-box:before{
@@ -2902,12 +2903,12 @@ hr {
   right: 0px;
   height: 100%;
   width: 1000%;
-  background: #f5f5f5;
+  background: ##FFFFFF;
   content: "";
 }
 
 .header-style-two .main-box:before{
-  background-color: #1370b5;
+  background-color: ##FFFFFF;
   width: 1000%;
   right: auto;
 }
