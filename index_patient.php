@@ -1064,7 +1064,7 @@ ini_set('display_errors', 1);
 		}
 	</style>
 	
-		<div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+	<div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -1078,6 +1078,35 @@ ini_set('display_errors', 1);
 	</div>
 
 	<style>
+		/* Override Bootstrap default styles at min-width 576px breakpoint */
+		@media (min-width: 576px) {
+			.modal-dialog {
+				max-width: 90% !important; /* Set max width to a larger percentage */
+				margin: auto !important; /* Center the modal */
+			}
+
+			.modal-dialog-scrollable {
+				max-height: calc(100% - 2rem) !important; /* Adjust max height */
+			}
+
+			.modal-dialog-scrollable .modal-content {
+				max-height: calc(100vh - 2rem) !important; /* Adjust height for better content fit */
+			}
+
+			.modal-dialog-centered {
+				min-height: calc(100% - 2rem) !important; /* Adjust min height */
+			}
+
+			.modal-dialog-centered::before {
+				height: calc(100vh - 2rem) !important; /* Set centering height */
+			}
+
+			.modal-sm {
+				max-width: 500px !important; /* Adjust small modal width */
+			}
+		}
+
+		/* General modal styling */
 		.modal-dialog {
 			display: flex;
 			align-items: center;
@@ -1087,15 +1116,15 @@ ini_set('display_errors', 1);
 
 		.modal-content {
 			width: 100%;
-			max-width: 800px; /* Adjust max width as needed */
+			max-width: 1200px; /* Set a larger max width */
 		}
 
 		.modal-body {
-			padding: 20px;
+			padding: 20px; /* Set padding for content */
 		}
 
 		.modal {
-			opacity: 1 !important;
+			opacity: 1 !important; /* Ensure the modal is fully visible */
 		}
 	</style>
 
@@ -1103,33 +1132,34 @@ ini_set('display_errors', 1);
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
-		<script>
-			// Remove any existing event listeners to prevent duplicates
-			$(document).off('click', '#load-appointment-history').on('click', '#load-appointment-history', function() {
-				console.log('Appointment History clicked');  // Log when the link is clicked
+	<script>
+		// Remove any existing event listeners to prevent duplicates
+		$(document).off('click', '#load-appointment-history').on('click', '#load-appointment-history', function() {
+			console.log('Appointment History clicked');  // Log when the link is clicked
 
-				// Show loading text before content loads
-				$('#modal-body-content').html('<p>Loading appointments...</p>');
+			// Show loading text before content loads
+			$('#modal-body-content').html('<p>Loading appointments...</p>');
 
-				// Load content via AJAX
-				$('#modal-body-content').load('view_existing_appointment_patient.php', function(response, status, xhr) {
-					if (status === "error") {
-						console.error('Error loading appointments:', xhr.status, xhr.statusText);
-						$('#modal-body-content').html('<p>Error loading appointment history. Please try again later.</p>');
-					} else {
-						console.log('Content loaded successfully');
-					}
-					// Show the modal after content loads
-					$('#appointmentModal').modal('show');
-				});
+			// Load content via AJAX
+			$('#modal-body-content').load('view_existing_appointment_patient.php', function(response, status, xhr) {
+				if (status === "error") {
+					console.error('Error loading appointments:', xhr.status, xhr.statusText);
+					$('#modal-body-content').html('<p>Error loading appointment history. Please try again later.</p>');
+				} else {
+					console.log('Content loaded successfully');
+				}
+				// Show the modal after content loads
+				$('#appointmentModal').modal('show');
 			});
+		});
 
-			// Clear content on modal close to prevent issues on reopening
-			$('#appointmentModal').on('hidden.bs.modal', function () {
-				$('#modal-body-content').empty();
-				console.log('Modal content cleared');
-			});
+		// Clear content on modal close to prevent issues on reopening
+		$('#appointmentModal').on('hidden.bs.modal', function () {
+			$('#modal-body-content').empty();
+			console.log('Modal content cleared');
+		});
 	</script>
+
 
 
        <!-- Main Footer -->
