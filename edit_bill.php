@@ -1,4 +1,7 @@
 <?php
+ob_start();
+?>
+<?php
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -221,3 +224,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 </body>
 </html>
+<?php
+ob_end_flush();
+?>

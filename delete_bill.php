@@ -1,4 +1,7 @@
 <?php
+ob_start();
+?>
+<?php
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -44,4 +47,7 @@ if ($bill_id) {
     echo "No bill ID provided.";
     exit();
 }
+?>
+<?php
+ob_end_flush();
 ?>

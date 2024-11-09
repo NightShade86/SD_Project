@@ -1,4 +1,7 @@
 <?php
+ob_start();
+?>
+<?php
 // Start session if not already started
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -184,3 +187,6 @@ function addItem() {
 
 </body>
 </html>
+<?php
+ob_end_flush();
+?>

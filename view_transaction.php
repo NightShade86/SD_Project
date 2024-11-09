@@ -1,4 +1,8 @@
 <?php
+ob_start();
+?>
+
+<?php
 // Start session and enable error reporting
 session_start();
 error_reporting(E_ALL);
@@ -35,11 +39,13 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Transactions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
         /* Global Styling */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f9;
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
             margin: 0;
             padding: 0;
             color: #333;
@@ -54,10 +60,10 @@ $result = $conn->query($sql);
         }
         h2 {
             text-align: center;
-            color: #444;
+            color: #495057;
             margin-bottom: 20px;
             font-size: 1.8em;
-            border-bottom: 2px solid #5a67d8;
+            border-bottom: 2px solid #007bff;
             padding-bottom: 10px;
         }
 
@@ -66,14 +72,14 @@ $result = $conn->query($sql);
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            font-size: 0.95em;
+            font-size: 1em;
         }
         th, td {
-            padding: 12px 15px;
+            padding: 15px;
             text-align: center;
         }
         thead th {
-            background-color: #5a67d8;
+            background-color: #007bff;
             color: #fff;
             font-weight: bold;
             border-top-left-radius: 8px;
@@ -83,7 +89,7 @@ $result = $conn->query($sql);
             background-color: #f9f9f9;
         }
         tbody tr:hover {
-            background-color: #e8f0fe;
+            background-color: #e9ecef;
         }
         th, td {
             border-bottom: 1px solid #ddd;
@@ -107,7 +113,7 @@ $result = $conn->query($sql);
                 font-size: 0.85em;
             }
             .container {
-                padding: 10px;
+                padding: 15px;
             }
             h2 {
                 font-size: 1.6em;
@@ -119,7 +125,7 @@ $result = $conn->query($sql);
 
 <div class="container">
     <h2>Transaction History</h2>
-    <table>
+    <table class="table table-bordered table-hover">
         <thead>
             <tr>
                 <th>Transaction ID</th>
@@ -150,7 +156,7 @@ $result = $conn->query($sql);
                     echo "</tr>";
                 }
             } else {
-                echo "<tr><td colspan='8'>No transactions found.</td></tr>";
+                echo "<tr><td colspan='8' class='text-center'>No transactions found.</td></tr>";
             }
             ?>
         </tbody>
@@ -162,5 +168,10 @@ $result = $conn->query($sql);
 $conn->close();
 ?>
 
+<!-- Optional: Add Bootstrap JS and Popper.js for enhanced interactivity (e.g., tooltips, modals) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+<?php
+ob_end_flush();
+?>

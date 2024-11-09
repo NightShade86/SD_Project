@@ -81,18 +81,53 @@ foreach ($bills as $bill) {
     <title>Patient Bills</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .card {
+            margin-bottom: 15px;
+        }
+
+        .modal-body table {
+            width: 100%;
+        }
+
+        .modal-body th, .modal-body td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        .modal-body th {
+            background-color: #f8f9fa;
+        }
+
+        .modal-header {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .modal-footer .btn {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
 </head>
 <body>
 
 <div class="container mt-4">
     <h3>Patient Bills</h3>
 
-    <div class="list-group">
+    <!-- List of bills -->
+    <div class="row">
         <?php foreach ($bills as $bill): ?>
-            <div class="list-group-item">
-                <h5>Bill #<?php echo $bill['id']; ?></h5>
-                <p>Total: $<?php echo $bill['total_amount']; ?></p>
-                <button class="btn btn-primary view-bill-btn" data-bill-id="<?php echo $bill['id']; ?>">View</button>
+            <div class="col-md-4 mb-3">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Bill #<?php echo $bill['id']; ?></h5>
+                        <p class="card-text">Total Amount: $<?php echo number_format($bill['total_amount'], 2); ?></p>
+                        <button class="btn btn-primary view-bill-btn" data-bill-id="<?php echo $bill['id']; ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="View Bill Details">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                    </div>
+                </div>
             </div>
         <?php endforeach; ?>
     </div>
@@ -107,20 +142,28 @@ foreach ($bills as $bill) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Bill details will be populated here -->
                 <div id="bill-details"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Back to Home Button -->
 <div class="container mt-4">
-    <button class="btn btn-primary view-bill-btn" onclick="window.location.href='index_patient.php';">Back to Home</button>
+    <button class="btn btn-secondary" onclick="window.location.href='index_patient.php';">
+        <i class="fas fa-home"></i> Back to Home
+    </button>
 </div>
 
-
 <script>
-    // JavaScript to handle "View" button click and display the modal with bill details
     $(document).ready(function() {
+        // Initialize tooltips
+        $('[data-bs-toggle="tooltip"]').tooltip();
+
+        // Handle "View" button click
         $('.view-bill-btn').on('click', function() {
             var billId = $(this).data('bill-id');
 
