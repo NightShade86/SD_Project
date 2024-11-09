@@ -172,9 +172,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <label for="payment_method">Payment Method:</label>
     <select id="payment_method" name="payment_method" class="form-control">
-        <option value="Cash" <?= $bill['payment_method'] == 'Cash' ? 'selected' : '' ?>>Cash</option>
+        <option value="Online" <?= $bill['payment_method'] == 'Online' ? 'selected' : '' ?>>Online</option>
         <option value="Card" <?= $bill['payment_method'] == 'Card' ? 'selected' : '' ?>>Card</option>
-        <option value="Insurance" <?= $bill['payment_method'] == 'Insurance' ? 'selected' : '' ?>>Insurance</option>
     </select>
 
     <label for="insurance_company">Insurance Company (if applicable):</label>

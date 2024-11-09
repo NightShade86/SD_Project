@@ -110,12 +110,13 @@ foreach ($bills as $bill) {
                 <!-- Bill details will be populated here -->
                 <div id="bill-details"></div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
         </div>
     </div>
 </div>
+<div class="container mt-4">
+    <button class="btn btn-primary view-bill-btn" onclick="window.location.href='index_patient.php';">Back to Home</button>
+</div>
+
 
 <script>
     // JavaScript to handle "View" button click and display the modal with bill details

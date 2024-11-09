@@ -2,6 +2,23 @@
 session_start();
 require_once 'db_conn.php'; // Ensure db_conn.php connects to the database
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "dtcmsdb";
+
+// Open connection
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($connection->connect_error) {
+    die("Connection failed: " . $connection->connect_error);
+}
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $billID = $_POST['bill_id'];
 
@@ -10,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             FROM clinic_bills AS c 
             JOIN user_info AS u ON c.patient_ic = u.IC 
             WHERE c.id = '$billID'";
-    $result = $conn->query($sql);
+    $result = $connection->query($sql);
     
     if ($result->num_rows > 0) {
         $bill = $result->fetch_assoc();

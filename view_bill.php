@@ -56,16 +56,19 @@ if (isset($_SESSION['role'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Bill Details</title>
+    <style>
+        th,tr,td {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 
 <h1>Bill Details</h1>
 
 <p>Transaction ID: <?= htmlspecialchars($bill['transaction_id']) ?></p>
-<p>Total Amount: $<?= number_format($bill['total_amount'], 2) ?></p>
-<p>Outstanding Payment: $<?= number_format($bill['outstanding_payment'], 2) ?></p>
-<p>Patient IC: <?= htmlspecialchars($bill['patient_ic']) ?></p>
-<p>Payment Status: <?= htmlspecialchars($bill['payment_status']) ?></p>
+<p>Total Amount: RM <?= number_format($bill['total_amount'], 2) ?></p>
+<p>Outstanding Payment: RM <?= number_format($bill['outstanding_payment'], 2) ?></p>
 
 <h2>Items</h2>
 <table>
@@ -78,15 +81,17 @@ if (isset($_SESSION['role'])) {
     <?php foreach ($items as $item): ?>
         <tr>
             <td><?= htmlspecialchars($item['item_name']) ?></td>
-            <td>$<?= number_format($item['price'], 2) ?></td>
-            <td><?= htmlspecialchars($item['quantity']) ?></td>
-            <td>$<?= number_format($item['total'], 2) ?></td>
+            <td>RM <?= number_format($item['price'], 2) ?></td>
+            <td ><?= htmlspecialchars($item['quantity']) ?></td>
+            <td>RM <?= number_format($item['total'], 2) ?></td>
         </tr>
     <?php endforeach; ?>
 </table>
 
 <!-- Back to Bills link based on role -->
 <a href="<?= $backLink ?>">Back to Bills</a>
+
+
 
 </body>
 </html>

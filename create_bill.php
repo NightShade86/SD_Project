@@ -145,6 +145,12 @@ function calculateTotal($cart) {
             width: 100%;
             box-sizing: border-box;
         }
+        .Nbtn {
+            margin-right: 10px;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -159,7 +165,7 @@ function calculateTotal($cart) {
     <label for="ic">Identification Number:</label>
     <input type="text" name="ic" required>
 
-    <button type="submit" name="submit">Check</button>
+    <button class="Nbtn" type="submit" name="submit">Check</button>
 </form>
 
 <br>
@@ -176,13 +182,14 @@ if (isset($_SESSION['user_data'])) {
 // Display the form since session data is set
 echo '<style>.user-form { display: block; }</style>';
 } else {
-    echo "<p>No user information found in the session.</p>";
+    echo "<p>Please search for a patient using IDENTIFICATION NUMBER above.</p>";
 }
 ?>
+
 <!-- The form is only shown if session data is available -->
 <form class="user-form">
     <div>
-        <img src="<?= htmlspecialchars($image) ?>" alt="User Avatar" class="user-avatar">
+        <img src="uploaded_img/<?php echo $image; ?>" alt="User Avatar" class="user-avatar">
     </div>
     <div>
         <label for="fname">First Name:</label>
@@ -209,9 +216,20 @@ echo '<style>.user-form { display: block; }</style>';
         <input type="text" id="usertype" name="usertype" value="<?= isset($usertype) ? htmlspecialchars($usertype) : '' ?>" readonly>
     </div>
 </form>
-<br>
-<button onclick="window.location.href='http://localhost/clinicdb/SD_Project/logout.php';">Clear session</button>
-<br>
+<br><form method="post">
+    <button class="Nbtn" type="submit" name="clear_session">Clear User Data</button>
+</form>
+<br><br>
+
+<?php
+if (isset($_POST['clear_session'])) {
+    unset($_SESSION['user_data']); // Clear the 'user_data' session data
+
+    // Reload the current page
+    header("Location: " . $_SERVER['PHP_SELF'] . "?section=add-bills");
+    exit();
+}
+?>
 
 <form method="post">
     <label for="item">Item:</label>
@@ -223,7 +241,7 @@ echo '<style>.user-form { display: block; }</style>';
     <label for="quantity">Quantity:</label>
     <input type="number" name="quantity" required>
 
-    <button type="submit" name="add_item">Add Item</button>
+    <button class="Nbtn" type="submit" name="add_item">Add Item</button>
 </form>
 
 
@@ -249,8 +267,8 @@ echo '<style>.user-form { display: block; }</style>';
                     ?>
                 </td>
                 <td>
-                    <button type="submit" name="update_item">Update</button>
-                    <button type="submit" name="delete_item">Delete</button>
+                    <button class="Nbtn" type="submit" name="update_item">Update</button>
+                    <button class="Nbtn" type="submit" name="delete_item">Delete</button>
                     <input type="hidden" name="index" value="<?= $index ?>">
                 </td>
             </form>
@@ -283,7 +301,7 @@ echo '<style>.user-form { display: block; }</style>';
         <input type="hidden" name="items[<?= $index ?>][total]" value="<?= htmlspecialchars($cartItem['price'] * $cartItem['quantity']) ?>">
     <?php endforeach; ?>
 
-    <button type="submit" name="submit_bill">Submit Bill</button>
+    <button class="Nbtn" type="submit" name="submit_bill">Submit Bill</button>
 </form>
 
 </body>

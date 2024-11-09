@@ -10,11 +10,52 @@ ini_set('display_errors', 1);
 $allowed_sections = [
     "patients", "staff", "add-staff", "edit-staff", "delete-staff", 
     "add-patient", "edit-patient", "delete-patient" , "profile" , "appointment" , "feedback" , "add-bills" ,
-	"edit-bills" , "delete-bills" , "view-bills"
+	"edit-bills" , "delete-bills" , "view-bills" , "show-bills" , "view-transaction" , "sales-report"
 ];
 
 $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sections) ? $_GET["section"] : "staff";
 
+// Get user data
+if ($_SESSION['loggedin']) {
+    $userid = $_SESSION['USER_ID'];
+    $role = $_SESSION['role'];
+
+    // Determine user table and ID column based on role
+    switch ($role) {
+        case 'admin':
+            $table = 'admin_info';
+            $id_column = 'USER_ID';
+            $userR = "Admin";
+            break;
+        case 'staff':
+            $table = 'staff_info';
+            $id_column = 'STAFF_ID';
+            $userR = "Staff";
+            break;
+        default:
+            $table = 'user_info';
+            $id_column = 'USER_ID';
+            $userR = "Patient";
+            break;
+    }
+
+    // Database connection
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "dtcmsdb";
+
+    $connection = new mysqli($servername, $username, $password, $dbname);
+
+    // Prepare and execute query to retrieve user data
+    $user_info = $connection->prepare("SELECT * FROM $table WHERE $id_column=?");
+    $user_info->bind_param("s", $userid);
+    $user_info->execute();
+    $user_result = $user_info->get_result();
+    $user = $user_result->fetch_assoc();
+
+    $ASimage = $user['IMAGE'] ?? 'default-avatar.png';
+}
 ?>
 <!Doctype html> 
 <html lang="en">
@@ -50,7 +91,7 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 
         #sidebar {
 			position: fixed;
-			top: 60px; /* Adjust based on your header height */
+			top: 100px; /* Adjust based on your header height */
 			left: 0;
 			height: calc(100vh - 60px); /* Full height minus the header */
 			width: 250px;
@@ -108,7 +149,8 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 			border-radius: 10px;
 			border: 1px solid #ddd;
 			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-			margin-bottom: 20px;
+			margin-bottom: 40px;
+			margin-top: 40px;
 			overflow-x: auto;
 		}
 		
@@ -191,6 +233,18 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 		.navbar-brand img {
 			border-radius: 5px; /* Optional: Make the logo slightly rounded */
 		}
+        .user-avatar-admin {
+            width: 27px; /* Smaller size */
+            height: 27px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .user-avatar-admin img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
     </style>
 </head>
@@ -233,9 +287,11 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
                     </div>
 					
                     <!-- Static Links -->
-                    <a class="nav-link text-white" href="#view-transaction"><i class="fas fa-exchange-alt"></i> View Transactions</a>
-                    <a class="nav-link text-white" href="#generate-sales-report"><i class="fas fa-chart-line"></i> Generate Sales Report</a>
+					<a class="nav-link text-white" href="?section=view-transaction"><i class="fas fa-exchange-alt"></i> View Transactions</a>
+                    <a class="nav-link text-white" href="?section=sales-report"><i class="fas fa-chart-line"></i> Generate Sales Report</a>
                     <a class="nav-link text-white" href="?section=feedback"><i class="fas fa-comments"></i> View Feedback</a>
+                    <a class="nav-link text-white" href="?section=feedback"><i class="fas fa-comments"></i> <?php echo $userid ?></a>
+
                 </nav>
             </div>
             
@@ -248,8 +304,8 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 					</a>
 					<style>
 					.logo {
-						width: 60px;
-						height: 60px;
+						width: 75px;
+						height: 75px;
 					}
 					</style>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" 
@@ -261,22 +317,18 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 						<ul class="navbar-nav ml-auto">
 							<li class="dropdown">
 								<span>
-									<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" 
-										fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-										<path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1z"/>
-										<path d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 10a5 5 0 0 0-4.546 3 
-											1 1 0 0 0 .657 1.07c.068.016.134.03.2.04A5.992 5.992 0 0 0 8 12a5.992 
-											5.992 0 0 0 4.689 2.11c.066-.01.132-.024.2-.04a1 1 0 0 0 .657-1.07A5 5 
-											0 0 0 8 10z"/>
-									</svg>
-									<?php 
-										$userid = $_SESSION['USER_ID'];
-										if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-											echo " Welcome, " . htmlspecialchars($userid);
-										} else {
-											echo " Profile"; 
-										}
-									?>
+									<div class="user-avatar-admin" >
+                                        <img src="uploaded_img/<?php echo $ASimage; ?>" alt="User Avatar" class="user-avatar">
+                                    </div>
+
+									<?php
+                                    $userid = $_SESSION['USER_ID'];
+                                    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+                                        echo "&nbsp Welcome, " . htmlspecialchars($userid);
+                                    } else {
+                                        echo " Profile &nbsp";
+                                    }
+                                    ?>
 								</span>
 								<ul>
 									<li><a href="?section=profile">Profile</a></li>
@@ -295,7 +347,7 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 					position: fixed;
 					top: 0;
 					left: 0;
-					height: 60px; /* Adjust as needed */
+					height: 100px; /* Adjust as needed */
 					z-index: 1050; /* Ensure it stays on top */
 					background-color: #ffffff;
 					box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -339,6 +391,7 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 					margin-right: 5px; /* Space between icon and text */
 					fill: #ffffff; /* Change the icon color if needed */
 				}
+
 			</style>
                 <main class="mt-4">
                     <div class='content bg-white p-4 shadow-sm rounded'>
@@ -356,10 +409,13 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
 							"profile" => "profile_SA.php" ,
 							"appointment" => "view_appointments.php" ,
 							"feedback" => "view_feedback.php" ,
-							"view-bills" => "bill.php" , 
+							"view-bills" => "bill.php" ,
+                            "show-bills" => "view_bill.php",
 							"add-bills" => "create_bill.php" ,
 							"edit-bills" => "edit_bill.php" ,
 							"delete-bills" => "delete_bill.php" , 
+							"view-transaction" => "view_transaction.php",
+							"sales-report" => "sales_report.php",
                         ];
 
                         if (array_key_exists($section, $section_map)) {
@@ -374,6 +430,7 @@ $section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sectio
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 </body>
 </html>
 <?php

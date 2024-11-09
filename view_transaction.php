@@ -36,39 +36,82 @@ $result = $conn->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Transactions</title>
     <style>
-        /* Simple styling for the table */
+        /* Global Styling */
         body {
             font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
         }
         .container {
-            width: 90%;
+            max-width: 1200px;
             margin: auto;
             padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
         h2 {
             text-align: center;
+            color: #444;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 2px solid #5a67d8;
+            padding-bottom: 10px;
         }
+
+        /* Table Styling */
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            font-size: 0.95em;
         }
         th, td {
-            padding: 10px;
+            padding: 12px 15px;
             text-align: center;
-            border: 1px solid #ddd;
         }
-        th {
-            background-color: #f2f2f2;
+        thead th {
+            background-color: #5a67d8;
+            color: #fff;
+            font-weight: bold;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tbody tr:hover {
+            background-color: #e8f0fe;
+        }
+        th, td {
+            border-bottom: 1px solid #ddd;
         }
         .status-paid {
             color: green;
+            font-weight: bold;
         }
         .status-pending {
             color: orange;
+            font-weight: bold;
         }
         .status-cancelled {
             color: red;
+            font-weight: bold;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            table, th, td {
+                font-size: 0.85em;
+            }
+            .container {
+                padding: 10px;
+            }
+            h2 {
+                font-size: 1.6em;
+            }
         }
     </style>
 </head>
@@ -98,9 +141,9 @@ $result = $conn->query($sql);
                     echo "<tr>";
                     echo "<td>" . htmlspecialchars($row['transaction_id']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['patient_ic']) . "</td>";
-                    echo "<td>" . number_format($row['total_amount'], 2) . "</td>";
-                    echo "<td>" . number_format($row['total_paid'], 2) . "</td>";
-                    echo "<td>" . number_format($row['outstanding_payment'], 2) . "</td>";
+                    echo "<td>RM " . number_format($row['total_amount'], 2) . "</td>";
+                    echo "<td>RM " . number_format($row['total_paid'], 2) . "</td>";
+                    echo "<td>RM " . number_format($row['outstanding_payment'], 2) . "</td>";
                     echo "<td class='status-" . strtolower($row['payment_status']) . "'>" . htmlspecialchars($row['payment_status']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['payment_method']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['payment_date']) . "</td>";
