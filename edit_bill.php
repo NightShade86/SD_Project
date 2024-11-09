@@ -95,8 +95,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Update the bill total and other details
-    $stmt = $pdo->prepare("UPDATE clinic_bills SET payment_status = ?, payment_method = ?, insurance_company = ?, insurance_policy_number = ?, total_amount = ?, outstanding_payment = ? WHERE id = ?");
-    $stmt->execute([$payment_status, $payment_method, $insurance_company, $insurance_policy_number, $total_amount, $total_amount, $bill_id]);
+    $stmt = $pdo->prepare("UPDATE clinic_bills SET payment_status = ?, payment_method = ?, insurance_company = ?, insurance_policy_number = ?, total_amount = ? WHERE id = ?");
+    $stmt->execute([$payment_status, $payment_method, $insurance_company, $insurance_policy_number, $total_amount, $bill_id]);
 
     // Redirect to the bills page with success message based on user role
     header("Location: {$dashboardLink}?section=view-bills&success=Bill updated successfully!");
@@ -202,9 +202,9 @@ if (isset($_POST['update_status'])) {
     <table>
         <tr>
             <th>Item Name</th>
-            <th>Price</th>
+            <th>Price (RM)</th>
             <th>Quantity</th>
-            <th>Total</th>
+            <th>Total (RM)</th>
             <th>Action</th>
         </tr>
         <?php foreach ($items as $item): ?>
@@ -212,20 +212,17 @@ if (isset($_POST['update_status'])) {
                 <td><input type="text" name="items[<?= $item['id'] ?>][item_name]" value="<?= htmlspecialchars($item['item_name']) ?>" class="form-control"></td>
                 <td><input type="text" name="items[<?= $item['id'] ?>][price]" value="<?= htmlspecialchars($item['price']) ?>" class="form-control"></td>
                 <td><input type="number" name="items[<?= $item['id'] ?>][quantity]" value="<?= htmlspecialchars($item['quantity']) ?>" class="form-control"></td>
-                <td>$<?= number_format($item['total'], 2) ?></td>
+                <td><input type="text" value="<?= htmlspecialchars($item['total']) ?>" class="form-control" readonly></td>
                 <td><input type="checkbox" name="items[<?= $item['id'] ?>][remove]"> Remove</td>
             </tr>
         <?php endforeach; ?>
     </table>
 
-    <h3>Add New Items</h3>
-    <table id="new-items-table">
-        <!-- New items will be added here -->
-    </table>
+    <h3>Add New Item</h3>
     <button type="button" class="btn btn-add" onclick="addNewItemRow()">Add New Item</button>
+    <table id="new-items-table"></table>
 
-    <br><br>
-    <button type="submit" class="btn">Update Bill</button>
+    <button type="submit" class="btn">Save Bill</button>
 </form>
 
 </body>

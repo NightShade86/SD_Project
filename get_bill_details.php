@@ -48,15 +48,14 @@ if (isset($_POST['bill_id'])) {
     $items_result = $items_query->get_result();
     $items = $items_result->fetch_all(MYSQLI_ASSOC);
 
-    // Generate the HTML for the modal
+    // Generate the HTML for the modal content
     echo '<h5>Patient IC: ' . $bill['patient_ic'] . '</h5>';
     echo '<p>Payment Status: ' . $bill['payment_status'] . '</p>';
-    echo '<p>Total Amount: $' . $bill['total_amount'] . '</p>';
-    echo '<p>Outstanding Payment: $' . $bill['outstanding_payment'] . '</p>';
+    echo '<p>Total Amount: RM ' . number_format($bill['total_amount'], 2) . '</p>';
     echo '<h6>Items:</h6>';
     echo '<ul>';
     foreach ($items as $item) {
-        echo '<li>' . $item['item_name'] . ' - $' . $item['price'] . ' x ' . $item['quantity'] . ' = $' . $item['total'] . '</li>';
+        echo '<li>' . $item['item_name'] . ' - RM ' . number_format($item['price'], 2) . ' x ' . $item['quantity'] . ' = RM ' . number_format($item['total'], 2) . '</li>';
     }
     echo '</ul>';
 }

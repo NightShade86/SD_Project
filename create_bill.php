@@ -146,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="form-group">
                     <label>Item Name:</label>
                     <input type="text" name="items[0][item_name]" required>
-                    <label>Price:</label>
+                    <label>Price (RM):</label>
                     <input type="number" name="items[0][price]" required step="0.01">
                     <label>Quantity:</label>
                     <input type="number" name="items[0][quantity]" required>
@@ -174,7 +174,7 @@ function addItem() {
     newItem.innerHTML = `
         <label>Item Name:</label>
         <input type="text" name="items[${itemIndex}][item_name]" required>
-        <label>Price:</label>
+        <label>Price (RM):</label>
         <input type="number" name="items[${itemIndex}][price]" required step="0.01">
         <label>Quantity:</label>
         <input type="number" name="items[${itemIndex}][quantity]" required>

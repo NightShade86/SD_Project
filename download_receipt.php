@@ -33,17 +33,28 @@ if (!$bill) {
     exit();
 }
 
-// Generate the receipt (you can adjust this part as needed)
-$receipt_content = "Receipt for Bill ID: " . $bill['id'] . "\n";
+// Generate a unique receipt ID
+$receipt_id = "REC" . strtoupper(uniqid());
+
+// Update the clinic_bills table with the receipt ID
+$update_receipt = $pdo->prepare("UPDATE clinic_bills SET receipt_id = ? WHERE id = ?");
+$update_receipt->execute([$receipt_id, $bill_id]);
+
+// Prepare receipt content
+$receipt_content = "Receipt ID: " . $receipt_id . "\n";
+$receipt_content .= "Transaction ID: " . $bill['transaction_id'] . "\n";
 $receipt_content .= "Patient IC: " . $bill['patient_ic'] . "\n";
-$receipt_content .= "Total Amount: $" . number_format($bill['total_amount'], 2) . "\n";
+$receipt_content .= "Total Amount: RM " . number_format($bill['total_amount'], 2) . "\n";
+$receipt_content .= "Amount Paid: RM " . number_format($bill['total_paid'], 2) . "\n";
+$receipt_content .= "Outstanding Payment: RM " . number_format($bill['outstanding_payment'], 2) . "\n";
 $receipt_content .= "Payment Status: " . $bill['payment_status'] . "\n";
 $receipt_content .= "Payment Method: " . $bill['payment_method'] . "\n";
-$receipt_content .= "Transaction ID: " . $bill['transaction_id'] . "\n";
+$receipt_content .= "Date: " . date("Y-m-d H:i:s") . "\n";
 
 // Set headers for file download
 header('Content-Type: text/plain');
 header('Content-Disposition: attachment; filename="receipt_' . $bill['id'] . '.txt"');
 
+// Output the receipt content to the browser
 echo $receipt_content;
 exit();

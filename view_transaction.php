@@ -4,6 +4,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+// Check if the user is an admin or staff
 if (empty($_SESSION['role']) || !in_array($_SESSION['role'], ['admin', 'staff'])) {
     header('Location: index.php');
     exit();
@@ -35,6 +36,7 @@ if (isset($_POST['undo_paid'])) {
     $updateStatus->execute([$bill_id]);
 }
 
+// Fetch bills where payment status is either 'Paid' or 'Pending'
 $stmt = $pdo->prepare("SELECT * FROM clinic_bills WHERE payment_status IN ('Paid', 'Pending') ORDER BY payment_date DESC");
 $stmt->execute();
 $bills = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -81,6 +83,8 @@ $bills = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <table>
     <tr>
+        <th>Bill ID</th>
+        <th>Receipt ID</th>
         <th>Patient IC</th>
         <th>Total Amount</th>
         <th>Payment Status</th>
@@ -91,8 +95,10 @@ $bills = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <?php foreach ($bills as $bill): ?>
         <tr class="<?= strtolower($bill['payment_status']) ?>">
+            <td><?= htmlspecialchars($bill['id']) ?></td> <!-- Bill ID -->
+            <td><?= htmlspecialchars($bill['receipt_id']) ?></td> <!-- Receipt ID -->
             <td><?= htmlspecialchars($bill['patient_ic']) ?></td>
-            <td>$<?= number_format($bill['total_amount'], 2) ?></td>
+            <td>RM <?= number_format($bill['total_amount'], 2) ?></td>
             <td><?= htmlspecialchars($bill['payment_status']) ?></td>
             <td><?= htmlspecialchars($bill['payment_method']) ?></td>
             <td><?= htmlspecialchars($bill['payment_date']) ?></td>
