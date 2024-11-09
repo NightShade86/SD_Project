@@ -1,14 +1,16 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
+session_start();
+if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], ['admin', 'staff'])) {
+    header("Location: index.php");
+    exit();
 }
+
 // Database connection parameters
 $host = "localhost";
 $username = "root";
 $password = "";
 $dbname = "dtcmsdb";
 
-// Create a new PDO instance
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -16,82 +18,43 @@ try {
     die("Database connection failed: " . $e->getMessage());
 }
 
-// Get the bill ID from the URL
-$bill_id = $_GET['bill_id'] ?? null;
+// Fetch all bills
+$stmt = $pdo->query("SELECT * FROM clinic_bills ORDER BY created_at ASC");
 
-if ($bill_id) {
-    // Fetch the bill details
-    $stmt = $pdo->prepare("SELECT * FROM clinic_bills WHERE id = ?");
-    $stmt->execute([$bill_id]);
-    $bill = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($bill) {
-        // Fetch the items associated with the bill
-        $stmt = $pdo->prepare("SELECT * FROM bill_items WHERE bill_id = ?");
-        $stmt->execute([$bill_id]);
-        $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-        echo "Bill not found.";
-        exit();
-    }
-} else {
-    echo "No bill ID provided.";
-    exit();
-}
-
-// Determine the redirection link based on the role
-$backLink = "index.php";
-if (isset($_SESSION['role'])) {
-    if ($_SESSION['role'] === 'admin') {
-        $backLink = "admin_dashboard.php?section=view-bills";
-    } elseif ($_SESSION['role'] === 'staff') {
-        $backLink = "staff_dashboard.php?section=view-bills";
-    }
-}
+$bills = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Bill Details</title>
-    <style>
-        th,tr,td {
-            text-align: center;
-        }
-    </style>
+    <title>View Bills</title>
 </head>
 <body>
+<h1>Bills</h1>
+<?php if (isset($_GET['success'])): ?>
+    <p style="color: green;"><?= htmlspecialchars($_GET['success']) ?></p>
+<?php endif; ?>
 
-<h1>Bill Details</h1>
-
-<p>Transaction ID: <?= htmlspecialchars($bill['transaction_id']) ?></p>
-<p>Total Amount: RM <?= number_format($bill['total_amount'], 2) ?></p>
-<p>Outstanding Payment: RM <?= number_format($bill['outstanding_payment'], 2) ?></p>
-
-<h2>Items</h2>
-<table>
+<table border="1">
     <tr>
-        <th>Item Name</th>
-        <th>Price</th>
-        <th>Quantity</th>
-        <th>Total</th>
+        <th>ID</th>
+        <th>Patient IC</th>
+        <th>Status</th>
+        <th>Total Amount</th>
+        <th>Action</th>
     </tr>
-    <?php foreach ($items as $item): ?>
+    <?php foreach ($bills as $bill): ?>
         <tr>
-            <td><?= htmlspecialchars($item['item_name']) ?></td>
-            <td>RM <?= number_format($item['price'], 2) ?></td>
-            <td ><?= htmlspecialchars($item['quantity']) ?></td>
-            <td>RM <?= number_format($item['total'], 2) ?></td>
+            <td><?= htmlspecialchars($bill['id']) ?></td>
+            <td><?= htmlspecialchars($bill['patient_ic']) ?></td>
+            <td><?= htmlspecialchars($bill['payment_status']) ?></td>
+            <td>$<?= number_format($bill['total_amount'], 2) ?></td>
+            <td>
+                <a href="edit_bill.php?bill_id=<?= $bill['id'] ?>">Edit</a>
+                <a href="delete_bill.php?bill_id=<?= $bill['id'] ?>" onclick="return confirm('Are you sure you want to delete this bill?');">Delete</a>
+            </td>
         </tr>
     <?php endforeach; ?>
 </table>
-
-<!-- Back to Bills link based on role -->
-<a href="<?= $backLink ?>">Back to Bills</a>
-
-
-
 </body>
 </html>

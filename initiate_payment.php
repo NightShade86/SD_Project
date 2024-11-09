@@ -1,7 +1,5 @@
 <?php
 session_start();
-require_once 'db_conn.php'; // Ensure db_conn.php connects to the database
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
