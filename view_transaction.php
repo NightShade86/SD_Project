@@ -1,36 +1,43 @@
 <?php
-ob_start();
-?>
+// Start session
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
-<?php
-// Start session and enable error reporting
-session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-// Check if the user is logged in as admin or staff (add your own session login check here)
-if (!isset($_SESSION['usertype']) || !in_array($_SESSION['usertype'], ['admin', 'staff'])) {
-    echo "Access denied. Only admin and staff can view this page.";
+if (empty($_SESSION['role']) || !in_array($_SESSION['role'], ['admin', 'staff'])) {
+    header('Location: index.php');
     exit();
 }
 
-// Database connection setup
-$servername = "localhost";
+$host = "localhost";
 $username = "root";
 $password = "";
 $dbname = "dtcmsdb";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check the connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+// Create a new PDO instance
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Database connection failed: " . $e->getMessage());
 }
 
-// Fetch transactions from clinic_bills
-$sql = "SELECT transaction_id, patient_ic, total_amount, total_paid, outstanding_payment, payment_status, payment_method, payment_date 
-        FROM clinic_bills";
-$result = $conn->query($sql);
+// Update the payment status in the database based on the button clicked
+if (isset($_POST['mark_paid'])) {
+    $bill_id = $_POST['bill_id'];
+    $updateStatus = $pdo->prepare("UPDATE clinic_bills SET payment_status = 'Paid' WHERE id = ?");
+    $updateStatus->execute([$bill_id]);
+}
+
+if (isset($_POST['undo_paid'])) {
+    $bill_id = $_POST['bill_id'];
+    $updateStatus = $pdo->prepare("UPDATE clinic_bills SET payment_status = 'Pending' WHERE id = ?");
+    $updateStatus->execute([$bill_id]);
+}
+
+$stmt = $pdo->prepare("SELECT * FROM clinic_bills WHERE payment_status IN ('Paid', 'Pending') ORDER BY payment_date DESC");
+$stmt->execute();
+$bills = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -39,139 +46,72 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Transactions</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
-        /* Global Styling */
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        h2 {
-            text-align: center;
-            color: #495057;
-            margin-bottom: 20px;
-            font-size: 1.8em;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-        }
-
-        /* Table Styling */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
-            font-size: 1em;
         }
         th, td {
-            padding: 15px;
-            text-align: center;
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd;
         }
-        thead th {
-            background-color: #007bff;
-            color: #fff;
-            font-weight: bold;
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
+        .btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
-        tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
+        .btn-undo {
+            background-color: #f44336; /* Red */
         }
-        tbody tr:hover {
-            background-color: #e9ecef;
+        .paid {
+            background-color: #d4edda; /* Light green for paid */
         }
-        th, td {
-            border-bottom: 1px solid #ddd;
-        }
-        .status-paid {
-            color: green;
-            font-weight: bold;
-        }
-        .status-pending {
-            color: orange;
-            font-weight: bold;
-        }
-        .status-cancelled {
-            color: red;
-            font-weight: bold;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            table, th, td {
-                font-size: 0.85em;
-            }
-            .container {
-                padding: 15px;
-            }
-            h2 {
-                font-size: 1.6em;
-            }
+        .pending {
+            background-color: #f8d7da; /* Light red for pending */
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>Transaction History</h2>
-    <table class="table table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>Transaction ID</th>
-                <th>Patient IC</th>
-                <th>Total Amount (RM)</th>
-                <th>Total Paid (RM)</th>
-                <th>Outstanding Payment (RM)</th>
-                <th>Payment Status</th>
-                <th>Payment Method</th>
-                <th>Payment Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            // Check if there are any transactions
-            if ($result && $result->num_rows > 0) {
-                // Loop through each transaction and display in a table row
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($row['transaction_id']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['patient_ic']) . "</td>";
-                    echo "<td>RM " . number_format($row['total_amount'], 2) . "</td>";
-                    echo "<td>RM " . number_format($row['total_paid'], 2) . "</td>";
-                    echo "<td>RM " . number_format($row['outstanding_payment'], 2) . "</td>";
-                    echo "<td class='status-" . strtolower($row['payment_status']) . "'>" . htmlspecialchars($row['payment_status']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['payment_method']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['payment_date']) . "</td>";
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr><td colspan='8' class='text-center'>No transactions found.</td></tr>";
-            }
-            ?>
-        </tbody>
-    </table>
-</div>
+<h1>View Transactions</h1>
 
-<?php
-// Close the database connection
-$conn->close();
-?>
+<table>
+    <tr>
+        <th>Patient IC</th>
+        <th>Total Amount</th>
+        <th>Payment Status</th>
+        <th>Payment Method</th>
+        <th>Transaction Date</th>
+        <th>Action</th>
+    </tr>
 
-<!-- Optional: Add Bootstrap JS and Popper.js for enhanced interactivity (e.g., tooltips, modals) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <?php foreach ($bills as $bill): ?>
+        <tr class="<?= strtolower($bill['payment_status']) ?>">
+            <td><?= htmlspecialchars($bill['patient_ic']) ?></td>
+            <td>$<?= number_format($bill['total_amount'], 2) ?></td>
+            <td><?= htmlspecialchars($bill['payment_status']) ?></td>
+            <td><?= htmlspecialchars($bill['payment_method']) ?></td>
+            <td><?= htmlspecialchars($bill['payment_date']) ?></td>
+            <td>
+                <?php if ($bill['payment_status'] == 'Pending'): ?>
+                    <form method="POST" style="display:inline;">
+                        <input type="hidden" name="bill_id" value="<?= $bill['id'] ?>">
+                        <button type="submit" name="mark_paid" class="btn">Mark as Paid</button>
+                    </form>
+                <?php elseif ($bill['payment_status'] == 'Paid'): ?>
+                    <form method="POST" style="display:inline;">
+                        <input type="hidden" name="bill_id" value="<?= $bill['id'] ?>">
+                        <button type="submit" name="undo_paid" class="btn btn-undo">Undo</button>
+                    </form>
+                <?php endif; ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+
 </body>
 </html>
-<?php
-ob_end_flush();
-?>
