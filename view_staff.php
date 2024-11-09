@@ -7,40 +7,47 @@
     <title>Staff Management System</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> <!-- Font Awesome CSS -->
+    <style>
+        .table th, .table td {
+            vertical-align: middle;
+        }
+        .btn-sm {
+            font-size: 0.875rem;
+        }
+        .btn-group .btn {
+            margin-right: 5px;
+        }
+        .container {
+            max-width: 1200px;
+        }
+        .btn {
+            padding: 10px 20px;
+        }
+    </style>
 </head>
 <body>
     <div class="container my-5">
-       
-        <h2>List of Staff</h2>
+        <h2 class="mb-4">List of Staff</h2>
         
         <!-- New Staff button with icon -->
-        <a class="btn btn-primary" href="/clinicdb/SD_Project/add_staff.php" role="button">
-            <i class="fas fa-user-plus"></i> New Staff
-        </a>
-        <br>
+        <div class="d-flex justify-content-between mb-3">
+            <a class="btn btn-primary" href="/clinicdb/SD_Project/add_staff.php" role="button">
+                <i class="fas fa-user-plus"></i> New Staff
+            </a>
+            <form class="d-flex" method="GET">
+                <input type="text" class="form-control me-2" name="search" placeholder="Search by Staff ID or Name">
+                <button type="submit" class="btn btn-primary">Search</button>
+                <a class="btn btn-success ms-2" href="/clinicdb/SD_Project/view_staff.php">Show All</a>
+            </form>
+        </div>
         
-        <!-- Search form -->
-        <form class="mt-3 mb-3" method="GET">
-            <div class="row">
-                <div class="col">
-                    <input type="text" class="form-control" name="search" placeholder="Search by Staff ID">
-                </div>
-                <div class="col-auto">
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </div>
-                <div class="col-auto">
-                    <a class="btn btn-success" href="/clinicdb/SD_Project/view_staff.php">Show All</a>
-                </div>
-            </div>
-        </form>
-
-        <!-- PHP code to retrieve and display staff data -->
         <?php
         $servername = "localhost";
         $username = "root";
         $password = "";
         $dbname = "dtcmsdb";
-
+        $records_per_page = 10;
+        
         // Open connection
         $connection = new mysqli($servername, $username, $password, $dbname);
 
@@ -49,28 +56,36 @@
             die("Connection failed: " . $connection->connect_error);
         }
 
+        // Pagination setup
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $offset = ($page - 1) * $records_per_page;
+
         // Initialize the SQL query
         $sql = "SELECT * FROM staff_info";
-
-        // Prepare the SQL query
         if (isset($_GET['search']) && !empty($_GET['search'])) {
             $search = $_GET['search'];
-            $sql .= " WHERE STAFF_ID = ?";
+            $sql .= " WHERE STAFF_ID LIKE ? OR FIRSTNAME LIKE ? OR LASTNAME LIKE ?";
             $stmt = $connection->prepare($sql);
-            $stmt->bind_param("s", $search); // 's' stands for string
+            $search_param = "%" . $search . "%";
+            $stmt->bind_param("sss", $search_param, $search_param, $search_param);
             $stmt->execute();
             $result = $stmt->get_result();
         } else {
+            $sql .= " LIMIT $offset, $records_per_page";
             $result = $connection->query($sql);
         }
 
-        // Count total number of staff
-        $totalStaff = $result->num_rows;
+        // Count total number of staff for pagination
+        $totalStaffResult = $connection->query("SELECT COUNT(*) AS total FROM staff_info");
+        $totalStaffRow = $totalStaffResult->fetch_assoc();
+        $totalStaff = $totalStaffRow['total'];
+        $totalPages = ceil($totalStaff / $records_per_page);
+
         echo "<p>Total Staff: $totalStaff</p>";
         ?>
 
-        <table class="table">
-            <thead>
+        <table class="table table-striped table-bordered">
+            <thead class="table-light">
                 <tr>
                     <th>No</th>
                     <th>First Name</th>
@@ -85,7 +100,7 @@
             <tbody>
                 <?php
                 // Initialize a counter variable for numbering
-                $no = 1;
+                $no = $offset + 1;
 
                 // Read data of each row
                 while ($row = $result->fetch_assoc()) {
@@ -99,15 +114,14 @@
                     echo "<td>{$row['STAFF_ID']}</td>";
                     echo "<td>";
                     // Edit button with icon
-                    echo "<a class='btn btn-primary btn-sm me-3' href='/clinicdb/SD_Project/edit_staff.php?staff_id={$row['STAFF_ID']}'>";
+                    echo "<a class='btn btn-primary btn-sm me-2' href='/clinicdb/SD_Project/edit_staff.php?staff_id={$row['STAFF_ID']}'>";
                     echo "<i class='fas fa-edit'></i> Edit</a>";
-                    // Delete button with icon
-                    echo "<a class='btn btn-danger btn-sm' href='/clinicdb/SD_Project/delete_staff.php?staff_id={$row['STAFF_ID']}' onclick='return confirm(\"Are you sure you want to delete this record?\")'>";
-                    echo "<i class='fas fa-trash'></i> Delete</a>";
+                    // Delete button triggers modal
+                    echo "<button class='btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#deleteModal' data-staff-id='{$row['STAFF_ID']}'>";
+                    echo "<i class='fas fa-trash'></i> Delete</button>";
                     echo "</td>";
                     echo "</tr>";
                     
-                    // Increment the counter
                     $no++;
                 }
 
@@ -116,7 +130,54 @@
                 ?>
             </tbody>
         </table>
-        
+
+        <!-- Pagination -->
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item <?php echo $page == 1 ? 'disabled' : ''; ?>">
+                    <a class="page-link" href="?page=<?php echo $page - 1; ?>" tabindex="-1">Previous</a>
+                </li>
+                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                    <li class="page-item <?php echo $page == $i ? 'active' : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                    </li>
+                <?php endfor; ?>
+                <li class="page-item <?php echo $page == $totalPages ? 'disabled' : ''; ?>">
+                    <a class="page-link" href="?page=<?php echo $page + 1; ?>">Next</a>
+                </li>
+            </ul>
+        </nav>
     </div>
+
+    <!-- Modal for Deletion Confirmation -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this staff member?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="" id="deleteLink" class="btn btn-danger">Delete Staff</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Set delete link dynamically in modal
+        var deleteModal = document.getElementById('deleteModal');
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var staffId = button.getAttribute('data-staff-id');
+            var deleteLink = document.getElementById('deleteLink');
+            deleteLink.setAttribute('href', '/clinicdb/SD_Project/delete_staff.php?staff_id=' + staffId);
+        });
+    </script>
 </body>
 </html>
