@@ -88,7 +88,7 @@ if ($result->num_rows > 0) {
                 <td>{$row['queue_number']}</td>
                 <td>
                     <button type='button' class='btn btn-primary btn-sm'>View</button>
-                    <button type='button' class='btn btn-success btn-sm'>Pay</button>
+                    <a href='pay_bills.php?appointment_id={$row['appointment_id']}' class='btn btn-success btn-sm'>Pay</a>
                 </td>
               </tr>";
     }
