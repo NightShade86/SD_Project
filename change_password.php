@@ -2,9 +2,6 @@
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-ini_set('log_errors', 1);
-ini_set('error_log', __DIR__ . '/php-error.log'); // Saves in the current directory
-
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $current_password = $_POST['current_password'];
@@ -45,10 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_result($hashed_password_from_db);
     $stmt->fetch();
     $stmt->close();
-
-    error_log("Input password: '" . $current_password . "'");
-    error_log("Fetched hash: '" . $hashed_password_from_db . "'");
-
 
     if (empty($hashed_password_from_db) || !password_verify($current_password, $hashed_password_from_db)) {
         $_SESSION['error_message'] = "Current password is incorrect!";
