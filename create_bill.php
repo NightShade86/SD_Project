@@ -1,14 +1,21 @@
 <?php
+// Start session if not already started
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-// Database connection parameters
+
+// Restrict access based on user role
+if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], ['admin', 'staff'])) {
+    header("Location: index.php");
+    exit();
+}
+
+// Database connection
 $host = "localhost";
 $username = "root";
 $password = "";
 $dbname = "dtcmsdb";
 
-// Create a new PDO instance
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -16,293 +23,164 @@ try {
     die("Database connection failed: " . $e->getMessage());
 }
 
-// Initialize cart if it doesn't exist
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = [];
-}
+$message = '';
+$patient_exists = false;
+$success = false; // Variable to track success
 
-// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Add item to cart
-    if (isset($_POST['add_item'])) {
-        $item = $_POST['item'];
-        $price = floatval($_POST['price']);
-        $quantity = intval($_POST['quantity']);
-
-        // Add the item to the cart
-        $_SESSION['cart'][] = ['item' => $item, 'price' => $price, 'quantity' => $quantity];
+    // Check if 'check_ic' button was clicked to validate the Patient IC
+    if (isset($_POST['check_ic'])) {
+        $patient_ic = $_POST['patient_ic'];
+        
+        // Check if patient IC exists in user_info table
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM user_info WHERE IC = ?");
+        $stmt->execute([$patient_ic]);
+        
+        if ($stmt->fetchColumn() == 0) {
+            $message = "Error: Patient IC not found in records. Bill cannot be created.";
+        } else {
+            $patient_exists = true;
+        }
     }
 
-    // Delete item from cart
-    if (isset($_POST['delete_item'])) {
-        $index = intval($_POST['index']);
-        unset($_SESSION['cart'][$index]);
-        $_SESSION['cart'] = array_values($_SESSION['cart']); // Reindex the array
-    }
-
-    // Update item in cart
-    if (isset($_POST['update_item'])) {
-        $index = intval($_POST['index']);
-        $item = $_POST['item'];
-        $price = floatval($_POST['price']);
-        $quantity = intval($_POST['quantity']);
-
-        $_SESSION['cart'][$index] = ['item' => $item, 'price' => $price, 'quantity' => $quantity];
-    }
-
-    // Process the bill submission
-    if (isset($_POST['submit_bill'])) {
-        $patient_ic = $_POST['ic'];
-        $payment_status = 'Pending'; // Initial status
-        $payment_method = $_POST['payment_method']; // Payment method chosen by user
-        $transaction_id = uniqid(); // Generate a unique transaction ID
+    // Process form submission for creating a bill
+    if (isset($_POST['create_bill']) && !empty($_POST['items'])) {
+        $patient_ic = $_POST['patient_ic'];
+        $payment_status = $_POST['payment_status'];
+        $payment_method = $_POST['payment_method'];
         $insurance_company = $_POST['insurance_company'] ?? '';
         $insurance_policy_number = $_POST['insurance_policy_number'] ?? '';
-        $total_amount = calculateTotal($_SESSION['cart']);
-        $total_paid = 0.00; // Total paid initially
-        $outstanding_payment = $total_amount; // Initially, total is outstanding
+        $total_amount = 0;
 
-        // Insert bill into the database
-        $stmt = $pdo->prepare("INSERT INTO clinic_bills (patient_ic, payment_status, payment_method, transaction_id, insurance_company, insurance_policy_number, total_amount, total_paid, outstanding_payment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$patient_ic, $payment_status, $payment_method, $transaction_id, $insurance_company, $insurance_policy_number, $total_amount, $total_paid, $outstanding_payment]);
-
-        // Get the last inserted bill ID
+        // Insert new bill in clinic_bills
+        $stmt = $pdo->prepare("INSERT INTO clinic_bills (patient_ic, payment_status, payment_method, insurance_company, insurance_policy_number, total_amount) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$patient_ic, $payment_status, $payment_method, $insurance_company, $insurance_policy_number, $total_amount]);
         $bill_id = $pdo->lastInsertId();
 
-        // Insert each cart item into the database
-        foreach ($_SESSION['cart'] as $cartItem) {
-            $item_name = $cartItem['item'];
-            $price = $cartItem['price'];
-            $quantity = $cartItem['quantity'];
-            $item_total = $price * $quantity;
+        // Insert bill items and calculate total amount
+        $items = $_POST['items'];
+        foreach ($items as $item) {
+            $item_name = $item['item_name'];
+            $price = floatval($item['price']);
+            $quantity = intval($item['quantity']);
+            $total = $price * $quantity;
+            $total_amount += $total;
 
             $stmt = $pdo->prepare("INSERT INTO bill_items (bill_id, item_name, price, quantity, total) VALUES (?, ?, ?, ?, ?)");
-            $stmt->execute([$bill_id, $item_name, $price, $quantity, $item_total]);
+            $stmt->execute([$bill_id, $item_name, $price, $quantity, $total]);
         }
 
-        // Clear the cart after processing the bill
-        $_SESSION['cart'] = [];
+        // Update total amount in clinic_bills
+        $stmt = $pdo->prepare("UPDATE clinic_bills SET total_amount = ? WHERE id = ?");
+        $stmt->execute([$total_amount, $bill_id]);
 
-        // Redirect or show a success message
-       if (isset($_SESSION['role'])) {
-			if ($_SESSION['role'] === 'admin') {
-				header("Location: admin_dashboard.php?section=view-bills&success=Bill created successfully!");
-			} elseif ($_SESSION['role'] === 'staff') {
-				header("Location: staff_dashboard.php?section=view-bills&success=Bill created successfully!");
-			} else {
-				header("Location: index.php?success=Bill created successfully!");
-			}
-		} else {
-			// Default redirection if role is not set
-			header("Location: index.php?success=Bill created successfully!");
-		}
-
-		exit();
+        // Set success to true to trigger JavaScript alert
+        $success = true;
     }
-}
-
-function calculateTotal($cart) {
-    $total = 0;
-    foreach ($cart as $cartItem) {
-        $total += $cartItem['price'] * $cartItem['quantity'];
-    }
-    return $total;
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clinic Billing System</title>
+    <title>Create Bill</title>
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-        .user-form {
-            display: none; /* By default, the form is hidden */
-            max-width: 400px;
-            margin: 20px auto;
-        }
-        .user-avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 10px;
-        }
-        input[readonly] {
-            background-color: #f9f9f9;
-            border: 1px solid #ccc;
-            padding: 5px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        .Nbtn {
-            margin-right: 10px;
-            padding: 5px 10px;
-            text-decoration: none;
-            border-radius: 4px;
-        }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; }
+        h1 { color: #333; text-align: center; }
+        .form-container { max-width: 600px; margin: 0 auto; padding: 20px; background: #fff; border: 1px solid #ccc; border-radius: 8px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: bold; }
+        .form-group input, .form-group select { width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; }
+        .form-group button { padding: 10px 15px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .form-group button:hover { background-color: #45a049; }
+        .error-message { color: red; }
     </style>
 </head>
 <body>
 
-<h1>Create Bill for Patient</h1>
+<h1>Create New Bill</h1>
 
-<?php if (isset($_GET['success'])): ?>
-    <p style="color: green;"><?= htmlspecialchars($_GET['success']); ?></p>
+<div class="form-container">
+    <?php if ($message): ?>
+        <p class="error-message"><?= htmlspecialchars($message) ?></p>
+    <?php endif; ?>
+
+    <form action="" method="POST">
+        <div class="form-group">
+            <label>Patient IC:</label>
+            <input type="text" name="patient_ic" value="<?= htmlspecialchars($_POST['patient_ic'] ?? '') ?>" required>
+            <button type="submit" name="check_ic">Check</button>
+        </div>
+
+        <?php if ($patient_exists): ?>
+            <div class="form-group">
+                <label>Payment Status:</label>
+                <select name="payment_status" required>
+                    <option value="Pending">Pending</option>
+                    <option value="Paid">Paid</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Payment Method:</label>
+                <select name="payment_method" required>
+                    <option value="Online">Online</option>
+                    <option value="Cash">Cash</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Insurance Company:</label>
+                <input type="text" name="insurance_company">
+            </div>
+
+            <div class="form-group">
+                <label>Insurance Policy Number:</label>
+                <input type="text" name="insurance_policy_number">
+            </div>
+
+            <h3>Items</h3>
+            <div id="items">
+                <div class="form-group">
+                    <label>Item Name:</label>
+                    <input type="text" name="items[0][item_name]" required>
+                    <label>Price:</label>
+                    <input type="number" name="items[0][price]" required step="0.01">
+                    <label>Quantity:</label>
+                    <input type="number" name="items[0][quantity]" required>
+                </div>
+            </div>
+
+            <button type="button" onclick="addItem()">Add Another Item</button><br><br>
+            <button type="submit" name="create_bill">Create Bill</button>
+        <?php endif; ?>
+    </form>
+</div>
+
+<script>
+// JavaScript to display success message
+<?php if ($success): ?>
+    alert("Success: Bill created successfully!");
 <?php endif; ?>
 
-<form method="post" action="icverify.php">
-    <label for="ic">Identification Number:</label>
-    <input type="text" name="ic" required>
+let itemIndex = 1;
 
-    <button class="Nbtn" type="submit" name="submit">Check</button>
-</form>
-
-<br>
-<?php
-if (isset($_SESSION['user_data'])) {
-    $user_data = $_SESSION['user_data'];
-    $fname = $user_data['FIRSTNAME'];
-    $lname = $user_data['LASTNAME'];
-    $pnum = $user_data['NO_TEL'];
-    $email = $user_data['EMAIL'];
-    $ic = $user_data['IC'];
-    $usertype = $user_data['USERTYPE'];
-    $image = $user_data['IMAGE'] ?? 'default-avatar.png';
-// Display the form since session data is set
-echo '<style>.user-form { display: block; }</style>';
-} else {
-    echo "<p>Please search for a patient using IDENTIFICATION NUMBER above.</p>";
+function addItem() {
+    const itemsDiv = document.getElementById("items");
+    const newItem = document.createElement("div");
+    newItem.className = 'form-group';
+    newItem.innerHTML = `
+        <label>Item Name:</label>
+        <input type="text" name="items[${itemIndex}][item_name]" required>
+        <label>Price:</label>
+        <input type="number" name="items[${itemIndex}][price]" required step="0.01">
+        <label>Quantity:</label>
+        <input type="number" name="items[${itemIndex}][quantity]" required>
+    `;
+    itemsDiv.appendChild(newItem);
+    itemIndex++;
 }
-?>
-
-<!-- The form is only shown if session data is available -->
-<form class="user-form">
-    <div>
-        <img src="uploaded_img/<?php echo $image; ?>" alt="User Avatar" class="user-avatar">
-    </div>
-    <div>
-        <label for="fname">First Name:</label>
-        <input type="text" id="fname" name="fname" value="<?= isset($fname) ? htmlspecialchars($fname) : '' ?>" readonly>
-    </div>
-    <div>
-        <label for="lname">Last Name:</label>
-        <input type="text" id="lname" name="lname" value="<?= isset($lname) ? htmlspecialchars($lname) : '' ?>" readonly>
-    </div>
-    <div>
-        <label for="pnum">Phone Number:</label>
-        <input type="text" id="pnum" name="pnum" value="<?= isset($pnum) ? htmlspecialchars($pnum) : '' ?>" readonly>
-    </div>
-    <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="<?= isset($email) ? htmlspecialchars($email) : '' ?>" readonly>
-    </div>
-    <div>
-        <label for="ic">IC Number:</label>
-        <input type="text" id="ic" name="ic" value="<?= isset($ic) ? htmlspecialchars($ic) : '' ?>" readonly>
-    </div>
-    <div>
-        <label for="usertype">User Type:</label>
-        <input type="text" id="usertype" name="usertype" value="<?= isset($usertype) ? htmlspecialchars($usertype) : '' ?>" readonly>
-    </div>
-</form>
-<br><form method="post">
-    <button class="Nbtn" type="submit" name="clear_session">Clear User Data</button>
-</form>
-<br><br>
-
-<?php
-if (isset($_POST['clear_session'])) {
-    unset($_SESSION['user_data']); // Clear the 'user_data' session data
-
-    // Reload the current page
-    header("Location: " . $_SERVER['PHP_SELF'] . "?section=add-bills");
-    exit();
-}
-?>
-
-<form method="post">
-    <label for="item">Item:</label>
-    <input type="text" name="item" required>
-
-    <label for="price">Price:</label>
-    <input type="number" name="price" step="0.01" required>
-
-    <label for="quantity">Quantity:</label>
-    <input type="number" name="quantity" required>
-
-    <button class="Nbtn" type="submit" name="add_item">Add Item</button>
-</form>
-
-
-<h2>Cart Preview</h2>
-<table>
-    <tr>
-        <th>Item</th>
-        <th>Price</th>
-        <th>Quantity</th>
-        <th>Total</th>
-        <th>Action</th>
-    </tr>
-    <?php foreach ($_SESSION['cart'] as $index => $cartItem): ?>
-        <tr>
-            <form method="post">
-                <td><input type="text" name="item" value="<?= htmlspecialchars($cartItem['item']) ?>" required></td>
-                <td><input type="number" name="price" step="0.01" value="<?= htmlspecialchars($cartItem['price']) ?>" required></td>
-                <td><input type="number" name="quantity" value="<?= htmlspecialchars($cartItem['quantity']) ?>" required></td>
-                <td>
-                    <?php
-                    $itemTotal = $cartItem['price'] * $cartItem['quantity'];
-                    echo number_format($itemTotal, 2);
-                    ?>
-                </td>
-                <td>
-                    <button class="Nbtn" type="submit" name="update_item">Update</button>
-                    <button class="Nbtn" type="submit" name="delete_item">Delete</button>
-                    <input type="hidden" name="index" value="<?= $index ?>">
-                </td>
-            </form>
-        </tr>
-    <?php endforeach; ?>
-</table>
-
-<h3>Total: $<?= number_format(calculateTotal($_SESSION['cart']), 2) ?></h3>
-
-<!-- Bill submission form -->
-<h2>Submit Bill</h2>
-<form method="post" action="submit_bill.php">
-    <label for="payment_method">Payment Method:</label>
-    <select name="payment_method" required>
-        <option value="Cash">Cash</option>
-        <option value="Online">Online</option>
-    </select>
-
-    <label for="insurance_company">Insurance Company (optional):</label>
-    <input type="text" name="insurance_company">
-
-    <label for="insurance_policy_number">Insurance Policy Number (optional):</label>
-    <input type="text" name="insurance_policy_number">
-
-    <!-- Hidden inputs for cart items -->
-    <?php foreach ($_SESSION['cart'] as $index => $cartItem): ?>
-        <input type="hidden" name="items[<?= $index ?>][item]" value="<?= htmlspecialchars($cartItem['item']) ?>">
-        <input type="hidden" name="items[<?= $index ?>][price]" value="<?= htmlspecialchars($cartItem['price']) ?>">
-        <input type="hidden" name="items[<?= $index ?>][quantity]" value="<?= htmlspecialchars($cartItem['quantity']) ?>">
-        <input type="hidden" name="items[<?= $index ?>][total]" value="<?= htmlspecialchars($cartItem['price'] * $cartItem['quantity']) ?>">
-    <?php endforeach; ?>
-
-    <button class="Nbtn" type="submit" name="submit_bill">Submit Bill</button>
-</form>
+</script>
 
 </body>
 </html>
