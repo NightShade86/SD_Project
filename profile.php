@@ -362,17 +362,17 @@ if (isset($_SESSION['error_message'])) : ?>
                             <form action="change_password.php" method="post">
                                 <div class="form-group">
                                     <label class="form-label">Current password</label>
-                                    <input type="password" class="form-control" name="current-password" required>
+                                    <input type="password" class="form-control" name="current_password" required>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="form-label">New password</label>
-                                    <input type="password" class="form-control" name="new-password" required>
+                                    <input type="password" class="form-control" name="new_password" required>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="form-label">Repeat new password</label>
-                                    <input type="password" class="form-control" name="confirm-password" required>
+                                    <input type="password" class="form-control" name="repeat_new_password" required>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Change Password</button>
                             </form>
