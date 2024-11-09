@@ -16,10 +16,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 }
 
 // Get user data
-if ($_SESSION['loggedin']) {
-    $userid = $_SESSION['USER_ID'];
-    $role = $_SESSION['role'];
-}
+$userid = $_SESSION['USER_ID'];
 
 // Database connection parameters
 $host = "localhost";
@@ -30,6 +27,11 @@ $dbname = "dtcmsdb";
 // Create a new MySQLi instance
 $connection = new mysqli($host, $username, $password, $dbname);
 
+// Check the connection
+if ($connection->connect_error) {
+    die("Connection failed: " . $connection->connect_error);
+}
+
 // Prepare and execute query to retrieve user data
 $user_info = $connection->prepare("SELECT * FROM user_info WHERE USER_ID = ?");
 $user_info->bind_param("s", $userid);
@@ -37,14 +39,8 @@ $user_info->execute();
 $user_result = $user_info->get_result();
 $user = $user_result->fetch_assoc();
 
-// Extract user data
-$fname = $user['FIRSTNAME'];
-$lname = $user['LASTNAME'];
-$pnum = $user['NO_TEL'];
-$email = $user['EMAIL'];
+// Extract user IC for bill lookup
 $ic = $user['IC'];
-$usertype = $user['USERTYPE'];
-$image = $user['IMAGE'] ?? 'default-avatar.png';
 
 // SQL query to get all bills related to the patient's IC
 $bills_query = $connection->prepare("SELECT * FROM clinic_bills WHERE patient_ic = ?");
@@ -54,22 +50,6 @@ $bills_result = $bills_query->get_result();
 
 // Fetch all bills
 $bills = $bills_result->fetch_all(MYSQLI_ASSOC);
-
-// Initialize array to store items related to each bill
-$bill_items = [];
-
-foreach ($bills as $bill) {
-    $bill_id = $bill['id'];
-
-    // SQL query to get all items for the current bill_id
-    $items_query = $connection->prepare("SELECT * FROM bill_items WHERE bill_id = ?");
-    $items_query->bind_param("i", $bill_id);
-    $items_query->execute();
-    $items_result = $items_query->get_result();
-
-    // Fetch items for the current bill and store in the array
-    $bill_items[$bill_id] = $items_result->fetch_all(MYSQLI_ASSOC);
-}
 ?>
 
 <!DOCTYPE html>
@@ -81,18 +61,31 @@ foreach ($bills as $bill) {
     <title>Patient Bills</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Styling for the payment status colors */
+        .paid { background-color: #d4edda; }   /* Light green for Paid */
+        .pending { background-color: #fff3cd; } /* Light yellow for Pending */
+        .unpaid { background-color: #f8d7da; }  /* Light red for Unpaid */
+    </style>
 </head>
 <body>
 
 <div class="container mt-4">
-    <h3>Patient Bills</h3>
-
+    <h3>Your Bills</h3>
     <div class="list-group">
         <?php foreach ($bills as $bill): ?>
-            <div class="list-group-item">
-                <h5>Bill #<?php echo $bill['id']; ?></h5>
-                <p>Total: $<?php echo $bill['total_amount']; ?></p>
-                <button class="btn btn-primary view-bill-btn" data-bill-id="<?php echo $bill['id']; ?>">View</button>
+            <div class="list-group-item d-flex justify-content-between align-items-center <?php echo ($bill['payment_status'] === 'Paid') ? 'paid' : ($bill['payment_status'] === 'Pending' ? 'pending' : 'unpaid'); ?>">
+                <div>
+                    <h5>Bill #<?php echo $bill['id']; ?></h5>
+                    <p>Total Amount: RM <?php echo number_format($bill['total_amount'], 2); ?></p>
+                    <p>Status: <?php echo ucfirst($bill['payment_status']); ?></p>
+                </div>
+                <div>
+                    <button class="btn btn-primary view-bill-btn" data-bill-id="<?php echo $bill['id']; ?>">View Details</button>
+                    <?php if ($bill['payment_status'] === 'Unpaid' || $bill['payment_status'] === 'Pending'): ?>
+                        <a href="pay_bills.php?bill_id=<?php echo $bill['id']; ?>" class="btn btn-success">Pay</a>
+                    <?php endif; ?>
+                </div>
             </div>
         <?php endforeach; ?>
     </div>
@@ -113,13 +106,19 @@ foreach ($bills as $bill) {
         </div>
     </div>
 </div>
+
+<!-- Back Button to return to the bill view page -->
 <div class="container mt-4">
-    <button class="btn btn-primary view-bill-btn" onclick="window.location.href='index_patient.php';">Back to Home</button>
+    <button class="btn btn-primary" onclick="window.location.href='view_bills_patient.php';">Back to Bills</button>
 </div>
 
+<!-- Back to Home Button -->
+<div class="container mt-4">
+    <button class="btn btn-primary" onclick="window.location.href='index_patient.php';">Back to Home</button>
+</div>
 
 <script>
-    // JavaScript to handle "View" button click and display the modal with bill details
+    // JavaScript to handle "View Details" button click and display the modal with bill details
     $(document).ready(function() {
         $('.view-bill-btn').on('click', function() {
             var billId = $(this).data('bill-id');

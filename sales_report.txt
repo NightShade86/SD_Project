@@ -1,0 +1,122 @@
+Sales Report
+Date: 2024-11-09 13:52:56
+
+Bill ID: 25
+Patient IC: 040404050101
+Total Amount: $90.00
+Payment Status: Unpaid
+Payment Method: Online
+Payment Date: 2024-11-09 20:47:03
+
+Bill ID: 24
+Patient IC: 040404050101
+Total Amount: $8.00
+Payment Status: Unpaid
+Payment Method: Online
+Payment Date: 2024-11-09 20:06:06
+
+Bill ID: 23
+Patient IC: 040404050101
+Total Amount: $16.00
+Payment Status: Paid
+Payment Method: Online
+Payment Date: 2024-11-09 20:05:43
+
+Bill ID: 22
+Patient IC: 040404050101
+Total Amount: $12.00
+Payment Status: Pending
+Payment Method: Online
+Payment Date: 2024-11-09 19:53:20
+
+Bill ID: 21
+Patient IC: 040404050101
+Total Amount: $90.00
+Payment Status: Pending
+Payment Method: Online
+Payment Date: 2024-11-09 19:33:02
+
+Bill ID: 20
+Patient IC: 040404050101
+Total Amount: $45.00
+Payment Status: Paid
+Payment Method: Online
+Payment Date: 2024-11-09 18:19:24
+
+Bill ID: 19
+Patient IC: 040404050101
+Total Amount: $10.00
+Payment Status: Paid
+Payment Method: Online
+Payment Date: 2024-11-09 18:14:11
+
+Bill ID: 18
+Patient IC: 040404050101
+Total Amount: $25.00
+Payment Status: Pending
+Payment Method: Online
+Payment Date: 2024-11-09 18:12:11
+
+Bill ID: 17
+Patient IC: 040404050101
+Total Amount: $9.00
+Payment Status: Pending
+Payment Method: Online
+Payment Date: 2024-11-09 13:38:38
+
+Bill ID: 16
+Patient IC: 040404050101
+Total Amount: $100.00
+Payment Status: Pending
+Payment Method: Online
+Payment Date: 2024-11-09 13:31:33
+
+Bill ID: 15
+Patient IC: 040404050101
+Total Amount: $2.00
+Payment Status: Pending
+Payment Method: Online
+Payment Date: 2024-11-09 12:49:11
+
+Bill ID: 14
+Patient IC: 040404050102
+Total Amount: $1.00
+Payment Status: Pending
+Payment Method: Online
+Payment Date: 2024-11-09 12:37:38
+
+Bill ID: 1
+Patient IC: 2147483647
+Total Amount: $57.00
+Payment Status: Pending
+Payment Method: Cash
+Payment Date: 2024-11-04 01:02:08
+
+Bill ID: 2
+Patient IC: 2147483647
+Total Amount: $544.00
+Payment Status: Pending
+Payment Method: Cash
+Payment Date: 2024-11-04 01:02:08
+
+Bill ID: 3
+Patient IC: 030807011163
+Total Amount: $30.00
+Payment Status: Pending
+Payment Method: Cash
+Payment Date: 2024-11-04 01:02:08
+
+Bill ID: 4
+Patient IC: 040404050101
+Total Amount: $0.00
+Payment Status: Pending
+Payment Method: Cash
+Payment Date: 2024-11-04 01:02:08
+
+Bill ID: 5
+Patient IC: 040404050101
+Total Amount: $0.00
+Payment Status: Pending
+Payment Method: Cash
+Payment Date: 2024-11-04 01:02:08
+

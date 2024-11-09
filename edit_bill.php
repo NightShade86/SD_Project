@@ -102,6 +102,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     header("Location: {$dashboardLink}?section=view-bills&success=Bill updated successfully!");
     exit();
 }
+
+// Update payment status if form is submitted
+if (isset($_POST['update_status'])) {
+    $payment_status = $_POST['payment_status'];
+    $bill_id = $_GET['bill_id'];
+
+    // Update payment status in the database
+    $stmt = $pdo->prepare("UPDATE clinic_bills SET payment_status = ? WHERE id = ?");
+    $stmt->execute([$payment_status, $bill_id]);
+
+    // Redirect with a success message
+    header("Location: view_bill.php?success=Payment status updated successfully");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -165,10 +179,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <h2>Bill Information</h2>
 
     <label for="payment_status">Payment Status:</label>
-    <select id="payment_status" name="payment_status" class="form-control">
+    <select name="payment_status" id="payment_status">
+        <option value="Unpaid" <?= $bill['payment_status'] == 'Unpaid' ? 'selected' : '' ?>>Unpaid</option>
         <option value="Pending" <?= $bill['payment_status'] == 'Pending' ? 'selected' : '' ?>>Pending</option>
         <option value="Paid" <?= $bill['payment_status'] == 'Paid' ? 'selected' : '' ?>>Paid</option>
     </select>
+    <button type="submit" name="update_status">Update Status</button>
 
     <label for="payment_method">Payment Method:</label>
     <select id="payment_method" name="payment_method" class="form-control">
@@ -197,27 +213,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <td><input type="text" name="items[<?= $item['id'] ?>][price]" value="<?= htmlspecialchars($item['price']) ?>" class="form-control"></td>
                 <td><input type="number" name="items[<?= $item['id'] ?>][quantity]" value="<?= htmlspecialchars($item['quantity']) ?>" class="form-control"></td>
                 <td>$<?= number_format($item['total'], 2) ?></td>
-                <td><input type="checkbox" name="items[<?= $item['id'] ?>][remove]" value="1"> Remove</td>
+                <td><input type="checkbox" name="items[<?= $item['id'] ?>][remove]"> Remove</td>
             </tr>
         <?php endforeach; ?>
     </table>
 
-    <h2>Add New Items</h2>
+    <h3>Add New Items</h3>
     <table id="new-items-table">
-        <tr>
-            <th>Item Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-        </tr>
+        <!-- New items will be added here -->
     </table>
     <button type="button" class="btn btn-add" onclick="addNewItemRow()">Add New Item</button>
 
     <br><br>
     <button type="submit" class="btn">Update Bill</button>
 </form>
-
-<!-- Back to Bills link based on user role -->
-<a href="<?= $dashboardLink ?>?section=view-bills">Back to Bills</a>
 
 </body>
 </html>

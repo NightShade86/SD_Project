@@ -6,7 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 // Restrict access based on user role
 if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], ['admin', 'staff'])) {
-    header("Location: index.php");
+    header("Location: login_guess.php");
     exit();
 }
 
@@ -27,6 +27,7 @@ $message = '';
 $patient_exists = false;
 $success = false; // Variable to track success
 
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Check if 'check_ic' button was clicked to validate the Patient IC
     if (isset($_POST['check_ic'])) {
@@ -46,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Process form submission for creating a bill
     if (isset($_POST['create_bill']) && !empty($_POST['items'])) {
         $patient_ic = $_POST['patient_ic'];
-        $payment_status = $_POST['payment_status'];
+        $payment_status = $_POST['payment_status']; // Correctly handle payment status
         $payment_method = $_POST['payment_method'];
         $insurance_company = $_POST['insurance_company'] ?? '';
         $insurance_policy_number = $_POST['insurance_policy_number'] ?? '';
@@ -116,6 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="form-group">
                 <label>Payment Status:</label>
                 <select name="payment_status" required>
+                    <option value="Unpaid">Unpaid</option>
                     <option value="Pending">Pending</option>
                     <option value="Paid">Paid</option>
                 </select>
