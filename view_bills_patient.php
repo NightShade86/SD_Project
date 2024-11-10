@@ -197,7 +197,6 @@ $bills = $bills_result->fetch_all(MYSQLI_ASSOC);
                                         <p>Status: <?php echo ucfirst($bill['payment_status']); ?></p>
                                     </div>
                                     <div>
-                                        <button class="btn btn-primary view-bill-btn" data-bill-id="<?php echo $bill['bill_id']; ?>">View Details</button>
                                         <?php if ($bill['payment_status'] === 'Unpaid' || $bill['payment_status'] === 'Pending'): ?>
                                             <a href="pay_bills.php?bill_id=<?php echo $bill['bill_id']; ?>" class="btn btn-success">Pay</a>
                                         <?php endif; ?>
@@ -226,141 +225,7 @@ $bills = $bills_result->fetch_all(MYSQLI_ASSOC);
         </div>
     </section>
 
-    <!-- Modal for Bill Details -->
-    <div class="modal fade" id="billModal" tabindex="-1" aria-labelledby="billModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="billModalLabel">Bill Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="bill-details"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
-<script>
-    $(document).ready(function() {
-        $('.view-bill-btn').on('click', function() {
-            var billId = $(this).data('bill-id');
-            $('#bill-details').html('<p>Loading details...</p>');
-            $.ajax({
-                url: 'get_bill_details.php',
-                method: 'POST',
-                data: { bill_id: billId },
-                success: function(response) {
-                    $('#bill-details').html(response);
-                    $('#billModal').modal('show');
-                },
-                error: function() {
-                    $('#bill-details').html('<p>Error loading details. Please try again.</p>');
-                }
-            });
-        });
-    });
-</script>
-
-	<div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="appointmentModalLabel">Your Appointments</h5>
-					</div>
-					<div class="modal-body" id="modal-body-content">
-						<!-- Appointment content will be loaded here via AJAX -->
-					</div>
-				</div>
-			</div>
-	</div>
-
-	<style>
-		/* Override Bootstrap default styles at min-width 576px breakpoint */
-		@media (min-width: 576px) {
-			.modal-dialog {
-				max-width: 90% !important; /* Set max width to a larger percentage */
-				margin: auto !important; /* Center the modal */
-			}
-
-			.modal-dialog-scrollable {
-				max-height: calc(100% - 2rem) !important; /* Adjust max height */
-			}
-
-			.modal-dialog-scrollable .modal-content {
-				max-height: calc(100vh - 2rem) !important; /* Adjust height for better content fit */
-			}
-
-			.modal-dialog-centered {
-				min-height: calc(100% - 2rem) !important; /* Adjust min height */
-			}
-
-			.modal-dialog-centered::before {
-				height: calc(100vh - 2rem) !important; /* Set centering height */
-			}
-
-			.modal-sm {
-				max-width: 500px !important; /* Adjust small modal width */
-			}
-		}
-
-		/* General modal styling */
-		.modal-dialog {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			min-height: 100vh; /* Centers the modal vertically */
-		}
-
-		.modal-content {
-			width: 100%;
-			max-width: 1200px; /* Set a larger max width */
-		}
-
-		.modal-body {
-			padding: 20px; /* Set padding for content */
-		}
-
-		.modal {
-			opacity: 1 !important; /* Ensure the modal is fully visible */
-		}
-	</style>
-
-	<!-- Include jQuery and Bootstrap's JS -->
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
-
-	<script>
-		// Remove any existing event listeners to prevent duplicates
-		$(document).off('click', '#load-appointment-history').on('click', '#load-appointment-history', function() {
-			console.log('Appointment History clicked');  // Log when the link is clicked
-
-			// Show loading text before content loads
-			$('#modal-body-content').html('<p>Loading appointments...</p>');
-
-			// Load content via AJAX
-			$('#modal-body-content').load('view_existing_appointment_patient.php', function(response, status, xhr) {
-				if (status === "error") {
-					console.error('Error loading appointments:', xhr.status, xhr.statusText);
-					$('#modal-body-content').html('<p>Error loading appointment history. Please try again later.</p>');
-				} else {
-					console.log('Content loaded successfully');
-				}
-				// Show the modal after content loads
-				$('#appointmentModal').modal('show');
-			});
-		});
-
-		// Clear content on modal close to prevent issues on reopening
-		$('#appointmentModal').on('hidden.bs.modal', function () {
-			$('#modal-body-content').empty();
-			console.log('Modal content cleared');
-		});
-	</script>
-	
 	<footer class="main-footer">
 		<div class="widgets-section">
 			<div class="auto-container">
