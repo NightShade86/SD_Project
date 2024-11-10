@@ -69,7 +69,6 @@ if ($result->num_rows > 0) {
                         <th>Appointment Time</th>
                         <th>Reason for Visit</th>
                         <th>Queue Number</th>
-                        <th>Action</th>
                     </tr>";
                     
     // Loop through the result set and output each row in the table
@@ -86,10 +85,6 @@ if ($result->num_rows > 0) {
                 <td>{$row['appointment_time']}</td>
                 <td>{$row['reason_for_visit']}</td>
                 <td>{$row['queue_number']}</td>
-                <td>
-                    <button type='button' class='btn btn-primary btn-sm'>View</button>
-                    <a href='pay_bills.php?appointment_id={$row['appointment_id']}' class='btn btn-success btn-sm'>Pay</a>
-                </td>
               </tr>";
     }
 
