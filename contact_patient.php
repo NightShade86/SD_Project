@@ -116,9 +116,9 @@ ini_set('display_errors', 1);
 												echo "<li><a href='login.php'>Log In</a></li>";
 											}
 										?>
+										<li><a href="javascript:void(0)" id="load-appointment-history">Appointment History</a></li>
+										<li><a href="view_bills_patient.php">View Bills</a></li>
 									</ul>
-									<li><a href="javascript:void(0)" id="load-appointment-history">Appointment History</a></li>
-									<li><a href="view_bills_patient.php">View Bills</a></li>
 								</li>
                              <!--       <span>Blog</span>
                                     <ul>
