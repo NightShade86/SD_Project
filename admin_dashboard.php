@@ -54,7 +54,11 @@ if ($_SESSION['loggedin']) {
     $user_result = $user_info->get_result();
     $user = $user_result->fetch_assoc();
 
-    $ASimage = $user['IMAGE'] ?? 'default-avatar.png';
+    if (!empty($user['IMAGE'])) {
+        $ASimage = $user['IMAGE'];
+    } else {
+        $ASimage = 'default-avatar.png';
+    }
 }
 
 ?>
@@ -339,7 +343,7 @@ if ($_SESSION['loggedin']) {
 										if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 											echo "&nbsp Welcome, " . htmlspecialchars($userid);
 										} else {
-											echo " Profile &nbsp";
+											echo " Profile ";
 										}
 									?>
 								</span>

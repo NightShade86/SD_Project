@@ -61,7 +61,11 @@ if ($_SESSION['loggedin']) {
     $email = $user['EMAIL'];
     $ic = $user['IC'];
     $usertype = $user['USERTYPE'];
-    $image = $user['IMAGE'] ?? 'default-avatar.png';
+    if (!empty($user['IMAGE'])) {
+        $image = $user['IMAGE'];
+    } else {
+        $image = 'default-avatar.png';
+    }
 }
 ?>
 
