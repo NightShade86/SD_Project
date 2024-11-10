@@ -59,7 +59,6 @@ foreach ($bills as $bill) {
         $totalUnpaid += $bill['total_amount'];
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -172,28 +171,25 @@ foreach ($bills as $bill) {
             background-color: #45a049;
         }
 
+        /* Print styles */
         @media print {
-            body {
-                background-color: white;
-                padding: 0;
-            }
-
-            .btn {
-                display: none;
-            }
-
-            .filter-form, .header {
-                display: none;
+            .sidebar, .navbar, .filter-form, .header, .btn {
+                display: none; /* Hide header, filter form, and print button */
             }
 
             .container {
                 max-width: 100%;
                 margin: 0;
+                padding: 0;
             }
 
             .report-summary, .report-table {
                 box-shadow: none;
                 border-radius: 0;
+            }
+
+            .report-table table {
+                width: 100%;
             }
         }
     </style>
