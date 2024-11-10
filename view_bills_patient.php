@@ -269,17 +269,17 @@ $bills = $bills_result->fetch_all(MYSQLI_ASSOC);
     });
 </script>
 
-	<div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="appointmentModalLabel">Your Appointments</h5>
-					</div>
-					<div class="modal-body" id="modal-body-content">
-						<!-- Appointment content will be loaded here via AJAX -->
-					</div>
+<div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="appointmentModalLabel">Your Appointments</h5>
+				</div>
+				<div class="modal-body" id="modal-body-content">
+					<!-- Appointment content will be loaded here via AJAX -->
 				</div>
 			</div>
+		</div>
 	</div>
 
 	<style>
@@ -424,7 +424,7 @@ $bills = $bills_result->fetch_all(MYSQLI_ASSOC);
 				</div>
 			</div>
 		</div>
-		
+	<style>	
 		footer.main-footer {
 		background: #f7f7f7;
 		padding: 40px 0;
@@ -495,7 +495,7 @@ $bills = $bills_result->fetch_all(MYSQLI_ASSOC);
 	.footer-nav ul li a:hover {
 		text-decoration: underline;
 	}
-
+	</style>
 		<!-- Footer Bottom -->
 		<div class="footer-bottom">
 			<div class="auto-container">
