@@ -26,7 +26,7 @@ if (!$bill_id) {
 }
 
 // Fetch the bill details
-$stmt = $pdo->prepare("SELECT * FROM clinic_bills WHERE id = ?");
+$stmt = $pdo->prepare("SELECT * FROM clinic_bills WHERE bill_id = ?");
 $stmt->execute([$bill_id]);
 $bill = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -69,11 +69,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (isset($updated_item['remove'])) {
             // Remove the item if requested
-            $stmt = $pdo->prepare("DELETE FROM bill_items WHERE id = ?");
+            $stmt = $pdo->prepare("DELETE FROM bill_items WHERE bill_id = ?");
             $stmt->execute([$item_id]);
         } else {
             // Update the item in the database
-            $stmt = $pdo->prepare("UPDATE bill_items SET item_name = ?, price = ?, quantity = ?, total = ? WHERE id = ?");
+            $stmt = $pdo->prepare("UPDATE bill_items SET item_name = ?, price = ?, quantity = ?, total = ? WHERE bill_id = ?");
             $stmt->execute([$item_name, $price, $quantity, $total, $item_id]);
         }
     }
@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Update the bill total and other details
-    $stmt = $pdo->prepare("UPDATE clinic_bills SET payment_status = ?, payment_method = ?, insurance_company = ?, insurance_policy_number = ?, total_amount = ? WHERE id = ?");
+    $stmt = $pdo->prepare("UPDATE clinic_bills SET payment_status = ?, payment_method = ?, insurance_company = ?, insurance_policy_number = ?, total_amount = ? WHERE bill_id = ?");
     $stmt->execute([$payment_status, $payment_method, $insurance_company, $insurance_policy_number, $total_amount, $bill_id]);
 
     // Redirect to the bills page with success message based on user role
@@ -109,7 +109,7 @@ if (isset($_POST['update_status'])) {
     $bill_id = $_GET['bill_id'];
 
     // Update payment status in the database
-    $stmt = $pdo->prepare("UPDATE clinic_bills SET payment_status = ? WHERE id = ?");
+    $stmt = $pdo->prepare("UPDATE clinic_bills SET payment_status = ? WHERE bill_id = ?");
     $stmt->execute([$payment_status, $bill_id]);
 
     // Redirect with a success message
@@ -209,11 +209,11 @@ if (isset($_POST['update_status'])) {
         </tr>
         <?php foreach ($items as $item): ?>
             <tr>
-                <td><input type="text" name="items[<?= $item['id'] ?>][item_name]" value="<?= htmlspecialchars($item['item_name']) ?>" class="form-control"></td>
-                <td><input type="text" name="items[<?= $item['id'] ?>][price]" value="<?= htmlspecialchars($item['price']) ?>" class="form-control"></td>
-                <td><input type="number" name="items[<?= $item['id'] ?>][quantity]" value="<?= htmlspecialchars($item['quantity']) ?>" class="form-control"></td>
+                <td><input type="text" name="items[<?= $item['bill_id'] ?>][item_name]" value="<?= htmlspecialchars($item['item_name']) ?>" class="form-control"></td>
+                <td><input type="text" name="items[<?= $item['bill_id'] ?>][price]" value="<?= htmlspecialchars($item['price']) ?>" class="form-control"></td>
+                <td><input type="number" name="items[<?= $item['bill_id'] ?>][quantity]" value="<?= htmlspecialchars($item['quantity']) ?>" class="form-control"></td>
                 <td><input type="text" value="<?= htmlspecialchars($item['total']) ?>" class="form-control" readonly></td>
-                <td><input type="checkbox" name="items[<?= $item['id'] ?>][remove]"> Remove</td>
+                <td><input type="checkbox" name="items[<?= $item['bill_id'] ?>][remove]"> Remove</td>
             </tr>
         <?php endforeach; ?>
     </table>

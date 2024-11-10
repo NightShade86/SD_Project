@@ -251,7 +251,7 @@ foreach ($bills as $bill) {
             <tbody>
                 <?php foreach ($bills as $bill): ?>
                     <tr>
-                        <td><?= htmlspecialchars($bill['id']) ?></td>
+                        <td><?= htmlspecialchars($bill['bill_id']) ?></td>
                         <td><?= htmlspecialchars($bill['patient_ic']) ?></td>
                         <td>RM <?= number_format($bill['total_amount'], 2) ?></td>
                         <td><?= htmlspecialchars($bill['payment_status']) ?></td>
