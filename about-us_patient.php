@@ -120,37 +120,6 @@ ini_set('display_errors', 1);
 										<li><a href="view_bills_patient.php">View Bills</a></li>
 									</ul>
 								</li>
-                            <!-- <li class="dropdown">
-                                <span>Blog</span>
-                                <ul>
-                                    <li><a href="blog-checkboard.html">Checkerboard</a></li>
-                                    <li><a href="blog-masonry.html">Masonry</a></li>
-                                    <li><a href="blog-two-col.html">Two Columns</a></li>
-                                    <li><a href="blog-three-col.html">Three Columns</a></li>
-                                    <li><a href="blog-four-col-wide.html">Four Columns</a></li>
-                                    <li class="dropdown">
-                                        <span>Post Types</span>
-                                        <ul>
-                                            <li><a href="blog-post-image.html">Image Post</a></li>
-                                            <li><a href="blog-post-gallery.html">Gallery Post</a></li>
-                                            <li><a href="blog-post-link.html">Link Post</a></li>
-                                            <li><a href="blog-post-audio.html">Audio Post</a></li>
-                                            <li><a href="blog-post-quote.html">Quote Post</a></li>
-                                            <li><a href="blog-post-video.html">Video Post</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li> 
-                            </li>
-                            <li class="dropdown">
-                                <span>Shop</span>
-                                <ul>
-                                    <li><a href="shop.html">Shop</a></li>
-                                    <li><a href="shop-single.html">Shop Single</a></li>
-                                    <li><a href="shopping-cart.html">Shopping Cart</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                </ul>
-                            </li> -->
                         </ul>
                     </nav>
                     <!-- Main Menu End-->
