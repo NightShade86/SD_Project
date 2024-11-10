@@ -51,6 +51,14 @@ if (isset($_POST['undo_paid'])) {
     $updateStatus = $pdo->prepare("UPDATE clinic_bills SET payment_status = 'Pending' WHERE bill_id = ?");
     $updateStatus->execute([$bill_id]);
 }
+
+// Show all bills when the button is clicked
+if (isset($_POST['show_all'])) {
+    $searchQuery = "";  // Clear the search query and fetch all bills
+    $stmt = $pdo->prepare("SELECT * FROM clinic_bills WHERE payment_status IN ('Paid', 'Pending') ORDER BY payment_date DESC");
+    $stmt->execute();
+    $bills = $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
 
 <!DOCTYPE html>
@@ -88,6 +96,34 @@ if (isset($_POST['undo_paid'])) {
         }
         .search-container {
             margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .search-container input {
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 250px;
+        }
+        .search-container button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .search-container button.show-all {
+            background-color: #28a745;
+        }
+        .search-container button:hover {
+            background-color: #0056b3;
+        }
+        .search-container button.show-all:hover {
+            background-color: #218838;
         }
     </style>
 </head>
@@ -97,9 +133,10 @@ if (isset($_POST['undo_paid'])) {
 
 <!-- Search Form -->
 <div class="search-container">
-    <form method="POST">
+    <form method="POST" style="display: flex;">
         <input type="text" name="bill_id" value="<?= htmlspecialchars($searchQuery) ?>" placeholder="Search by Bill ID" required>
         <button type="submit" name="search" class="btn">Search</button>
+        <button type="submit" name="show_all" class="btn show-all">Show All</button>
     </form>
 </div>
 

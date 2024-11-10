@@ -37,7 +37,7 @@
             <form class="d-flex" method="GET">
                 <input type="text" class="form-control me-2" name="search" placeholder="Search by Staff ID or Name">
                 <button type="submit" class="btn btn-primary">Search</button>
-                <a class="btn btn-success ms-2" href="/clinicdb/SD_Project/view_staff.php">Show All</a>
+                <a class="btn btn-success ms-2" href="/clinicdb/SD_Project/admin_dashboard.php?section=staff">Show All</a>
             </form>
         </div>
         
