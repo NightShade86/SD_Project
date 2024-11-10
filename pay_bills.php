@@ -52,6 +52,8 @@ if ($result->num_rows > 0) {
         .pay-button { background-color: #28a745; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
         .pay-button:hover { background-color: #218838; }
         .paid-button { background-color: #6c757d; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: not-allowed; font-size: 16px; }
+        .back-button { background-color: #007bff; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        .back-button:hover { background-color: #0056b3; }
     </style>
 </head>
 <body>
@@ -68,6 +70,9 @@ if ($result->num_rows > 0) {
     <?php else: ?>
         <button type="button" class="paid-button" disabled>Paid</button>
     <?php endif; ?>
+
+    <!-- Back Button -->
+    <button class="back-button" onclick="window.history.back();">Back</button>
 </div>
 
 </body>
