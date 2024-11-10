@@ -198,7 +198,7 @@ foreach ($bills as $bill) {
 
 <div class="container">
     <div class="header">
-        <img src="logo.png" alt="Dr. Thong Clinic Logo">
+        <img src="file.png" alt="Dr. Thong Clinic Logo">
         <div class="clinic-name">DR. THONG CLINIC</div>
         <h1>Sales Report</h1>
     </div>
