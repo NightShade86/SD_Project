@@ -18,7 +18,7 @@ try {
 }
 
 // Fetch bills from clinic_bills table using JOIN with bill_items
-$stmt = $pdo->prepare("SELECT clinic_bills.*, bill_items.item_name, bill_items.price 
+$stmt = $pdo->prepare("SELECT clinic_bills.*, bill_items.item_name, bill_items.price, bill_items.quantity
                        FROM clinic_bills
                        LEFT JOIN bill_items ON clinic_bills.id = bill_items.bill_id
                        ORDER BY clinic_bills.created_at DESC");
@@ -130,7 +130,7 @@ if (isset($_SESSION['role'])) {
             <td><?= htmlspecialchars($bill['patient_ic']) ?></td>
             <td><?= isset($bill['item_name']) ? htmlspecialchars($bill['item_name']) : 'N/A' ?></td>
             <td>RM <?= isset($bill['price']) && is_numeric($bill['price']) ? number_format($bill['price'], 2) : '0.00' ?></td>
-            <td><?= isset($bill['quantity']) ? htmlspecialchars($bill['quantity']) : '0' ?></td>
+            <td><?= isset($bill['quantity']) && is_numeric($bill['quantity']) ? htmlspecialchars($bill['quantity']) : '0' ?></td>
             <td>RM <?= isset($bill['total_amount']) && is_numeric($bill['total_amount']) ? number_format($bill['total_amount'], 2) : '0.00' ?></td>
             <td>
                 <!-- Display the payment status -->
