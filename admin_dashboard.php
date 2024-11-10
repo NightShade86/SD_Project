@@ -321,7 +321,7 @@ if ($_SESSION['loggedin']) {
 					</a>
 					<style>
 						.logo {
-							width: 130px;
+							width: 120px;
 							height: 75px;
 						}
 					</style>
