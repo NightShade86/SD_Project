@@ -4,8 +4,8 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-if (empty($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    header('Location: index.php');
+if (empty($_SESSION['role']) || !in_array($_SESSION['role'], ['admin', 'staff'])) {
+    header('Location: index.php'); // Redirect to login or another page if access is not allowed
     exit();
 }
 
