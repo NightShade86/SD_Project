@@ -54,8 +54,13 @@ if ($_SESSION['loggedin']) {
     $user_result = $user_info->get_result();
     $user = $user_result->fetch_assoc();
 
-    $ASimage = $user['IMAGE'] ?? 'default-avatar.png';
+    if (!empty($user['IMAGE'])) {
+        $ASimage = $user['IMAGE'];
+    } else {
+        $ASimage = 'default-avatar.png';
+    }
 }
+
 ?>
 <!Doctype html> 
 <html lang="en">
@@ -155,9 +160,9 @@ if ($_SESSION['loggedin']) {
 		}
 		
 		.content table {
-			width: 100%; /* Set the table width to 100% of its parent container */
-			overflow-x: auto; /* Add horizontal scrolling to the table */
-			display: block; /* Set the table display to block to enable horizontal scrolling */
+		width: 100%; /* Set the table width to 100% of its parent container */
+		overflow-x: auto; /* Add horizontal scrolling to the table */
+		display: block; /* Set the table display to block to enable horizontal scrolling */
 		}
 		
 				/* Profile Dropdown Styles */
@@ -246,7 +251,9 @@ if ($_SESSION['loggedin']) {
             object-fit: cover;
         }
 
-    </style>
+
+
+   </style>
 </head>
 <body>
     <div class="container-fluid">
@@ -287,11 +294,9 @@ if ($_SESSION['loggedin']) {
                     </div>
 					
                     <!-- Static Links -->
-					<a class="nav-link text-white" href="?section=view-transaction"><i class="fas fa-exchange-alt"></i> View Transactions</a>
+                    <a class="nav-link text-white" href="?section=view-transaction"><i class="fas fa-exchange-alt"></i> View Transactions</a>
                     <a class="nav-link text-white" href="?section=sales-report"><i class="fas fa-chart-line"></i> Generate Sales Report</a>
                     <a class="nav-link text-white" href="?section=feedback"><i class="fas fa-comments"></i> View Feedback</a>
-                    <a class="nav-link text-white" href="?section=feedback"><i class="fas fa-comments"></i> <?php echo $userid ?></a>
-
                 </nav>
             </div>
             
@@ -303,10 +308,10 @@ if ($_SESSION['loggedin']) {
 						Staff Dashboard
 					</a>
 					<style>
-					.logo {
-						width: 75px;
-						height: 75px;
-					}
+						.logo {
+							width: 130px;
+							height: 75px;
+						}
 					</style>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" 
 							data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
@@ -321,14 +326,14 @@ if ($_SESSION['loggedin']) {
                                         <img src="uploaded_img/<?php echo $ASimage; ?>" alt="User Avatar" class="user-avatar">
                                     </div>
 
-									<?php
-                                    $userid = $_SESSION['USER_ID'];
-                                    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-                                        echo "&nbsp Welcome, " . htmlspecialchars($userid);
-                                    } else {
-                                        echo " Profile &nbsp";
-                                    }
-                                    ?>
+									<?php 
+										$userid = $_SESSION['USER_ID'];
+										if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+											echo "&nbsp Welcome, " . htmlspecialchars($userid);
+										} else {
+											echo " Profile ";
+										}
+									?>
 								</span>
 								<ul>
 									<li><a href="?section=profile">Profile</a></li>
@@ -391,7 +396,6 @@ if ($_SESSION['loggedin']) {
 					margin-right: 5px; /* Space between icon and text */
 					fill: #ffffff; /* Change the icon color if needed */
 				}
-
 			</style>
                 <main class="mt-4">
                     <div class='content bg-white p-4 shadow-sm rounded'>
@@ -430,7 +434,6 @@ if ($_SESSION['loggedin']) {
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
 </body>
 </html>
 <?php
