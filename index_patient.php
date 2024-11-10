@@ -267,8 +267,8 @@ unset($_SESSION['success_message'], $_SESSION['error_message']);
                         data-textalign="['top','top','top','top']"
                         data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","to":"o:1;","ease":"Power4.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'>
                             <div class="btn-box">
-                                <a href="about-us_patient.html" class="theme-btn btn-style-one"><span class="btn-title">About Us</span></a>
-                                <a href="services_patient.html" class="theme-btn btn-style-two"><span class="btn-title">Our Services</span></a>
+                                <a href="about-us_patient.php" class="theme-btn btn-style-one"><span class="btn-title">About Us</span></a>
+                                <a href="services_patient.php" class="theme-btn btn-style-two"><span class="btn-title">Our Services</span></a>
                             </div>
                         </div>
                     </li>
@@ -352,8 +352,8 @@ unset($_SESSION['success_message'], $_SESSION['error_message']);
                         data-textalign="['top','top','top','top']"
                         data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","to":"o:1;","ease":"Power4.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'>
                             <div class="btn-box">
-                                <a href="about-us.html" class="theme-btn btn-style-one"><span class="btn-title">About Us</span></a>
-                                <a href="departments.html" class="theme-btn btn-style-two"><span class="btn-title">Our Services</span></a>
+                                <a href="about-us_patient.php" class="theme-btn btn-style-one"><span class="btn-title">About Us</span></a>
+                                <a href="services_patient.php" class="theme-btn btn-style-two"><span class="btn-title">Our Services</span></a>
                             </div>
                         </div>
                     </li>

@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Execute the query
     if ($stmt->execute() === TRUE) {
         $_SESSION['success_message'] = "Registration successful!";
-        header("Location: login_patient.php");
+        header("Location: login_guess.php");
     } else {
         $_SESSION['error_message'] = "There was an issue with the registration. Please try again.";
         header("Location: register_guess.php");
