@@ -31,7 +31,7 @@
         
         <!-- New Staff button with icon -->
         <div class="d-flex justify-content-between mb-3">
-            <a class="btn btn-primary" href="/clinicdb/SD_Project/add_staff.php" role="button">
+            <a class="btn btn-primary" href="/clinicdb/SD_Project/admin_dashboard.php?section=add-staff" role="button">
                 <i class="fas fa-user-plus"></i> New Staff
             </a>
             <form class="d-flex" method="GET">

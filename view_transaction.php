@@ -23,6 +23,22 @@ try {
     die("Database connection failed: " . $e->getMessage());
 }
 
+// Initialize search variable
+$searchQuery = "";
+
+// Check if search form is submitted
+if (isset($_POST['search'])) {
+    $searchQuery = $_POST['bill_id'];  // Get search query
+    $stmt = $pdo->prepare("SELECT * FROM clinic_bills WHERE payment_status IN ('Paid', 'Pending') AND bill_id LIKE ? ORDER BY payment_date DESC");
+    $stmt->execute(["%$searchQuery%"]);
+} else {
+    // Default fetch all bills with Paid or Pending status
+    $stmt = $pdo->prepare("SELECT * FROM clinic_bills WHERE payment_status IN ('Paid', 'Pending') ORDER BY payment_date DESC");
+    $stmt->execute();
+}
+
+$bills = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 // Update the payment status in the database based on the button clicked
 if (isset($_POST['mark_paid'])) {
     $bill_id = $_POST['bill_id'];
@@ -35,11 +51,6 @@ if (isset($_POST['undo_paid'])) {
     $updateStatus = $pdo->prepare("UPDATE clinic_bills SET payment_status = 'Pending' WHERE bill_id = ?");
     $updateStatus->execute([$bill_id]);
 }
-
-// Fetch bills where payment status is either 'Paid' or 'Pending'
-$stmt = $pdo->prepare("SELECT * FROM clinic_bills WHERE payment_status IN ('Paid', 'Pending') ORDER BY payment_date DESC");
-$stmt->execute();
-$bills = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -75,16 +86,26 @@ $bills = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .pending {
             background-color: #f8d7da; /* Light red for pending */
         }
+        .search-container {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
 
 <h1>View Transactions</h1>
 
+<!-- Search Form -->
+<div class="search-container">
+    <form method="POST">
+        <input type="text" name="bill_id" value="<?= htmlspecialchars($searchQuery) ?>" placeholder="Search by Bill ID" required>
+        <button type="submit" name="search" class="btn">Search</button>
+    </form>
+</div>
+
 <table>
     <tr>
         <th>Bill ID</th>
-        <th>Receipt ID</th>
         <th>Patient IC</th>
         <th>Total Amount</th>
         <th>Payment Status</th>
@@ -96,7 +117,6 @@ $bills = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php foreach ($bills as $bill): ?>
         <tr class="<?= strtolower($bill['payment_status']) ?>">
             <td><?= htmlspecialchars($bill['bill_id']) ?></td> <!-- Bill ID -->
-            <td><?= htmlspecialchars($bill['receipt_id']) ?></td> <!-- Receipt ID -->
             <td><?= htmlspecialchars($bill['patient_ic']) ?></td>
             <td>RM <?= number_format($bill['total_amount'], 2) ?></td>
             <td><?= htmlspecialchars($bill['payment_status']) ?></td>

@@ -170,7 +170,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </div>
 
-            <button type="button" onclick="addItem()">Add Another Item</button><br><br>
             <button type="submit" name="create_bill">Create Bill</button>
         <?php endif; ?>
     </form>
@@ -182,23 +181,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     alert("Success: Bill created successfully!");
 <?php endif; ?>
 
-let itemIndex = 1;
-
-function addItem() {
-    const itemsDiv = document.getElementById("items");
-    const newItem = document.createElement("div");
-    newItem.className = 'form-group';
-    newItem.innerHTML = `
-        <label>Item Name:</label>
-        <input type="text" name="items[${itemIndex}][item_name]" required>
-        <label>Price (RM):</label>
-        <input type="number" name="items[${itemIndex}][price]" required step="0.01">
-        <label>Quantity:</label>
-        <input type="number" name="items[${itemIndex}][quantity]" required>
-    `;
-    itemsDiv.appendChild(newItem);
-    itemIndex++;
-}
 </script>
 
 </body>
