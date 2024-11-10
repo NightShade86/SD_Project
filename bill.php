@@ -17,11 +17,13 @@ try {
     die("Database connection failed: " . $e->getMessage());
 }
 
-// Fetch bills from clinic_bills table using JOIN with bill_items
-$stmt = $pdo->prepare("SELECT clinic_bills.*, bill_items.item_name, bill_items.price, bill_items.quantity
+// Fetch bills from clinic_bills table using JOIN with bill_items, ordered by bill_id
+$stmt = $pdo->prepare("SELECT clinic_bills.bill_id, clinic_bills.patient_ic, clinic_bills.payment_status, 
+                              clinic_bills.payment_method, clinic_bills.total_amount, clinic_bills.created_at,
+                              bill_items.item_name, bill_items.price, bill_items.quantity
                        FROM clinic_bills
-                       LEFT JOIN bill_items ON clinic_bills.id = bill_items.bill_id
-                       ORDER BY clinic_bills.created_at DESC");
+                       LEFT JOIN bill_items ON clinic_bills.bill_id = bill_items.bill_id
+                       ORDER BY clinic_bills.bill_id ASC"); // Order by bill_id in ascending order
 $stmt->execute();
 $bills = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -80,10 +82,10 @@ if (isset($_SESSION['role'])) {
         }
         .action-btns a {
             text-decoration: none;
-            padding: 5px 12px; /* Reduced padding */
-            font-size: 14px; /* Smaller font size */
+            padding: 3px 8px;
+            font-size: 12px;
             border-radius: 5px;
-            margin: 0 5px; /* Reduced margin for buttons to be closer */
+            margin: 0 5px;
             font-weight: bold;
             color: white;
             display: inline-block;
@@ -102,7 +104,7 @@ if (isset($_SESSION['role'])) {
             background-color: #c82333;
         }
         .btn-icon {
-            margin-right: 5px; /* Adjust icon spacing */
+            margin-right: 5px;
         }
     </style>
 </head>
@@ -110,30 +112,28 @@ if (isset($_SESSION['role'])) {
 
 <h1>List of Bills</h1>
 
-<!-- Bill Table -->
 <table>
     <tr>
-        <th>ID</th>
+        <th>Bill ID</th>
         <th>Patient IC</th>
         <th>Item</th>
         <th>Price</th>
         <th>Quantity</th>
         <th>Total Amount</th>
-        <th>Payment Status</th> <!-- Added Payment Status Column -->
+        <th>Payment Status</th>
         <th>Actions</th>
     </tr>
 
     <?php $counter = 1; ?>
     <?php foreach ($bills as $bill): ?>
         <tr>
-            <td><?= $counter++ ?></td> <!-- ID starts from 1 and increments -->
+            <td><?= htmlspecialchars($bill['bill_id']) ?></td>
             <td><?= htmlspecialchars($bill['patient_ic']) ?></td>
             <td><?= isset($bill['item_name']) ? htmlspecialchars($bill['item_name']) : 'N/A' ?></td>
             <td>RM <?= isset($bill['price']) && is_numeric($bill['price']) ? number_format($bill['price'], 2) : '0.00' ?></td>
             <td><?= isset($bill['quantity']) && is_numeric($bill['quantity']) ? htmlspecialchars($bill['quantity']) : '0' ?></td>
             <td>RM <?= isset($bill['total_amount']) && is_numeric($bill['total_amount']) ? number_format($bill['total_amount'], 2) : '0.00' ?></td>
             <td>
-                <!-- Display the payment status -->
                 <?php
                 if ($bill['payment_status'] == 'Paid') {
                     echo '<span style="color: green; font-weight: bold;">Paid</span>';
@@ -145,13 +145,10 @@ if (isset($_SESSION['role'])) {
                 ?>
             </td>
             <td class="action-btns">
-                <!-- Edit Button -->
-                <a href="<?= $dashboardLink ?>?section=edit-bills&bill_id=<?= $bill['id'] ?>" class="edit-btn">
+                <a href="<?= $dashboardLink ?>?section=edit-bills&bill_id=<?= $bill['bill_id'] ?>" class="edit-btn">
                     <i class="fas fa-edit btn-icon"></i> Edit
                 </a>
-
-                <!-- Delete Button -->
-                <a href="<?= $dashboardLink ?>?section=delete-bills&bill_id=<?= $bill['id'] ?>" class="delete-btn"
+                <a href="<?= $dashboardLink ?>?section=delete-bills&bill_id=<?= $bill['bill_id'] ?>" class="delete-btn"
                    onclick="return confirm('Are you sure you want to delete this bill?')">
                     <i class="fas fa-trash-alt btn-icon"></i> Delete
                 </a>
@@ -160,7 +157,6 @@ if (isset($_SESSION['role'])) {
     <?php endforeach; ?>
 </table>
 
-<!-- Include FontAwesome for Icons -->
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
 </body>

@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['bill_id'])) {
         SELECT clinic_bills.*, user_info.email, user_info.NO_TEL 
         FROM clinic_bills 
         JOIN user_info ON clinic_bills.patient_ic = user_info.IC 
-        WHERE clinic_bills.id = ? 
+        WHERE clinic_bills.bill_id = ? 
     ");
     $stmt->bind_param("i", $billID);
     $stmt->execute();

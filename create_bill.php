@@ -25,8 +25,7 @@ try {
 
 $message = '';
 $patient_exists = false;
-$success = false; // Variable to track success
-
+$success = false;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Check if 'check_ic' button was clicked to validate the Patient IC
@@ -47,36 +46,54 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Process form submission for creating a bill
     if (isset($_POST['create_bill']) && !empty($_POST['items'])) {
         $patient_ic = $_POST['patient_ic'];
-        $payment_status = $_POST['payment_status']; // Correctly handle payment status
+        $payment_status = $_POST['payment_status'];
         $payment_method = $_POST['payment_method'];
         $insurance_company = $_POST['insurance_company'] ?? '';
         $insurance_policy_number = $_POST['insurance_policy_number'] ?? '';
         $total_amount = 0;
 
-        // Insert new bill in clinic_bills
-        $stmt = $pdo->prepare("INSERT INTO clinic_bills (patient_ic, payment_status, payment_method, insurance_company, insurance_policy_number, total_amount) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$patient_ic, $payment_status, $payment_method, $insurance_company, $insurance_policy_number, $total_amount]);
-        $bill_id = $pdo->lastInsertId();
+        // Begin transaction
+        $pdo->beginTransaction();
 
-        // Insert bill items and calculate total amount
-        $items = $_POST['items'];
-        foreach ($items as $item) {
-            $item_name = $item['item_name'];
-            $price = floatval($item['price']);
-            $quantity = intval($item['quantity']);
-            $total = $price * $quantity;
-            $total_amount += $total;
+        try {
+            // Insert new bill in clinic_bills
+            $stmt = $pdo->prepare("INSERT INTO clinic_bills (patient_ic, payment_status, payment_method, insurance_company, insurance_policy_number, total_amount) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$patient_ic, $payment_status, $payment_method, $insurance_company, $insurance_policy_number, $total_amount]);
+            $bill_id = $pdo->lastInsertId(); // Get the generated bill_id after the insert
 
-            $stmt = $pdo->prepare("INSERT INTO bill_items (bill_id, item_name, price, quantity, total) VALUES (?, ?, ?, ?, ?)");
-            $stmt->execute([$bill_id, $item_name, $price, $quantity, $total]);
+            if (!$bill_id) {
+                throw new Exception("Failed to get the bill ID");
+            }
+
+            // Insert bill items and calculate total amount
+            $items = $_POST['items'];
+            foreach ($items as $item) {
+                $item_name = $item['item_name'];
+                $price = floatval($item['price']);
+                $quantity = intval($item['quantity']);
+                $total = $price * $quantity;
+                $total_amount += $total;
+
+                // Insert item into bill_items
+                $stmt = $pdo->prepare("INSERT INTO bill_items (bill_id, item_name, price, quantity, total) VALUES (?, ?, ?, ?, ?)");
+                $stmt->execute([$bill_id, $item_name, $price, $quantity, $total]);
+            }
+
+            // Update total amount in clinic_bills after inserting all items
+            $stmt = $pdo->prepare("UPDATE clinic_bills SET total_amount = ? WHERE bill_id = ?");
+            $stmt->execute([$total_amount, $bill_id]);
+
+            // Commit transaction
+            $pdo->commit();
+            
+            // Set success to true to trigger JavaScript alert
+            $success = true;
+
+        } catch (Exception $e) {
+            // Rollback transaction if something goes wrong
+            $pdo->rollBack();
+            $message = "Error: " . $e->getMessage();
         }
-
-        // Update total amount in clinic_bills
-        $stmt = $pdo->prepare("UPDATE clinic_bills SET total_amount = ? WHERE id = ?");
-        $stmt->execute([$total_amount, $bill_id]);
-
-        // Set success to true to trigger JavaScript alert
-        $success = true;
     }
 }
 ?>

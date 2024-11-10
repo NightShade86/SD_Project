@@ -192,14 +192,14 @@ $bills = $bills_result->fetch_all(MYSQLI_ASSOC);
                             <?php foreach ($bills as $bill): ?>
                                 <div class="list-group-item d-flex justify-content-between align-items-center <?php echo ($bill['payment_status'] === 'Paid') ? 'paid' : ($bill['payment_status'] === 'Pending' ? 'pending' : 'unpaid'); ?>">
                                     <div>
-                                        <h5>Bill #<?php echo $bill['id']; ?></h5>
+                                        <h5>Bill #<?php echo $bill['bill_id']; ?></h5>
                                         <p>Total Amount: RM <?php echo number_format($bill['total_amount'], 2); ?></p>
                                         <p>Status: <?php echo ucfirst($bill['payment_status']); ?></p>
                                     </div>
                                     <div>
-                                        <button class="btn btn-primary view-bill-btn" data-bill-id="<?php echo $bill['id']; ?>">View Details</button>
+                                        <button class="btn btn-primary view-bill-btn" data-bill-id="<?php echo $bill['bill_id']; ?>">View Details</button>
                                         <?php if ($bill['payment_status'] === 'Unpaid' || $bill['payment_status'] === 'Pending'): ?>
-                                            <a href="pay_bills.php?bill_id=<?php echo $bill['id']; ?>" class="btn btn-success">Pay</a>
+                                            <a href="pay_bills.php?bill_id=<?php echo $bill['bill_id']; ?>" class="btn btn-success">Pay</a>
                                         <?php endif; ?>
                                     </div>
                                 </div>

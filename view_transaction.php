@@ -26,13 +26,13 @@ try {
 // Update the payment status in the database based on the button clicked
 if (isset($_POST['mark_paid'])) {
     $bill_id = $_POST['bill_id'];
-    $updateStatus = $pdo->prepare("UPDATE clinic_bills SET payment_status = 'Paid' WHERE id = ?");
+    $updateStatus = $pdo->prepare("UPDATE clinic_bills SET payment_status = 'Paid' WHERE bill_id = ?");
     $updateStatus->execute([$bill_id]);
 }
 
 if (isset($_POST['undo_paid'])) {
     $bill_id = $_POST['bill_id'];
-    $updateStatus = $pdo->prepare("UPDATE clinic_bills SET payment_status = 'Pending' WHERE id = ?");
+    $updateStatus = $pdo->prepare("UPDATE clinic_bills SET payment_status = 'Pending' WHERE bill_id = ?");
     $updateStatus->execute([$bill_id]);
 }
 
@@ -95,7 +95,7 @@ $bills = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <?php foreach ($bills as $bill): ?>
         <tr class="<?= strtolower($bill['payment_status']) ?>">
-            <td><?= htmlspecialchars($bill['id']) ?></td> <!-- Bill ID -->
+            <td><?= htmlspecialchars($bill['bill_id']) ?></td> <!-- Bill ID -->
             <td><?= htmlspecialchars($bill['receipt_id']) ?></td> <!-- Receipt ID -->
             <td><?= htmlspecialchars($bill['patient_ic']) ?></td>
             <td>RM <?= number_format($bill['total_amount'], 2) ?></td>
@@ -105,12 +105,12 @@ $bills = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <td>
                 <?php if ($bill['payment_status'] == 'Pending'): ?>
                     <form method="POST" style="display:inline;">
-                        <input type="hidden" name="bill_id" value="<?= $bill['id'] ?>">
+                        <input type="hidden" name="bill_id" value="<?= $bill['bill_id'] ?>">
                         <button type="submit" name="mark_paid" class="btn">Mark as Paid</button>
                     </form>
                 <?php elseif ($bill['payment_status'] == 'Paid'): ?>
                     <form method="POST" style="display:inline;">
-                        <input type="hidden" name="bill_id" value="<?= $bill['id'] ?>">
+                        <input type="hidden" name="bill_id" value="<?= $bill['bill_id'] ?>">
                         <button type="submit" name="undo_paid" class="btn btn-undo">Undo</button>
                     </form>
                 <?php endif; ?>
