@@ -1,4 +1,7 @@
 <?php
+
+ob_start();
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -8,18 +11,18 @@ ini_set('display_errors', 1);
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "dtcmsdb";  
+$dbname = "dtcmsdb";
 
 // Open connection
 $connection = new mysqli($servername, $username, $password, $dbname);
 
-$patient_id = "";  
+$patient_id = "";
 $firstname = "";
 $lastname = "";
 $no_tel = "";
 $email = "";
 $ic = "";
-$password = ""; 
+$password = "";
 $errorMessage = "";
 $successMessage = "";
 
@@ -94,17 +97,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $errorMessage = "Error: " . $sql . "<br>" . $connection->error;
         } else {
             $successMessage = "Patient information updated successfully!";
-              
+            ob_end_clean(); // Clear any output buffer before redirecting
+
             // Redirect based on the existing session variable for user role
             if (isset($_SESSION['userRole'])) {
                 if ($_SESSION['userRole'] === 'admin') {
                     header("Location: admin_dashboard.php?section=patients");
+                    exit;
                 } elseif ($_SESSION['userRole'] === 'staff') {
                     header("Location: staff_dashboard.php?section=patients");
+                    exit;
                 }
-            } 
-            exit;
+            }
         }
+
     }
 }
 ?>
@@ -186,8 +192,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
                         <!-- Submit and Cancel Buttons -->
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" href = "admin_dashboard.php?section=patients" > Submit</button>
-                            <a class="btn btn-outline-secondary" href="<?php echo htmlspecialchars($_SERVER['HTTP_REFERER']); ?>" role="button">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="button" class="btn btn-outline-secondary" onclick="history.back()">Cancel</button>
                         </div>
                     </form>
                 </div>

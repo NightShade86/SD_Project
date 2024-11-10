@@ -1,8 +1,12 @@
-
 <?php
-session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Store messages in variables and clear them from session
+$successMessage = isset($_SESSION['success_message']) ? $_SESSION['success_message'] : null;
+$errorMessage = isset($_SESSION['error_message']) ? $_SESSION['error_message'] : null;
+unset($_SESSION['success_message'], $_SESSION['error_message']);
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +23,11 @@ ini_set('display_errors', 1);
 <link href="css/style.css" rel="stylesheet">
 <link href="css/responsive.css" rel="stylesheet">
 
-<!--Color Themes-->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <!--Color Themes-->
 <link id="theme-color-file" href="css/color-themes/default-theme.css" rel="stylesheet">
 
 <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
@@ -1326,6 +1334,29 @@ ini_set('display_errors', 1);
 <script src="js/owl.js"></script>
 <script src="js/wow.js"></script>
 <script src="js/script.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        <?php if ($successMessage): ?>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: '<?php echo $successMessage; ?>',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        });
+        <?php elseif ($errorMessage): ?>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '<?php echo $errorMessage; ?>',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Try Again'
+        });
+        <?php endif; ?>
+    });
+</script>
+
 </body>
 </html>
 
