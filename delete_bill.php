@@ -37,7 +37,7 @@ if ($bill_id) {
     $stmt->execute([$bill_id]);
 
     // Then delete the bill itself
-    $stmt = $pdo->prepare("DELETE FROM clinic_bills WHERE id = ?");
+    $stmt = $pdo->prepare("DELETE FROM clinic_bills WHERE bill_id = ?");
     $stmt->execute([$bill_id]);
 
     // Redirect back to the bills list
