@@ -21,7 +21,7 @@ if (!$bill_id) {
 }
 
 // Retrieve the bill details based on the provided bill_id
-$stmt = $conn->prepare("SELECT * FROM clinic_bills WHERE id = ? AND payment_status IN ('Unpaid', 'Pending')");
+$stmt = $conn->prepare("SELECT * FROM clinic_bills WHERE bill_id = ? AND payment_status IN ('Unpaid', 'Pending')");
 $stmt->bind_param("i", $bill_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -62,7 +62,7 @@ if ($result->num_rows > 0) {
 
     <?php if ($paymentStatus == 'Unpaid'): ?>
         <form action="initiate_payment.php" method="POST">
-            <input type="hidden" name="bill_id" value="<?php echo $bill['id']; ?>">
+            <input type="hidden" name="bill_id" value="<?php echo $bill['bill_id']; ?>">
             <button type="submit" class="pay-button">Pay Now</button>
         </form>
     <?php else: ?>
