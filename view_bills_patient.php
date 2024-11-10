@@ -47,15 +47,7 @@ $bills = $bills_result->fetch_all(MYSQLI_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Bills</title>
 
-    <!-- Stylesheets -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/responsive.css" rel="stylesheet">
-    <link href="css/color-themes/default-theme.css" rel="stylesheet">
-    
-    <!-- Bootstrap and Custom CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
+  	<!-- Stylesheets -->
 	<link href="css/bootstrap.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
 	<link href="css/responsive.css" rel="stylesheet">
@@ -71,6 +63,7 @@ $bills = $bills_result->fetch_all(MYSQLI_ASSOC);
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script><![endif]-->
 	<!--[if lt IE 9]><script src="js/respond.js"></script><![endif]-->
+
 		
     <style>
         .paid { background-color: #d4edda; }   /* Light green for Paid */
@@ -269,17 +262,17 @@ $bills = $bills_result->fetch_all(MYSQLI_ASSOC);
     });
 </script>
 
-<div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="appointmentModalLabel">Your Appointments</h5>
-				</div>
-				<div class="modal-body" id="modal-body-content">
-					<!-- Appointment content will be loaded here via AJAX -->
+	<div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="appointmentModalLabel">Your Appointments</h5>
+					</div>
+					<div class="modal-body" id="modal-body-content">
+						<!-- Appointment content will be loaded here via AJAX -->
+					</div>
 				</div>
 			</div>
-		</div>
 	</div>
 
 	<style>
@@ -424,7 +417,7 @@ $bills = $bills_result->fetch_all(MYSQLI_ASSOC);
 				</div>
 			</div>
 		</div>
-	<style>	
+		
 		footer.main-footer {
 		background: #f7f7f7;
 		padding: 40px 0;
@@ -495,7 +488,7 @@ $bills = $bills_result->fetch_all(MYSQLI_ASSOC);
 	.footer-nav ul li a:hover {
 		text-decoration: underline;
 	}
-	</style>
+
 		<!-- Footer Bottom -->
 		<div class="footer-bottom">
 			<div class="auto-container">
