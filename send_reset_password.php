@@ -37,7 +37,7 @@ if ($mysqli->affected_rows) {
     $mail->Subject = "Password Reset";
     $mail->Body = <<<END
 
-    Click <a href="http://localhost/clinicdb/SD_Project/reset_password.php?token=$token">here</a> 
+    Click <a href="https://www.drthong-clinic.uk/clinicdb/SD_Project/reset_password.php?token=$token">here</a> 
     to reset your password.
 
     END;

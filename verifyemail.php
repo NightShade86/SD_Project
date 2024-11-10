@@ -26,7 +26,7 @@ if ($mysqli->affected_rows) {
     $mail->addAddress($email);
     $mail->Subject = "Email Verification";
     $mail->Body = <<<END
-        Click <a href="http://localhost/clinicdb/SD_Project/register_guess.php?token=$token">here</a> 
+        Click <a href="https://www.drthong-clinic.uk/clinicdb/SD_Project/register_guess.php?token=$token">here</a> 
         to verify your email.
     END;
 
