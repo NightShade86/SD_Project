@@ -2,7 +2,7 @@
 // Retrieve GET parameters with default values if not provided
 $status_id = isset($_GET['status_id']) ? $_GET['status_id'] : null;
 $billcode = isset($_GET['billcode']) ? $_GET['billcode'] : 'N/A';
-$order_id = isset($_GET['order_id']) ? $_GET['order_id'] : 'N/A';
+$receipt_id = isset($_GET['order_id']) ? $_GET['order_id'] : 'N/A'; // Changed from order_id to receipt_id
 $msg = isset($_GET['msg']) ? $_GET['msg'] : null;
 $transaction_id = isset($_GET['transaction_id']) ? $_GET['transaction_id'] : 'N/A';
 
@@ -14,6 +14,41 @@ if ($status_id == '3') {
 
 // Set a default payment status if payment is successful
 $payment_status = "Successful";
+
+// Database connection (Replace with your actual connection)
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "dtcmsdb";  // Use your actual database name
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Function to insert data into the database
+function insertPaymentDetails($receipt_id, $transaction_id, $billcode, $conn) {
+    // Insert data into clinic_bills table
+    $sql_bills = "UPDATE clinic_bills SET receipt_id = ?, transaction_id = ?, bill_code = ? WHERE receipt_id = ?";
+    $stmt_bills = $conn->prepare($sql_bills);
+    $stmt_bills->bind_param("ssss", $receipt_id, $transaction_id, $billcode, $receipt_id); // Changed from order_id to receipt_id
+    $stmt_bills->execute();
+
+    // Insert data into bill_items table (you may need to adapt this to match your schema)
+    $sql_items = "UPDATE bill_items SET bill_code = ?, transaction_id = ? WHERE receipt_id = ?";
+    $stmt_items = $conn->prepare($sql_items);
+    $stmt_items->bind_param("sss", $billcode, $transaction_id, $receipt_id); // Changed from order_id to receipt_id
+    $stmt_items->execute();
+
+    $stmt_bills->close();
+    $stmt_items->close();
+}
+
+// Call the function to insert data into the database
+insertPaymentDetails($receipt_id, $transaction_id, $billcode, $conn);
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -224,7 +259,7 @@ footer {
         <p><strong>Congratulations! Your payment has been successfully processed.</strong></p>
     </div>
     <div class="details" id="receipt-content">
-        <p><strong>Order ID:</strong> <?php echo htmlspecialchars($order_id); ?></p>
+        <p><strong>Receipt ID:</strong> <?php echo htmlspecialchars($receipt_id); ?></p>
         <p><strong>Transaction ID:</strong> <?php echo htmlspecialchars($transaction_id); ?></p>
         <p><strong>Bill Code:</strong> <?php echo htmlspecialchars($billcode); ?></p>
         <p><strong>Status:</strong> <?php echo htmlspecialchars($payment_status); ?></p>
@@ -277,5 +312,4 @@ footer {
     <p>&copy; 2024 Dr. Thong Clinic. All Rights Reserved.</p>
 </footer>
 </body>
-
 </html>

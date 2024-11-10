@@ -35,7 +35,7 @@ if (isset($_POST['bill_id'])) {
     $bill_id = $_POST['bill_id'];
 
     // Fetch the bill details
-    $bill_query = $connection->prepare("SELECT * FROM clinic_bills WHERE id = ?");
+    $bill_query = $connection->prepare("SELECT * FROM clinic_bills WHERE bill_id = ?");
     $bill_query->bind_param("i", $bill_id);
     $bill_query->execute();
     $bill_result = $bill_query->get_result();
