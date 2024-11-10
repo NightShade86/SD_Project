@@ -1,5 +1,5 @@
 <?php
-/*// Start session if not started already
+// Start session if not started already
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -37,7 +37,7 @@ $bills_query = $connection->prepare("SELECT * FROM clinic_bills WHERE patient_ic
 $bills_query->bind_param("s", $ic);
 $bills_query->execute();
 $bills_result = $bills_query->get_result();
-$bills = $bills_result->fetch_all(MYSQLI_ASSOC);*/
+$bills = $bills_result->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
