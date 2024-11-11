@@ -66,8 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['bill_id'])) {
             'billPriceSetting' => 1,
             'billPayorInfo' => 1,
             'billAmount' => intval($totalAmount * 100), // ToyyibPay requires the amount in cents
-            'billReturnUrl' => 'http://localhost/clinicdb/SD_Project/payment_success.php',
-            'billCallbackUrl' => 'http://localhost/clinicdb/SD_Project/payment_callback.php',
+            'billReturnUrl' => 'https://www.drthong-clinic.uk/clinicdb/SD_Project/payment_success.php',
+            'billCallbackUrl' => 'https://www.drthong-clinic.uk/clinicdb/SD_Project/payment_callback.php',
             'billExternalReferenceNo' => $transaction_id,
             'billTo' => $bill['patient_ic'],
             'billEmail' => $bill['email'],

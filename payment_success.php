@@ -27,27 +27,6 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
-// Function to insert data into the database
-function insertPaymentDetails($receipt_id, $transaction_id, $billcode, $conn) {
-    // Insert data into clinic_bills table
-    $sql_bills = "UPDATE clinic_bills SET receipt_id = ?, transaction_id = ?, bill_code = ? WHERE receipt_id = ?";
-    $stmt_bills = $conn->prepare($sql_bills);
-    $stmt_bills->bind_param("ssss", $receipt_id, $transaction_id, $billcode, $receipt_id); // Changed from order_id to receipt_id
-    $stmt_bills->execute();
-
-    // Insert data into bill_items table (you may need to adapt this to match your schema)
-    $sql_items = "UPDATE bill_items SET bill_code = ?, transaction_id = ? WHERE receipt_id = ?";
-    $stmt_items = $conn->prepare($sql_items);
-    $stmt_items->bind_param("sss", $billcode, $transaction_id, $receipt_id); // Changed from order_id to receipt_id
-    $stmt_items->execute();
-
-    $stmt_bills->close();
-    $stmt_items->close();
-}
-
-// Call the function to insert data into the database
-insertPaymentDetails($receipt_id, $transaction_id, $billcode, $conn);
 $conn->close();
 ?>
 
