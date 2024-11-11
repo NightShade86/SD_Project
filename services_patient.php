@@ -65,7 +65,7 @@ ini_set('display_errors', 1);
                 <div class="main-box">
 
                     <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index_patient.php"><img src="images/file.png" alt="" title=""></a></div>
                     </div>
 
                     <!--Nav Box-->
@@ -159,7 +159,7 @@ ini_set('display_errors', 1);
 
         <!-- Mobile Header -->
         <div class="mobile-header">
-            <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
+            <div class="logo"><a href="index_patient.php"><img src="images/file.png" alt="" title=""></a></div>
 
             <!--Nav Box-->
             <div class="nav-outer clearfix">

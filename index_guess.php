@@ -62,7 +62,7 @@ ini_set('display_errors', 1);
                 <!-- Main box -->
                 <div class="main-box">
                     <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index_guess.php"><img src="images/file.png" alt="" title=""></a></div>
                     </div>
                     <!--Nav Box-->
                     <div class="nav-outer">

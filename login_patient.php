@@ -158,7 +158,7 @@ ini_set('display_errors', 1);
 
         <!-- Mobile Header -->
         <div class="mobile-header">
-            <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
+            <div class="logo"><a href="index_patient.php"><img src="images/file.png" alt="" title=""></a></div>
 
             <!--Nav Box-->
             <div class="nav-outer clearfix">
@@ -178,7 +178,7 @@ ini_set('display_errors', 1);
             <div class="title-outer">
                 <h1>Login</h1>
                 <ul class="page-breadcrumb">
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index_patient.php">Home</a></li>
                     <li>Shop</li>
                 </ul> 
             </div>

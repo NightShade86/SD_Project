@@ -114,7 +114,7 @@ $bills = $bills_result->fetch_all(MYSQLI_ASSOC);
             <div class="auto-container">    
                 <div class="main-box">
                     <div class="logo-box">
-                        <div class="logo"><a href="index.html"><img src="images/file.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index_guess.php"><img src="images/file.png" alt="" title=""></a></div>
                     </div>
 
                     <!--Nav Box-->
@@ -126,7 +126,6 @@ $bills = $bills_result->fetch_all(MYSQLI_ASSOC);
                                 <li><a href="doctor-detail_patient.php">Doctor Detail</a></li>
                                 <li><a href="about-us_patient.php">About Us</a></li>
                                 <li><a href="contact_patient.php">Contact</a></li>
-                                <li class="current"><a href="checkout.php">Checkout</a></li>
                                 <li class="dropdown">
                                     <span>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
