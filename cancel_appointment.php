@@ -56,32 +56,7 @@ if (!isset($_GET["patient_id"])) {
         }
     }
 }
+// Redirect back to the previous page or a default location
+header("Location: " . $_SERVER['HTTP_REFERER']);
 exit();
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Go Back Button</title>
-</head>
-<body>
-
-<!-- Button to go back -->
-<button onclick="goBack()">Go Back</button>
-
-<script>
-    // JavaScript function to go back to the previous page
-    function goBack() {
-        // Check if the document has a referrer (the previous page URL)
-        if (document.referrer) {
-            window.history.back();
-        } else {
-            // If no referrer, you can redirect to a default page (e.g., homepage)
-            window.location.href = 'default-page.php'; // Replace with your default page
-        }
-    }
-</script>
-
-</body>
-</html>

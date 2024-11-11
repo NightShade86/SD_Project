@@ -273,11 +273,10 @@ if ($_SESSION['loggedin']) {
                     <!-- Patients Dropdown -->
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white py-3" href="#" id="patientDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-procedures"></i> Manage Patients
+                            <i class="fas fa-procedures" href="?section=patients"></i> Manage Patients
                         </a>
                         <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="patientDropdown">
                             <a class="dropdown-item" href="?section=patients">View Patients</a>
-                            <a class="dropdown-item" href="?section=edit-patient">Edit Patient</a>
                         </div>
                     </div>
 					
