@@ -8,12 +8,12 @@ ini_set('display_errors', 1);
 
 // Initialize the section variable
 $allowed_sections = [
-    "patients", "staff", "add-staff", "edit-staff", "delete-staff", 
+    "patients",
     "add-patient", "edit-patient", "delete-patient" , "profile" , "appointment" , "feedback" , "add-bills" ,
 	"edit-bills" , "delete-bills" , "view-bills" , "show-bills" , "view-transaction" , "sales-report"
 ];
 
-$section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sections) ? $_GET["section"] : "staff";
+$section = isset($_GET["section"]) && in_array($_GET["section"], $allowed_sections) ? $_GET["section"] : "patients";
 
 // Get user data
 if ($_SESSION['loggedin']) {
@@ -399,10 +399,6 @@ if ($_SESSION['loggedin']) {
                         <?php
                         // Include the corresponding section file based on the selected section
                         $section_map = [
-                            "staff" => "view_staff.php",
-                            "add-staff" => "add_staff.php",
-                            "edit-staff" => "edit_staff.php",
-                            "delete-staff" => "delete_staff.php",
                             "patients" => "view_patient.php",
                             "add-patient" => "add_patient.php",
                             "edit-patient" => "edit_patient.php",
