@@ -3,7 +3,6 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +13,7 @@ ini_set('display_errors', 1);
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 <link href="css/responsive.css" rel="stylesheet">
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!--Color Themes-->
 <link id="theme-color-file" href="css/color-themes/default-theme.css" rel="stylesheet">
 
@@ -48,11 +47,6 @@ ini_set('display_errors', 1);
                             <li><i class="flaticon-back-in-time"></i>Monday - Thursday 9.00am - 9.00pm , Friday 9.00am - 5.00pm. Sunday and Saturday CLOSED</li>
                         </ul>
                     </div>
-                    <div class="top-right">
-                        <div class="btn-box">
-                            <a href="appointment.php" id="appointment-btn" class="theme-btn btn-style-three"><span class="btn-title">Appointment</span></a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -65,61 +59,21 @@ ini_set('display_errors', 1);
                 <div class="main-box">
 
                     <div class="logo-box">
-                        <div class="logo"><a href="index_patient.php"><img src="images/file.png" alt="" title=""></a></div>
+                        <div class="logo"><a href="index_guess.php"><img src="images/file.png" alt="" title=""></a></div>
                     </div>
 
                     <!--Nav Box-->
                     <div class="nav-outer">
                         <nav class="nav main-menu">
                             <ul class="navigation" id="navbar">
-                                <li><a href="index_patient.php">Home</a></li>
-								<li><a href="services_patient.php">Services</a></li>
-								<li><a href="doctor-detail_patient.php">Doctor Detail</a></li>
-								<li><a href="about-us_patient.php">About Us</a></li>
-								<li><a href="contact_patient.php">Contact</a></li>
-								<li class="dropdown">
-									<span>
-										<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-											<path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 1a7 7 0 1 1 0 14A7 7 0 0 1 8 1z"/>
-											<path d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 10a5 5 0 0 0-4.546 3 1 1 0 0 0 .657 1.07c.068.016.134.03.2.04A5.992 5.992 0 0 0 8 12a5.992 5.992 0 0 0 4.689 2.11c.066-.01.132-.024.2-.04a1 1 0 0 0 .657-1.07A5 5 0 0 0 8 10z"/>
-										</svg>
-										<?php 
-											$userid = $_SESSION['USER_ID'];
-											
-											if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-												echo " Welcome, " . htmlspecialchars($userid);
-											} else {
-												echo " Profile"; // Default text when user is not logged in
-											}
-										?>
-										<style>
-										.dropdown span {
-											display: flex;
-											align-items: center; /* Vertically center the icon and text */
-											font-size: 14px; /* Adjust font size as needed */
-										}
-
-										.dropdown span svg {
-											margin-right: 5px; /* Space between icon and text */
-											fill: #ffffff; /* Change the icon color if needed */
-										}
-
-										</style>
-									</span>
-									<ul>
-										<li><a href="profile.php">Profile</a></li>
-										<?php 
-											if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-												echo "<li><a href='logout.php'>Log Out</a></li>";
-											} else {
-												echo "<li><a href='login.php'>Log In</a></li>";
-											}
-										?>
-										<li><a href="javascript:void(0)" id="load-appointment-history">Appointment History</a></li>
-										<li><a href="view_bills_patient.php">View Bills</a></li>
-									</ul>
-								</li>
-                                  <!--  <span>Blog</span>
+                                <li><a href="index_guess.php">Home</a></li>
+								<li><a href="services_guess.html">Services</a></li>
+								<li><a href="doctor-detail_guess.html">Doctor Detail</a></li>
+								<li><a href="about-us_guess.html">About Us</a></li>
+								<li><a href="contact_guess.html">Contact</a></li>
+								<li class="current"><a href="login_guess.php">Login</a></li>
+                                <li><a href="register_guess.php">Register</a></li>
+                                <!--    <span>Blog</span>
                                     <ul>
                                         <li><a href="blog-checkboard.html">Checkerboard</a></li>
                                         <li><a href="blog-masonry.html">Masonry</a></li>
@@ -146,8 +100,7 @@ ini_set('display_errors', 1);
                                         <li><a href="shop-single.html">Shop Single</a></li>
                                         <li><a href="shopping-cart.html">Shopping Cart</a></li>
                                         <li><a href="checkout.html">Checkout</a></li>
-                                    </ul>
-                                </li> -->
+                                    </ul> -->
 							</ul>
 						</nav>
 						<!-- Main Menu End-->
@@ -156,12 +109,15 @@ ini_set('display_errors', 1);
             </div>
         </div>
 
+
         <!-- Mobile Header -->
         <div class="mobile-header">
-            <div class="logo"><a href="index_patient.php"><img src="images/file.png" alt="" title=""></a></div>
+            <div class="logo"><a href="index.html"><img src="images/logo.png" alt="" title=""></a></div>
 
             <!--Nav Box-->
             <div class="nav-outer clearfix">
+
+                <div class="outer-box">
                     <a href="#nav-mobile" class="mobile-nav-toggler navbar-trigger"><span class="fa fa-bars"></span></a>
                 </div>
             </div>
@@ -178,7 +134,7 @@ ini_set('display_errors', 1);
             <div class="title-outer">
                 <h1>Login</h1>
                 <ul class="page-breadcrumb">
-                    <li><a href="index_patient.php">Home</a></li>
+                    <li><a href="index_guess.html">Home</a></li>
                     <li>Shop</li>
                 </ul> 
             </div>
@@ -194,14 +150,27 @@ ini_set('display_errors', 1);
 					<!-- Login Form -->
 					<div class="login-form" style="background-color: #f7f7f7; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
 						<h2 style="text-align: center; color: #333; font-weight: bold;">Login</h2>
-						<!-- Error Message -->
+						<!-- SweetAlert Messages -->
 						<?php if (isset($_SESSION['error'])): ?>
-							<div class="error" style="color: red; text-align: center; padding: 10px; border-radius: 5px; background-color: #ffe6e6;">
-								<?php
-								echo $_SESSION['error'];
-								unset($_SESSION['error']);
-								?>
-							</div>
+						    <script>
+							    Swal.fire({
+							        title: 'Error!',
+							        text: '<?php echo $_SESSION["error"]; ?>',
+							        icon: 'error'
+							    });
+						    </script>
+						    <?php unset($_SESSION['error']); // Clear the error after displaying it ?>
+						<?php endif; ?>
+
+						<?php if (isset($_SESSION['success'])): ?>
+						    <script>
+							    Swal.fire({
+							        title: 'Success!',
+							        text: '<?php echo $_SESSION["success"]; ?>',
+							        icon: 'success'
+							    });
+						    </script>
+						    <?php unset($_SESSION['success']); // Clear the success message after displaying it ?>
 						<?php endif; ?>
 						<form method="post" action="login_process.php">
 							<div class="form-group">
@@ -218,7 +187,7 @@ ini_set('display_errors', 1);
 								<input type="checkbox" name="remember_me" id="account-option-1" style="margin-right: 10px;">&nbsp; 
 								<label for="account-option-1" style="font-weight: bold; color: #333;">Remember me</label>
 							</div>
-							
+
 							<div class="form-group">
 								<button class="theme-btn btn-style-one" type="submit" name="login" style="width: 100%; padding: 10px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer;">
 									<span class="btn-title">LOGIN</span>
@@ -353,103 +322,6 @@ ini_set('display_errors', 1);
 			color: #5a5a5a;
 		}
 		</style>
-		
-	<div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="appointmentModalLabel">Your Appointments</h5>
-				</div>
-				<div class="modal-body" id="modal-body-content">
-					<!-- Appointment content will be loaded here via AJAX -->
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<style>
-		/* Override Bootstrap default styles at min-width 576px breakpoint */
-		@media (min-width: 576px) {
-			.modal-dialog {
-				max-width: 90% !important; /* Set max width to a larger percentage */
-				margin: auto !important; /* Center the modal */
-			}
-
-			.modal-dialog-scrollable {
-				max-height: calc(100% - 2rem) !important; /* Adjust max height */
-			}
-
-			.modal-dialog-scrollable .modal-content {
-				max-height: calc(100vh - 2rem) !important; /* Adjust height for better content fit */
-			}
-
-			.modal-dialog-centered {
-				min-height: calc(100% - 2rem) !important; /* Adjust min height */
-			}
-
-			.modal-dialog-centered::before {
-				height: calc(100vh - 2rem) !important; /* Set centering height */
-			}
-
-			.modal-sm {
-				max-width: 500px !important; /* Adjust small modal width */
-			}
-		}
-
-		/* General modal styling */
-		.modal-dialog {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			min-height: 100vh; /* Centers the modal vertically */
-		}
-
-		.modal-content {
-			width: 100%;
-			max-width: 1200px; /* Set a larger max width */
-		}
-
-		.modal-body {
-			padding: 20px; /* Set padding for content */
-		}
-
-		.modal {
-			opacity: 1 !important; /* Ensure the modal is fully visible */
-		}
-	</style>
-
-	<!-- Include jQuery and Bootstrap's JS -->
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
-
-	<script>
-		// Remove any existing event listeners to prevent duplicates
-		$(document).off('click', '#load-appointment-history').on('click', '#load-appointment-history', function() {
-			console.log('Appointment History clicked');  // Log when the link is clicked
-
-			// Show loading text before content loads
-			$('#modal-body-content').html('<p>Loading appointments...</p>');
-
-			// Load content via AJAX
-			$('#modal-body-content').load('view_existing_appointment_patient.php', function(response, status, xhr) {
-				if (status === "error") {
-					console.error('Error loading appointments:', xhr.status, xhr.statusText);
-					$('#modal-body-content').html('<p>Error loading appointment history. Please try again later.</p>');
-				} else {
-					console.log('Content loaded successfully');
-				}
-				// Show the modal after content loads
-				$('#appointmentModal').modal('show');
-			});
-		});
-
-		// Clear content on modal close to prevent issues on reopening
-		$('#appointmentModal').on('hidden.bs.modal', function () {
-			$('#modal-body-content').empty();
-			console.log('Modal content cleared');
-		});
-	</script>
-
 
         <!--Footer Bottom-->
         <div class="footer-bottom">
@@ -460,8 +332,8 @@ ini_set('display_errors', 1);
                 <div class="inner-container clearfix">
                     <div class="footer-nav">
                         <ul class="clearfix">
-                           <li><a href="about-us_patient.html">Contact</a></li> 
-                           <li><a href="services_patient.html">Services</a></li>  
+                           <li><a href="about-us_guess.html">Contact</a></li> 
+                           <li><a href="services_guess.html">Supplier</a></li>  
                         </ul>
                     </div>
                     
