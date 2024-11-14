@@ -14,16 +14,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Include the database connection
     $mysqli = require __DIR__ . "/db_conn.php";
 
+    // Check all tables (`user_info`, `staff_info`, `admin_info`) for the token
+    $table_found = null;
+    $user = null;
+
     // Prepare the query to find the user by the reset token hash
-    $sql = "SELECT * FROM user_info WHERE reset_token_hash = ?";
+    $sql = "SELECT 'user_info' AS source, EMAIL, reset_token_expires_at 
+            FROM user_info WHERE reset_token_hash = ?
+            UNION 
+            SELECT 'staff_info' AS source, EMAIL, reset_token_expires_at 
+            FROM staff_info WHERE reset_token_hash = ?
+            UNION 
+            SELECT 'admin_info' AS source, EMAIL, reset_token_expires_at 
+            FROM admin_info WHERE reset_token_hash = ?";
+    
     $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("s", $token_hash);
+    $stmt->bind_param("sss", $token_hash, $token_hash, $token_hash);
     $stmt->execute();
     $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
 
-    // Check if user with the provided token exists
-    if ($user === null) {
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        $table_found = $user['source']; // Identify the table where the token is found
+    }
+
+    // If the token is not found, redirect with an error
+    if (!$user) {
         $_SESSION['message'] = "Token not found or invalid.";
         $_SESSION['message_type'] = 'error';
         $_SESSION['token'] = $token; // Save token for redirection
@@ -97,23 +113,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Hash the new password
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-    // Update the user's password in the database
-    $sql = "UPDATE user_info
-            SET PASSWORD = ?, 
-                reset_token_hash = NULL, 
-                reset_token_expires_at = NULL 
-            WHERE EMAIL = ?";
+    // Update the password in the appropriate table
+    $update_sql = "UPDATE $table_found
+                   SET PASSWORD = ?, 
+                       reset_token_hash = NULL, 
+                       reset_token_expires_at = NULL 
+                   WHERE EMAIL = ?";
 
-    $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("ss", $password_hash, $user["EMAIL"]);
+$update_stmt = $mysqli->prepare($update_sql);
+$update_stmt->bind_param("ss", $password_hash, $user["EMAIL"]);
 
     // Execute the query
-    if ($stmt->execute()) {
+    if ($update_stmt->execute()) {
         $_SESSION['message'] = 'Your password has been successfully reset.';
         $_SESSION['message_type'] = 'success';
         unset($_SESSION['token']); // Clear the token since reset was successful
     } else {
-        $_SESSION['message'] = "Error updating password: " . $stmt->error;
+        $_SESSION['message'] = "Error updating password: " . $update_stmt->error;
         $_SESSION['message_type'] = 'error';
         $_SESSION['token'] = $token; // Save token for redirection
     }

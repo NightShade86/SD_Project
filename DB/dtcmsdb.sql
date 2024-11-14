@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2024 at 12:06 PM
+-- Generation Time: Nov 14, 2024 at 12:28 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -140,40 +140,6 @@ INSERT INTO `clinic_bills` (`bill_id`, `patient_ic`, `payment_status`, `payment_
 (41, '030807011163', 'Paid', 'Online', '', '', 50.00, 0.00, '2024-11-11 04:51:39', '2024-11-13 13:27:39', '2024-11-11 12:51:39'),
 (42, '123456789', 'Paid', 'Online', '-', '-', 100.00, 0.00, '2024-11-13 14:35:44', '2024-11-13 14:36:42', '2024-11-13 22:35:44'),
 (43, '040404050101', 'Unpaid', 'Online', '-', '-', 30.00, 0.00, '2024-11-13 16:10:05', '2024-11-13 16:10:05', '2024-11-14 00:10:05');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `password_resets`
---
-
-CREATE TABLE `password_resets` (
-  `id` int(11) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `password_resets`
---
-
-INSERT INTO `password_resets` (`id`, `email`, `token`, `created_at`) VALUES
-(1, 'fatihah04@graduate.utm.my', '792877fb550eea712c4deb184cad57a1de34630ccfc16678c668631081c7bc89a666a2cec288b741ddacb5653834551a05be', '2024-08-31 19:07:05'),
-(2, 'fatihah04@graduate.utm.my', '056c9656d7c04e81555cbff83c4531b494e24a21698caf251d292dfa07d4a4f57d6c130d9c65a469d3efa1dd449759661314', '2024-08-31 19:07:11'),
-(3, 'fatihah04@graduate.utm.my', '9add84278e6e0e14b66ee9a461abaafa58db466d95d403c1e733dd1262419001bb847076f07ad517f03080a826ee35510105', '2024-08-31 19:09:57'),
-(4, 'fatihah04@graduate.utm.my', '1a44bd4ba64ee3c12ab3e69fd4550fe6ba3eeba0193714666ac5817715c93d0bb5cad7a55f7c95dc190bc8fc24ae03094351', '2024-08-31 19:12:22'),
-(5, 'fatihah04@graduate.utm.my', '9a3da10c4e44f7f25cb3f4ef48110f8ec482ca04d3298beaae45e6895d98ad542e1ee7bf5a5857d8222e66ff3ccaa7e9b0e2', '2024-08-31 19:12:34'),
-(6, 'fatihah04@graduate.utm.my', 'fd16cb83f18212a20f7492a3a050aca9791e841b66b6ebc14ba38ed6b92c4d9d04bd070a2055b5759377b517a7d675647dcf', '2024-08-31 19:23:44'),
-(7, 'fatihah04@graduate.utm.my', 'e320105fd1b466fdf9d0619354993ec89f6a825fbaf2011f8fd34a54518da5c64aefa374056a95164f5a5b349fa63adee02c', '2024-08-31 19:23:47'),
-(8, '', '524101564234627bbc3c73e8b4bbfd2de31dd825be6272eb5e5ed4a048bd5fdd', '2024-08-31 19:34:49'),
-(9, '', '98afb6b2bbb271e446694fa904ab25e5f0ec97ef9cd900a0b5b9f8feedecdd56', '2024-08-31 19:35:03'),
-(10, '', '6f26575cc28ec960e6772a60e7c621f9fe536a480ddfbe7eb034230cc158bc7c', '2024-08-31 19:37:15'),
-(11, '', '21d822cf9c2247ae4113cf8bb9ea302d30f4ecda1bc9e020326fd6c7b11ee84f', '2024-08-31 19:37:22'),
-(12, '', 'decdf8b6b19a3fc6b986796ddf02ad9a00f0e0f74e2923a13c79b115cb7cff86', '2024-08-31 19:38:49'),
-(13, 'fatihah04@graduate.utm.my', '2bc0e67b19cff2075d966b0e54fc685aa8cb9c0b5d09e3d40e3f211f0ca4f02379c81e7a9451e37fa0c0ff1bdfc6eaca14f6', '2024-08-31 19:39:43'),
-(14, 'fatihah04@graduate.utm.my', '2bc0e67b19cff2075d966b0e54fc685aa8cb9c0b5d09e3d40e3f211f0ca4f02379c81e7a9451e37fa0c0ff1bdfc6eaca14f6', '2024-08-31 19:39:43'),
-(15, 'fatihah04@graduate.utm.my', '33434683945799f41a122958e2c6f8e4f51ccb3a3e6a1f798e8fc0086ce9ca08b27e19e237cf3c784a30260207ec0f38fd22', '2024-08-31 20:01:52');
 
 -- --------------------------------------------------------
 
@@ -333,12 +299,6 @@ ALTER TABLE `clinic_bills`
   ADD KEY `patient_ic` (`patient_ic`);
 
 --
--- Indexes for table `password_resets`
---
-ALTER TABLE `password_resets`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `staff_info`
 --
 ALTER TABLE `staff_info`
@@ -374,12 +334,6 @@ ALTER TABLE `appointment_info`
 --
 ALTER TABLE `clinic_bills`
   MODIFY `bill_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
-
---
--- AUTO_INCREMENT for table `password_resets`
---
-ALTER TABLE `password_resets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `user_feedback`
