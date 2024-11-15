@@ -102,21 +102,6 @@ Our mission is to enhance the clinic management system at **Dr. Thong's Clinic**
 
 ---
 
-## 📂 Project Structure
-
-- **`/index_guess.php`**: The entry point of the application.
-- **`/config`**: Contains configuration files.
-- **`/assets`**: Static assets such as images and stylesheets.
-- **`/src`**: Contains the PHP files responsible for the system's functionality.
-
----
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
----
-
 ## 📞 Support
 
 For any issues or support requests, feel free to open an issue in our GitHub repository or contact the team via email.
