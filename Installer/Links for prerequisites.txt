@@ -1,0 +1,12 @@
+Hello there, 
+this file serves the purpose of providing the official links for programs
+that's needed to be installed.
+
+XAMPP
+- a simple, lightweight way to set up a webserver and database server
+without configuring each individual component manually.
+- https://www.apachefriends.org/download.html
+
+Cloudflared
+- used for tunneling a xampp port to a domain
+- https://github.com/cloudflare/cloudflared?tab=readme-ov-file
